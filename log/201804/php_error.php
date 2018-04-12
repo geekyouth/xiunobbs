@@ -1,0 +1,1 @@
+<?php exit;?>	2018-04-12 11:19:26	0.0.0.0	/xiunobbs/install/action=db	0	Error[1024]: Database Error:选择数据库失败:Unknown database 'xiuno', File: D:\localhost\xiunobbs\xiunophp\db_mysql.class.php, Line: 190

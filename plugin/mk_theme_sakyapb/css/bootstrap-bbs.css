@@ -1,0 +1,316 @@
+@charset "UTF-8";
+/*!
+ * Bootstrap v4.0.0-beta.3 (https://getbootstrap.com)
+ * Copyright 2011-2017 The Bootstrap Authors
+ * Copyright 2011-2017 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+/****************************************   bbs 业务部分  ****************************************/
+.bg-dark {
+  background-color: #1e1e1e !important ; 
+}
+#footer.bg-dark{
+    background-color:transparent !important
+
+}
+.sakya_logo{
+  background:url(../images/logo.png);
+  width:3rem;
+  height: 3rem;
+  background-size: cover;
+}
+html, table {
+  font-size: 14px;
+}
+
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: "Helvetica Neue", Helvetica, "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", "微软雅黑", "华文细黑", STHeiti, sans-serif;
+}
+
+/* 页脚固定在底部 */
+#header, #body, #footer {
+  width: 100%;
+}
+
+#header {
+  flex: 0 0 auto;
+}
+
+#body {
+  flex: 1 0 auto;
+}
+
+#footer {
+  flex: 0 0 auto;
+}
+
+#body > .container > .row > .col-lg-3 {
+  padding-left: 0;
+}
+
+.table th {
+  border-top: none;
+}
+
+.table > tbody > tr:first-child > td {
+  border-top: none;
+}
+
+.card {
+  margin-bottom: 1rem;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1)
+}
+
+.breadcrumb .breadcrumb-item {
+  display: inline-flex;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.breadcrumb .breadcrumb-item a {
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-header-dropdown .dropdown-menu .dropdown-item i {
+  width: 12px;
+}
+
+/* 小屏: only small screen */
+@media (max-width: 576px) {
+  #body {
+    padding-top: 0.5rem;
+  }
+  #body > .container > .row > div {
+    padding: 0.5rem;
+  }
+}
+
+/* 小屏 + 中屏: small + middle */
+@media (max-width: 992px) {
+  #nav {
+    padding-top: 1.5rem;
+    padding-left: 0.5rem;
+  }
+  #nav > ul:first-child > li:not(:first-child) {
+    padding-left: 3rem;
+  }
+}
+
+/* 中屏 + 大屏: middle + big */
+@media (min-width: 576px) {
+  #body {
+    padding-top: 1.3rem;
+  }
+}
+
+.addattach:hover {
+  font-weight: 800;
+}
+
+/*@teax 弥补bootstrap beta3的不足，分页如果过多则换行，防止超出屏幕*/
+.pagination {
+  flex-wrap: wrap;
+}
+
+table.nav_tag_list {
+  margin-bottom: 0.2rem;
+}
+
+table.nav_tag_list td {
+  padding: 0.1rem;
+}
+
+table.nav_tag_list td a {
+  margin-right: 0.5rem;
+}
+
+.nav_tag_list .active {
+  font-weight: 800;
+}
+
+@keyframes quote_animation {
+  from {
+    background-color: #39954e;
+  }
+  to {
+    background-color: #f8f9fa;
+  }
+}
+
+li.quote {
+  background-color: #333;
+  animation: quote_animation 1s;
+  -moz-animation: quote_animation 1s;
+  -webkit-animation: quote_animation 1s;
+  -o-animation: quote_animation 1s;
+  background-image: url(../../../view/img/quote.png);
+  background-repeat: no-repeat;
+  background-position: top right;
+}
+
+.blockquote {
+  font-size: 0.8rem;
+  background: #333;
+  background-repeat: no-repeat;
+  background-position: top right;
+  padding: 0.5rem 1rem !important;
+}
+
+.blockquote .user {
+  margin-right: 0.5rem;
+}
+
+.thread, .post {
+  border-bottom: 1px solid #262626;
+  padding: 0.7rem;
+}
+
+.thread:hover {
+  background-color: #262626;
+}
+
+.postlist > .post:last-child {
+  border-bottom: 0px;
+}
+
+.postlist .media-body {
+  width: 1%;
+}
+
+.message p {
+  margin: 0.2rem 0;
+  line-height: 1.7;
+}
+
+.message img {
+  max-width: 100%;
+  height: auto !important;
+}
+
+.thread .badge {
+  font-weight: normal;
+}
+
+.tag_option {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+/* 回帖输入框 */
+#message {
+  height: 2.4rem;
+  transition: height 0.2s;
+}
+
+#footer {
+  color:#666 !important;
+}
+
+.bg-dark .text-muted {
+  color: #666 !important;
+}
+
+/* add by sakya*/
+body{background-color:#000;color:#999}
+a{
+color:#ccc
+}
+.navbar-nav{flex-wrap: wrap}
+.card-threadlist .card-body,.card-thread .card-body{
+  flex: 1 1 auto;
+  padding: 0 0 1.25rem 0;
+  background: #141414
+}
+.card-threadlist .card-body ul{
+  background: #1e1e1e
+}
+
+.card-threadlist .card-body .message{background:#fff;padding:1.25rem;}
+.card-threadlist .card-body hr{margin:0}
+
+.btn-secondary:hover{
+  background-color:#f8981d;
+  border-color:#f8981d
+}
+
+.navbar-dark .navbar-nav .nav-link{
+  padding:.15rem .5rem;
+  border-radius:5px;
+  margin-right:4px;
+  white-space: nowrap;
+  transition-duration: .3s
+}
+.card-body.small ul,.card-body.small li{padding:0;margin:0;list-style: none;font-size:100%}
+
+.nav-tabs .nav-item{
+}
+.card-header{
+  border-bottom:1px solid #262626;
+  padding:0.65rem
+}
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
+  border-color:transparent
+}
+
+.navbar-toggler-icon{
+  color:#000
+}
+.navbar-dark .navbar-brand{
+  color:#f8981d
+}
+
+.thread_tbox{
+    background-image: linear-gradient(0deg, #fff, #f9f9f9);
+padding:1.25rem;}
+
+.card-thread .media{
+  padding:1.2rem;
+  background-color:#333
+}
+.card-thread .card-body hr{margin:0}
+.card-thread .card-body .message{background:#222;padding:1.25rem;}
+
+.w-100 tr{
+  display: flex
+}
+
+.w-100 td{
+  flex-grow: 1;
+  width:0;
+  border-right:1px solid rgba(0, 0, 0, 0.725);
+}
+.card-postlist .card-body{
+  padding:0
+}
+.card-postlist .card-title{
+  padding:0.8rem 1.2rem;
+  border-bottom:1px solid #000;
+  background: #333;
+  margin-bottom:0;
+}
+.card-postlist .card-body .postlist>li{
+  /* min-height: 9rem; */
+}
+
+
+/*插件兼容*/
+.edui-container .dropdown-menu{
+	color:#000000
+}
+
+.noticelist > .notice:not(:last-child){
+  border-bottom:1px solid rgba(0, 0, 0, 0.725) !important;
+}
+.btn-light.text-muted{
+	color:#ccc !important
+}
+
+/* 这里改logo*/
+@media (min-width: 576px) {
+.navbar-dark .navbar-brand{height:1.8rem;width:5.8rem;background:url(../images/logo.png);background-size:auto 100%;background-repeat:no-repeat}
+.navbar-dark .navbar-brand img.logo-2{display:none}
+}

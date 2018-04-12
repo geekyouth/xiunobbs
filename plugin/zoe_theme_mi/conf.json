@@ -1,0 +1,10 @@
+{
+    "name": "类mi主题",
+    "brief": "类似小米论坛风格模板",
+    "version": "1.6",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "dependencies": []
+}
