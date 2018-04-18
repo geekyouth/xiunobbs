@@ -3,7 +3,7 @@
     "brief": "哦，这无聊的夜晚，多么的彷黄。<br>去掉css最后一段(有注释)恢复系统logo",
     "version": "1.2",
     "bbs_version": "4.0.2",
-    "installed": 0,
+    "installed": 1,
     "enable": 0,
     "hooks_rank": [],
     "dependencies": []

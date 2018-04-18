@@ -1,0 +1,68 @@
+<?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
+<!--{hook well_read_tag_list_start.htm}-->
+<div class="row">
+	<div class="col-lg-12">
+		<div class="content mr-3">
+			<div class="d-flex justify-content-between">
+				<ol class="breadcrumb col">
+					<li class="breadcrumb-item"><a href="./"><i class="icon-home" aria-hidden="true"></i></a></li>
+					<li class="breadcrumb-item">
+						<a href="<?php echo url('tag-list');?>"><?php echo lang('well_tag_manage');?></a>
+					</li>
+					<li class="breadcrumb-item">
+						<?php echo $r['name'];?>
+					</li>
+					<!--{hook well_read_tag_list_breadcrumb_li.htm}-->
+				</ol>
+				<!--{hook well_read_tag_list_breadcrumb_ol.htm}-->
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+                    <div class="card card-threadlist">
+					<div class="card-body">
+						<ul class="list-unstyled threadlist mb-0">
+                            <?php if($count) { foreach($threadlist as &$_thread) { ?>
+                            <li class="thread tap" data-href="<?php echo url("thread-$_thread[tid]");?>" data-tid="<?php echo $_thread['tid'];?>">
+                            <div class="subject break-all">
+                                <div class="d-flex row small mt-1">
+                                    <div class="col-12 col-md-7">
+                                        <h2 class="font-bold">
+                                            <a href="<?php echo url("thread-$_thread[tid]");?>" aria-label="<?php echo $_thread['subject'];?>"><?php echo $_thread['subject'];?></a>
+                                        </h2>
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                    <div class="row text-muted small">
+                                        <span class="col-4">
+                                            <?php echo date('Y-m-d', $_thread['create_date']);?>
+                                        </span>
+                                        <span class="col-4"><i class="icon-eye"></i> <?php echo $_thread['views'];?></span>
+                                        <span class="col-4"><i class="icon-comment-o"></i> <?php echo $_thread['posts'];?></span>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            </li>
+                            <?php }} else { ?>
+                            <li>
+                                <div><?php echo lang('none');?></div>
+                            </li>
+                            <?php } ?>
+						</ul>
+					</div>
+                    </div>
+					<nav class="my-3"><ul class="pagination justify-content-center"><?php echo $pagination; ?></ul></nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/footer.inc.htm');?>
+
+<script>
+    $('#nav_pc li[fid="<?php echo $fid;?>"]').addClass('active');
+</script>
+
+<!--{hook well_read_tag_list_js.htm}-->

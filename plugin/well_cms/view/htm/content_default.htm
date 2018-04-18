@@ -1,0 +1,100 @@
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_header.inc.htm');?>
+
+<!--{hook well_content_index_start.htm}-->
+
+<div class="media admin-content">
+
+    <?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_left_menu_info.htm');?>
+    <div class="media-body col-lg-10 pr-0">
+        <div class="content-right pt-3 pr-3">
+
+            <div class="card">
+                <div class="row justify-content-between m-0">
+                    <ol class="breadcrumb mb-0 ml-3" style="border: none;box-shadow:none;">
+                        <li class="breadcrumb-item"><a href="./"><i class="icon-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item">
+                            <?php echo lang('well_content_index');?>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p><?php echo lang('well_content_channel'); ?>：<?php echo $channel_num; ?></p>
+                            <p class="mb-0"><?php echo lang('well_content_forum'); ?>：<?php echo $forum_num; ?></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p><?php echo lang('users');?>：<?php echo user_count(); ?></p>
+                            <p class="mb-0"><?php echo lang('onlines');?>：<?php echo $runtime['onlines']; ?></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p><?php echo lang('well_order');?>：
+                                <!--{hook well_content_default_order.htm}-->
+                            </p>
+                            <p class="mb-0"><?php echo lang('well_order_total');?>：
+                                <!--{hook well_content_default_order_total.htm}-->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <p><?php echo lang('attachs');?>：<?php echo attach_count(); ?></p>
+                            <p class="mb-0"><?php echo lang('disk_free_space');?>：<?php echo function_exists('disk_free_space') ? humansize(disk_free_space(APP_PATH)) : lang('unknown'); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5><?php echo lang('well_dev_team_info');?></h5>
+                            <hr />
+                            <p>Dev Leader: wellcms@qq.com</p>
+                            <p>Official Site: <a href="http://www.wellcms.cn" target="_blank">http://www.wellcms.cn</a></p>
+                            <p>Dev Team: </p>
+                            <blockquote class="ml-4">
+                                <a href="http://www.wellcms.cn/" target="_blank">燃烧的冰</a>
+                            </blockquote>
+                            <p>Dev Notes: </p>
+                            <blockquote class="ml-4">
+                                有技术你可以使我展示更多姿势，没技术我可以为你摆出很多姿势！违规擦边伤不起，侥幸异想梦中梦。有偿提供服务！
+                                <br><br>
+                                WellCMS是一款安全、高效、稳定、灵活、SEO更简单的软件，简单设置即可实现CMS+BBS+Blog为一体的综合网站。前后台页面均配置有api接口，链接即可调用。前台可使用自适应模板，也可单独开发PC和移动端模板，程序根据客户端设备自动加载不同模板，一个URL搞定两件事，管理简单、更省事，同时避免被误判SEO作弊行为。目前全站前后台页面均已经自适应各端。此版为<strong>体验版</strong>，后续推出<strong>专业版</strong>和<strong>企业版</strong>将以插件的形式对此版进行增强，后台管理及权限分配更细化，负载更强、功能更多、用户粘性更强劲，敬请期待。
+                                <br><br><strong>如果您希望使用WellCMS作为“商业用途”，则您必须取得WellCMS作者的商业授权/书面许可。<a href="<?php echo url('content-license'); ?>">具体请点这里查看许可协议</a></strong>
+                            </blockquote>
+                            <p>Software name: <?php echo $soft['name']; ?></p>
+                            <p>Software version: <?php echo $soft['version']; ?></p>
+                            <p>Software based: Xiuno bbs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--{hook well_content_index_end.htm}-->
+
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_footer.inc.htm');?>
+
+<script>
+    $('#nav li[active="content"]').addClass('active');
+</script>
+
+<!--{hook well_content_index_js.htm}-->

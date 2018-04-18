@@ -1,1 +1,2 @@
 <?php exit;?>	2018-04-12 11:19:26	0.0.0.0	/xiunobbs/install/action=db	0	SQL: errno: 1049, errstr: 选择数据库失败:Unknown database 'xiuno'
+<?php exit;?>	2018-04-13 10:22:50	0.0.0.0	/xiunobbs/admin/?plugin-install-haya_post_info.htm	1	SQL: ALTER TABLE bbs_post ADD INDEX (`uid`(11));  errno: 1089, errstr: Incorrect prefix key; the used key part isn't a string, the used length is longer than the key part, or the storage engine doesn't support unique prefix keys

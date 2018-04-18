@@ -1,0 +1,99 @@
+<!--{hook well_content_footer_start.htm}-->
+
+<?php $db = G('db');?>
+<?php $starttime = G('starttime');?>
+<?php $time = G('time');?>
+<?php $ip = G('ip');?>
+<?php $useragent = G('useragent');?>
+<?php $forumlist = G('forumlist');?>
+<?php $forumarr = G('forumarr');?>
+<?php $fid = G('fid');?>
+<?php $conf = G('conf');?>
+<?php $static_version = $conf['static_version'];?>
+
+<?php echo xn_debug_info();?>
+
+<!--{hook well_content_footer_before.htm}-->
+
+<!--[if lt IE 9]>
+<script>window.location = '<?php echo url('browser');?>';</script>
+<![endif]-->
+
+<!--{hook well_content_footer_js_before.htm}-->
+
+<?php $browser = get__browser();?>
+<?php if($browser['name'] == 'ie') { ?>
+<script src="<?php echo $conf['view_url'];?>js/es6-shim.js<?php echo $static_version;?>"></script>
+<?php } ?>
+<script src="lang/<?php echo $conf['lang'];?>/bbs.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/jquery-3.1.0.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/popper.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/bootstrap.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/xiuno.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/bootstrap-plugin.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/async.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/form.js<?php echo $static_version;?>"></script>
+<script>
+    var debug = DEBUG = <?php echo DEBUG; ?>;
+    var url_rewrite_on = <?php echo $conf['url_rewrite_on'];?>;
+    var forumarr = <?php echo xn_json_encode($forumarr);?>;
+    var fid = <?php echo $fid;?>;
+    var uid = <?php echo intval($uid);?>;
+    var gid = <?php echo intval($gid);?>;
+</script>
+<script src="<?php echo $conf['view_url'];?>js/bbs.js<?php echo $static_version;?>"></script>
+
+<script src="./plugin/well_cms/view/js/jquery.slimscroll.min.js<?php echo $static_version;?>"></script>
+<script type = "text/javascript">
+    // 左侧滚动条 浏览器当前窗口文档的高度
+    $(function () {
+        //var nav_height = $('nav').height();
+        var nav_height = 49;
+        var left_width = $('.side-menu').width();
+        var height = $('#wrapper').height();
+        $("#menu").slimScroll({
+            width: left_width,
+            height: height - nav_height,
+            alwaysVisible: false
+        });
+        var width = $(document).width();
+        $(".content-right").slimScroll({
+            height: height - nav_height,
+            width: width - left_width,
+            alwaysVisible: false
+        });
+    });
+
+    /*展开左侧菜单*/
+    function cms_left_menu(fid) {
+        if (!fid) return;
+        var menu = $('.cms-left-menu-' + fid);
+        var display = menu.css('display');
+        var channel = $('#channel-' + fid);
+        var icon = $('#icon-' + fid);
+        if (display == 'none') {
+            channel.attr("class", "icon-minus-square");
+            icon.attr("class", "icon-chevron-circle-down");
+            menu.css('display', 'block');
+        } else {
+            channel.attr("class", "icon-plus-square");
+            icon.attr("class", "icon-chevron-circle-right");
+            menu.css('display', 'none');
+        }
+    }
+
+    $('.button-menu').click(function () {
+        var cms_menu = $("#cms-menu");
+        cms_menu.css({"position":"fixed","z-index":"9999"});
+        cms_menu.toggle();
+        cms_menu.removeClass('hidden-sm hidden-md');
+    });
+</script>
+
+</div>
+</body>
+</html>
+
+<!--{hook well_content_footer_js_after.htm}-->
+
+<?php echo cron_run();?>

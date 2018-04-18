@@ -1,0 +1,40 @@
+@charset "UTF-8";
+:root {
+    --dark-blue: #2B3D51;
+}
+body{margin: 0;background-color: var(--white);font-size: 1rem;}
+h1,h2,h3,h4,h5{font-size: 100%;}
+.font-bold{font-weight:700;}
+ol, ul{list-style:none;}
+ol, ul, li{margin: 0;padding: 0;}
+a, a:hover, a:link, a:visited, a:focus{text-decoration:none;}
+#header.bg-dark{background: var(--dark-blue) !important;}
+#header .nav-item{padding-top: .1rem;padding-bottom: .1rem;}
+.page-title-box{background-color: var(--white);margin: -5px 0 10px 0;padding: 20px 20px 10px 20px;box-shadow: 0 0px 20px 0 var(--gray-300), 0 1px 0px 0 var(--gray-200);}
+.card{border: 1px solid var(--gray-400);box-shadow: 0 0px 20px 0 var(--gray-300), 0 1px 0px 0 var(--gray-200);}
+.ul_round li:after{margin-top: -6px;}
+.ul_round li:after{background: var(--gray-300); width: 4px; height: 4px; border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; -webkit-border-radius: 4px; display: block; position: absolute; left: 0; top: 50%;}
+.ul_round li{position: relative;width: 100%;padding-left: 12px;}
+.ul_round li{height: 25px; line-height: 25px;float: left}
+.nowrap{white-space:nowrap;}
+.ellipsis{text-overflow:ellipsis;overflow:hidden;}
+.float-left{margin-left: .5rem;float: left;}
+.padding-right {padding-right: 7px;}
+.padding-left {padding-left: 7px;}
+.Box_con {position: relative;width: 348px;}
+.Box_con .conbox {position: relative;overflow: hidden;}
+.Box_con .conbox ul {position: relative;list-style: none;}
+.Box_con .conbox ul li {float: left;overflow: hidden;padding-right: .6rem;}
+.Box_con .conbox ul li:first-child {margin-left: 0;}
+.Box_con .conbox ul li img {display: block;transition: all 0.5s;}
+.Box_con .conbox ul li:hover img {transform: scale(1.1);}
+.BoxSwitch {margin-bottom: 0;text-align: center;}
+.BoxSwitch span {display: inline-block;*display: inline;*zoom: 1;vertical-align: middle;width:8px;height:8px;background: var(--gray-300);margin: 0 5px;cursor: pointer;border-radius:8px;}
+.BoxSwitch span.cur {background: red;}
+.breadcrumb {border: 1px solid var(--gray-400);background-color: var(--white) !important;}
+.radius{border-radius:4px;}
+.subject h1 {font-size: 1.6rem;}
+.subject h2 {font-size: 1rem;}
+.list-right h3 {font-size: 1rem;margin-bottom: .7rem;}
+.brief {display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;}
+.message{font: 1.2rem/28px "Microsoft Yahei"}

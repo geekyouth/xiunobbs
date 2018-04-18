@@ -1,0 +1,9 @@
+<?php if (isset($haya_post_info_config['post_show_first_floor']) && $haya_post_info_config['post_show_first_floor'] == 1) { ?>	
+	<?php if (isset($thread) && ($_post['uid'] == $thread['uid'])) { ?>
+
+		<span class="badge badge-secondary small">
+			楼主
+		</span>
+
+	<?php } ?>
+<?php } ?>

@@ -1,0 +1,109 @@
+<!--{hook well_thread_list_inc_start.htm}-->
+
+<?php
+					if($threadlist) {
+						$have_allowtop = 0;
+						foreach($threadlist as &$_thread) {
+							$_thread['allowtop'] = forum_access_mod($_thread['fid'], $gid, 'allowtop');
+							if($_thread['allowtop']) $have_allowtop = 1;
+						}
+					}
+					?>
+
+<?php if($threadlist) { foreach($threadlist as &$_thread) { ?>
+<li class="media thread tap <?php echo $_thread['top_class'];?> " data-href="<?php echo url('thread-'.$_thread['tid']);?>" tid="<?php echo $_thread['tid'];?>">
+	<?php if($have_allowtop) { ?>
+	<?php if($_thread['allowtop']) { ?>
+	<input type="checkbox" name="modtid" class="mt-3 mr-2" value="<?php echo $_thread['tid']; ?>" />
+	<?php } ?>
+
+	<?php } ?>
+
+	<div class="media-body">
+        <div class="media"><!--hidden-sm-->
+            <div class="col-3 col-md-2 px-0">
+                <a href="<?php echo $_thread['url']; ?>">
+                    <img class="d-block w-100 main-pic radius" src="<?php echo $_thread['mainpic'];?>" title="<?php echo $_thread['subject'];?>" alt="<?php echo $_thread['subject'];?>" />
+                </a>
+            </div>
+
+            <div class="media-body ml-3">
+                <div class="row hidden-sm hidden-md mb-2">
+                    <div class="col-lg-12 text-grey">
+                        <!--{hook well_thread_list_inc_view_before.htm}-->
+                        <a href="<?php echo url("user-$_thread[uid]");?>" tabindex="-1" class="ml-1 mt-1 mr-3">
+                        <img class="avatar-1" src="<?php echo $_thread['user_avatar_url'];?>">
+                        </a>
+
+                        <!--{hook well_thread_list_inc_avatar_after.htm}-->
+
+                        <span class="username text-grey mr-1" uid="<?php echo $_thread['uid'];?>"><?php echo $_thread['username'];?></span>
+                        <span class="date text-grey"><?php echo $_thread['create_date_fmt'];?></span>
+
+                        <!--{hook well_thread_list_inc_lastuid_before.htm}-->
+
+                        <?php if($_thread['lastuid']) { ?>
+                        <span>
+                            <span class="text-grey mx-2">←</span>
+                            <span class="username text-grey mr-1" uid="<?php echo $_thread['lastuid'];?>"><?php echo $_thread['lastusername'];?></span>
+                            <span class="text-grey"><?php echo $_thread['last_date_fmt'];?></span>
+                        </span>
+                        <?php } ?>
+
+                        <!--{hook well_thread_list_inc_lastuid_after.htm}-->
+                    </div>
+                </div>
+
+                <div class="subject">
+                    <!--{hook well_thread_list_inc_subject_before.htm}-->
+                    <h2 class="font-weight-bold mb-1">
+                        <!--{hook well_thread_list_inc_top_icon_before.htm}-->
+                        <?php if($_thread['top'] > 0) { ?>
+                        <i class="icon-top-<?php echo $_thread['top']; ?>"></i>
+                        <?php } ?>
+                        <a href="<?php echo $_thread['url']; ?>" aria-label="<?php echo $_thread['subject'];?>"><?php echo $_thread['subject'];?></a></h2>
+                    <!--{hook well_thread_list_inc_subject_after.htm}-->
+                    <?php if($_thread['files'] > 0) { ?><i class="icon small filetype other"></i><?php } ?>
+                    <!--{hook well_thread_list_inc_filetype_icon_after.htm}-->
+                    <?php if($_thread['closed'] > 0) { ?><i class="icon-lock"></i><?php } ?>
+                </div>
+
+                <div class="row brief">
+                    <div class="col-lg-12">
+                        <a class="text-dark" href="<?php echo $_thread['url'];?>">
+                            <?php echo $_thread['brief']?$_thread['brief']:lang('well_no_guide_brief');?>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row hidden-sm">
+                    <div class="col-lg-12 mt-1 small">
+                        <?php if($_thread['tag']){?>
+                        <?php foreach($_thread['tag'] as $key => $_tag) {?>
+                        <span class="badge border border-secondary mr-2">
+                            <strong class="mb-0">
+                            <a class="text-secondary" href="<?php echo url('tag-'.$key);?>"><?php echo $_tag;?></a></strong>
+                        </span>
+                        <?php }?>
+                        <?php }?>
+                        <span class="mr-2 text-grey">
+                            <i class="icon-eye"></i> <?php echo $_thread['views'];?>
+                        </span>
+                        <span class="mr-2 text-grey">
+                            <i class="icon-comment"></i> <?php echo $_thread['posts'];?>
+                        </span>
+                        <!--{hook well_thread_list_inc_posts_after.htm}-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+	</div>
+
+</li>
+<?php }} else { ?>
+<li>
+	<div><?php echo lang('none');?></div>
+</li>
+<?php } ?>
+<!--{hook well_thread_list_inc_end.htm}-->

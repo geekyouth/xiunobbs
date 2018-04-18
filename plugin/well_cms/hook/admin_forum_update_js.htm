@@ -1,0 +1,155 @@
+<script>
+    var well_type = $('input[name=well_type]');
+    var well_type_v = well_type.checked();
+    if(!well_type_v) {
+        var well_type_v = well_type.val();
+    }
+    if (well_type_v == 1) {
+        $('#well_cms').css("display", "block");
+        $('#well_cms-set').css("display", "block");
+    } else {
+        $('#well_bbs').css("display", "block");
+        $('#well_model_type').css("display", "none");
+        $('#well_cms-set').css("display", "none");
+    }
+
+    // 点击input改变css状态
+    well_type.click(function () {
+        var well_type_v = $(this).val();
+        if (well_type_v == 1) {
+            $('#well_cms').css("display", "block");
+            $('#well_model_type').css("display", "block");
+            $('#well_bbs').css("display", "none");
+            $('#well_cms-set').css("display", "block");
+        } else {
+            $('#well_bbs').css("display", "block");
+            $('#well_cms').css("display", "none");
+            $('#well_model_type').css("display", "none");
+            $('#well_cms-set').css("display", "none");
+        }
+    });
+
+    var well_tpl = $('input[name=well_tpl]');
+    var well_tpl_v = well_tpl.checked();
+    if(!well_tpl_v) var well_tpl_v = well_tpl.val();
+    if (well_tpl_v == 1) {
+        $('#well_tpl').css("display", "block");
+    } else {
+        $('#well_tpl').css("display", "none");
+    }
+
+    // 点击input改变css状态
+    well_tpl.click(function () {
+        var well_tpl_v = $(this).val();
+        if (well_tpl_v == 1) {
+            $('#well_tpl').css("display", "block");
+        } else {
+            $('#well_tpl').css("display", "none");
+        }
+    });
+
+    // 版块属性 (0列表 1频道)
+    var well_forum_type = $('input[name=well_forum_type]');
+    var well_forum_type_v = well_forum_type.checked();
+    if(!well_forum_type_v) var well_forum_type_v = well_forum_type.val();
+    if (well_forum_type_v == 1) {
+        $('#well_index').css("display", "none");
+        $('#well_tpl_show').css("display", "none");
+        $('#well_channel').css("display", "block");
+    } else {
+        $('#well_channel').css("display", "none");
+        $('#well_index').css("display", "block");
+        $('#well_tpl_show').css("display", "block");
+    }
+
+    // 点击input改变css状态
+    well_forum_type.click(function () {
+        var well_forum_type_v = $(this).val();
+        if (well_forum_type_v == 1) {
+            $('#forum_channel').css("display", "none");
+            $('#well_tpl_show').css("display", "none");
+            $('#well_index').css("display", "none");
+            $('#well_channel').css("display", "block");
+        } else {
+            $('#forum_channel').css("display", "block");
+            $('#well_tpl_show').css("display", "block");
+            $('#well_index').css("display", "block");
+            $('#well_channel').css("display", "none");
+        }
+    });
+
+    var well_display = $('input[name=well_display]');
+    var well_display_v = well_display.checked();
+    if (well_display_v == 1) {// 首页
+        $('#index-num').css("display", "block");
+    }  else {
+        $('#index-num').css("display", "none");
+    }
+    // 点击input改变css状态
+    well_display.click(function () {
+        var well_display_v = $(this).val();
+        if (well_display_v == 1) {// 首页
+            $('#index-num').css("display", "block");
+        } else {
+            $('#index-num').css("display", "none");
+        }
+    });
+
+    var well_channel_display = $('input[name=well_channel_display]');
+    var well_channel_display_v = well_channel_display.checked();
+    if (well_channel_display_v == 1) {// 首页
+        $('#channel-num').css("display", "block");
+    }  else {
+        $('#channel-num').css("display", "none");
+    }
+    // 点击input改变css状态
+    well_channel_display.click(function () {
+        var well_channel_display_v = $(this).val();
+        if (well_channel_display_v == 1) {
+            $('#channel-num').css("display", "block");
+        } else {
+            $('#channel-num').css("display", "none");
+        }
+    });
+
+    var _well_fup = $('input[name=_well_fup]');
+    var _well_fup_v = _well_fup.val();
+    if (_well_fup.val()) {
+        $('#channel_display').css("display", "block");
+    }  else {
+        $('#channel_display').css("display", "none");
+    }
+    // 点击input改变css状态
+    var channel_select = $('#well_cms');
+    var channel_select_v = channel_select.checked();
+    if (!_well_fup_v) {
+        if (channel_select_v > 0) {
+            $('#channel_display').css("display", "block");
+        } else {
+            $('#channel_display').css("display", "none");
+        }
+    }
+    channel_select.change(function () {
+        if ($(this).val() > 0) {
+            $('#channel_display').css("display", "block");
+        } else {
+            $('#channel_display').css("display", "none");
+        }
+    });
+
+    /*$('input[name=well_model]').click(function () {
+        var well_model = $(this).val();
+        var input = $("#model_type input");
+        if (value > 0) {
+            $.alert("<?php echo lang('forum_model_type_no');?>");
+            $('input[name=well_model]:eq(0)').prop('checked', true);
+            input.each(function () {
+                if ($(this).val() > 0) $(this).attr('disabled', true);
+            });
+        } else {
+            $(this).each(function () {
+                $(this).attr('disabled', false);
+            });
+        }
+    });*/
+</script>

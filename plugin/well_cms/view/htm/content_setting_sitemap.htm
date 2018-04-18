@@ -1,0 +1,42 @@
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_header.inc.htm');?>
+<div class="media admin-content">
+	<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_left_menu_setting.htm');?>
+	<div class="media-body col-lg-10 pr-0">
+		<div class="content-right pt-3 pr-3">
+			<div class="card">
+                <div class="card-header source">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo url('content-setting-sitemap-list'); ?>" data-active="list"><?php echo lang('well_sitemap');?></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo url('content-setting-sitemap-create'); ?>"><?php echo lang('well_create_sitemap');?></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+
+                    <ul>
+                        <?php foreach ($arr as $v) { ?>
+                        <li>
+                            <?php echo $v; ?>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            在你的网站robots.txt文件中添加 例如 Sitemap:http://www.xxx.com/sitemap/sitemap_1.xml
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_footer.inc.htm');?>
+<script>
+    $('#nav li[active="setting"]').addClass('active');
+    $('#menu li a[active="sitemap"]').addClass('active');
+    $('a[data-active="list"]').addClass('active');
+</script>
+<!--{hook well_content_setting_sitemap_list_js.htm}-->

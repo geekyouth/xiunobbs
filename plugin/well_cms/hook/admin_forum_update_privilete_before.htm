@@ -1,0 +1,252 @@
+<!--是否显示在导航-->
+<div class="form-group row">
+    <label class="col-sm-2 form-control-label" for="forum_type"><?php echo lang('well_nav_display');?>：</label>
+    <div class="col-sm-10">
+        <?php echo $input['well_nav_display']; ?>
+    </div>
+</div>
+
+<!--版块类型-->
+<div class="form-group row">
+	<label class="col-sm-2 form-control-label" for="type"><?php echo lang('well_forum_type');?>：</label>
+	<div class="col-sm-10">
+		<?php echo $input['well_type'].$well_typename; ?>
+	</div>
+</div>
+
+<div id="well_cms-set">
+
+    <div class="form-group row">
+        <label class="col-sm-2 form-control-label" for="well_model"><?php echo lang('well_model');?>：</label>
+        <div class="col-sm-10">
+            <?php echo $input['well_model'];?>
+        </div>
+    </div>
+
+    <!--版块属性-->
+    <div class="form-group row">
+        <label class="col-sm-2 form-control-label" for="forum_type"><?php echo lang('well_forum_flag');?>：</label>
+        <div class="col-sm-10">
+            <?php echo $input['well_forum_type'].$well_forum_name; ?>
+        </div>
+    </div>
+
+    <?php if($_forum['threads'] || $_forum['well_son']){ ?>
+    <!--所属频道ID-->
+    <div class="form-group row">
+        <label class="col-sm-2 form-control-label" for="cate_tpl"><?php echo lang('well_channel_forum');?>：</label>
+        <div class="col-sm-8">
+            <div>
+                <?php echo $input['well_fup'].$well_channel_name; ?>
+            </div>
+        </div>
+    </div>
+    <?php }else{ ?>
+    <!--所属频道ID-->
+    <div id="forum_channel" style="display: block;">
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="cate_tpl"><?php echo lang('well_channel_forum');?>：</label>
+            <div class="col-sm-8">
+                <div>
+                    <fieldset class="form-group">
+                        <select class="custom-select m-r-sm" name="well_fup" id="well_bbs" style="display: none;">
+
+                            <!--<?php if($_forum['well_fup']==0){ ?>-->
+                            <!--<option value="0"><?php echo lang('well_channel_select'); ?></option>-->
+                            <!--<?php } ?>-->
+                            <?php if($_forum['threads'] == 0 || $_forum['well_son'] == 0){ ?>
+                            <option value="0"><?php echo lang('well_top_column'); ?></option>
+                            <?php } ?>
+
+                            <?php foreach ($well_bbslist as $forum) { ?>
+                            <option value="<?php echo $forum['fid']; ?>"><?php echo $forum['name']; ?></option>
+                            <?php } ?>
+
+                        </select>
+
+                        <select class="custom-select m-r-sm" name="_well_fup" id="well_cms" style="display: none;">
+
+                            <!--<?php if($_forum['well_fup']==0){ ?>-->
+                            <!--<option value="0"><?php echo lang('well_channel_select'); ?></option>-->
+                            <!--<?php } ?>-->
+                            <?php if($_forum['threads'] == 0 || $_forum['well_son'] == 0){ ?>
+                            <option value="0"><?php echo lang('well_top_column'); ?></option>
+                            <?php } ?>
+
+                            <?php foreach ($well_cmslist as $v) { ?>
+                            <option value="<?php echo $v['fid']; ?>" <?php if($v['fid']==$_forum['well_fup']){echo 'selected="selected"';} ?>><?php echo $v['name']; ?></option>
+                            <?php } ?>
+
+                        </select>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php } ?>
+
+    <!--选择模板-->
+    <div class="form-group row">
+        <label class="col-sm-2 form-control-label" for="tpl_default"><?php echo lang('well_tpl_template');?>：</label>
+        <div class="col-sm-10">
+            <?php echo $input['well_tpl'];?>
+            <p class="small text-muted mt-3"><?php echo lang('well_tpl_template_tips');?></p>
+        </div>
+    </div>
+
+    <div id="well_tpl" style="display: none;">
+        <!--分类页模板文件路径-->
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="cate_tpl"><?php echo lang('well_create_template');?>：</label>
+            <div class="col-sm-10">
+                <?php echo $input['well_tpl_class'];?>
+                <p class="small text-muted mt-3" id="cate_tpl"><?php echo lang('well_up_template_file');?></p>
+            </div>
+        </div>
+        <!--内容页模板文件路径-->
+        <div id="well_tpl_show">
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label" for="show_tpl"><?php echo lang('well_item_page_template');?>：</label>
+                <div class="col-sm-10">
+                    <?php echo $input['well_tpl_show'];?>
+                    <p class="small text-muted mt-3" id="show_tpl"><?php echo lang('well_up_template_file');?></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--频道-->
+    <div id="well_channel" style="display: block;">
+
+        <!--轮播显示数量-->
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="display_num"><?php echo lang('well_channel_slides');?>：</label>
+            <div class="col-sm-10">
+                <?php echo $input['well_channel_slides'];?>
+                <p class="small text-muted mt-3" id="display_num"><?php echo lang('well_show_num_remark');?></p>
+            </div>
+        </div>
+
+        <!--头条显示数量-->
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="display_num"><?php echo lang('well_channel_headline');?>：</label>
+            <div class="col-sm-10">
+                <?php echo $input['well_channel_headline'];?>
+                <p class="small text-muted mt-3" id="display_num"><?php echo lang('well_show_num_remark');?></p>
+            </div>
+        </div>
+
+        <!--导读显示数量-->
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="display_num"><?php echo lang('well_channel_guide');?>：</label>
+            <div class="col-sm-10">
+                <?php echo $input['well_channel_guide'];?>
+                <p class="small text-muted mt-3" id="display_num"><?php echo lang('well_show_num_remark');?></p>
+            </div>
+        </div>
+
+        <!--推荐显示数量-->
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="display_num"><?php echo lang('well_channel_recommend');?>：</label>
+            <div class="col-sm-10">
+                <?php echo $input['well_channel_recommend'];?>
+                <p class="small text-muted mt-3" id="display_num"><?php echo lang('well_show_num_remark');?></p>
+            </div>
+        </div>
+
+    </div>
+
+    <!--首页显示-->
+    <div id="well_index" style="display: block;">
+
+        <!--内容评论-->
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="display"><?php echo lang('well_comment');?>：</label>
+            <div class="col-sm-10">
+                <?php echo $input['well_comment'];?>
+                <p class="small text-muted mt-3" id="display"><?php echo lang('well_comment_remark');?></p>
+            </div>
+        </div>
+
+        <!--列表显示数量-->
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="display_num"><?php echo lang('well_list_news');?>：</label>
+            <div class="col-sm-10">
+                <?php echo $input['well_list_news'];?>
+                <p class="small text-muted mt-3" id="display_num"><?php echo lang('well_list_tips');?></p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="display_num"><?php echo lang('well_list_headlines');?>：</label>
+            <div class="col-sm-10">
+                <?php echo $input['well_list_headlines'];?>
+                <p class="small text-muted mt-3" id="display_num"><?php echo lang('well_list_tips');?></p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="display_num"><?php echo lang('well_list_recommends');?>：</label>
+            <div class="col-sm-10">
+                <?php echo $input['well_list_recommends'];?>
+                <p class="small text-muted mt-3" id="display_num"><?php echo lang('well_list_tips');?></p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 form-control-label" for="display"><?php echo lang('well_index_display');?>：</label>
+            <div class="col-sm-10">
+                <?php echo $input['well_display'];?>
+                <p class="small text-muted mt-3" id="display"><?php echo lang('well_display_remark');?></p>
+            </div>
+        </div>
+
+        <div id="index-num">
+            <!--首页显示数量-->
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label" for="display_num"><?php echo lang('well_index_new');?>：</label>
+                <div class="col-sm-10">
+                    <?php echo $input['well_news'];?>
+                    <p class="small text-muted mt-3" id="display_num"><?php echo lang('well_new_remark');?></p>
+                </div>
+            </div>
+
+            <!--头条数量-->
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label"><?php echo lang('well_headline');?>：</label>
+                <div class="col-sm-10">
+                    <?php echo $input['well_headlines'];?>
+                    <p class="m-t-sm text-grey small"><?php echo lang('well_headline_tips');?> </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="channel_display" style="display: none;">
+            <div class="form-group row">
+                <label class="col-sm-2 form-control-label" for="display"><?php echo lang('well_channel_display');?>：</label>
+                <div class="col-sm-10">
+                    <?php echo $input['well_channel_display'];?>
+                    <p class="small text-muted mt-3" id="display"><?php echo lang('well_display_remark');?></p>
+                </div>
+            </div>
+
+            <div id="channel-num">
+                <!--频道显示数量-->
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label" for="channel_num"><?php echo lang('well_channel_new');?>：</label>
+                    <div class="col-sm-10">
+                        <?php echo $input['well_channel_news'];?>
+                        <p class="small text-muted mt-3"><?php echo lang('well_new_remark');?></p>
+                    </div>
+                </div>
+
+                <!--频道头条数量-->
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label"><?php echo lang('well_channel_headline');?>：</label>
+                    <div class="col-sm-10">
+                        <?php echo $input['well_channel_headlines'];?>
+                        <p class="m-t-sm text-grey small"><?php echo lang('well_new_remark');?> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

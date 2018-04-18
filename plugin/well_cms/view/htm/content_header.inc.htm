@@ -1,0 +1,65 @@
+<?php $conf = G('conf');?>
+<?php $header = G('header');?>
+<?php $user = G('user');?>
+<?php $uid = G('uid');?>
+<?php $gid = G('gid');?>
+<?php $fid = G('fid');?>
+<?php $tid = G('tid');?>
+<?php $pid = G('pid');?>
+<?php $route = G('route');?>
+<?php $forumlist_show = G('forumlist_show');?>
+<?php $static_version = $conf['static_version'];?>
+<!--{hook well_content_header_start.htm}-->
+<!DOCTYPE html>
+<html lang="<?php echo $conf['lang'];?>">
+<head>
+
+    <?php echo defined('BASE_HREF') ? '<base href="'.BASE_HREF.'" />' : '' ;?>
+
+    <!--{hook well_content_header_meta_before.htm}-->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <?php if(!empty($header['keywords'])) { ?>
+    <meta name="keywords" content="<?php echo strip_tags($header['keywords']);?>" />
+    <?php } ?>
+
+    <meta name="description" content="<?php echo strip_tags($header['description']);?>" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+
+    <title><?php echo $header['title'];?></title>
+
+    <!--{hook well_content_header_link_before.htm}-->
+
+    <link rel="shortcut icon" href="<?php echo $conf['view_url'];?>img/favicon.ico" />
+    <link rel="icon" sizes="32x32" href="<?php echo $conf['view_url'];?>img/favicon.ico">
+    <link rel="Bookmark" href="<?php echo $conf['view_url'];?>img/favicon.ico" />
+
+    <!--{hook well_content_header_bootstrap_before.htm}-->
+    <?php $bootstrap_css = G('bootstrap_css', $conf['view_url']."css/bootstrap.css".$static_version); ?>
+    <link rel="stylesheet" href="<?php echo $bootstrap_css;?>">
+    <!--{hook well_content_header_bootstrap_after.htm}-->
+
+    <!--{hook well_content_header_bootstrap_bbs_before.htm}-->
+    <?php $bootstrap_bbs_css = G('bootstrap_bbs_css', $conf['view_url']."css/bootstrap-bbs.css".$static_version); ?>
+    <link rel="stylesheet" href="<?php echo $bootstrap_bbs_css;?>">
+
+    <!--{hook well_content_header_bootstrap_bbs_after.htm}-->
+
+    <!--{hook well_content_header_link_after.htm}-->
+
+    <link rel="stylesheet" href="./plugin/well_cms/view/css/wellcms.pc.admin.css<?php echo $static_version;?>">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+<!--{hook well_content_header_body_start.htm}-->
+
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_header_nav.inc.htm');?>
+
+        <!--{hook well_content_body_start.htm}-->

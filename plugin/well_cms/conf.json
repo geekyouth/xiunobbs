@@ -1,0 +1,10 @@
+{
+    "name": "WellCMS",
+    "brief": "WellCMS基于 xiuno bbs 4.0，安全、高效、稳定、灵活、SEO更简单，简单设置即可实现CMS+BBS+Blog为一体的综合网站。前后台页面均配置有api接口，链接即可调用。前台可使用自适应模板，也可单独开发PC和移动端模板，程序根据客户端设备自动加载不同模板，一个URL搞定两件事，管理简单、更省事，同时避免被误判SEO作弊行为。<p><strong>卸载会清空WellCMS所有数据，建议安装后删除或将plugin/well_cms/unstall.php改名，需要时改回即可</strong></p><p>WellCMS官方网站http://www.wellcms.cn</p><p>演示站http://demo.wellcms.cn</p>",
+    "version": "1.2.16",
+    "bbs_version": "4.0.4",
+    "installed": 1,
+    "enable": 0,
+    "hooks_rank": [],
+    "dependencies": []
+}

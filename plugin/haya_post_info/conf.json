@@ -1,0 +1,19 @@
+{
+    "name": "帖子增强",
+    "brief": "增加回帖查看方式、回复中添加楼主标识、首页板块列表自定义、@用户提醒、列表显示浏览量、首页列表前显示板块名称、列表今日发帖时间高亮及列表帖子后添加分页。",
+    "version": "1.3.15",
+    "author": "deatil",
+    "id": "haya_post_info",
+    "bbs_version": "4.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": {
+        "post_list_inc_username_after.htm": 1500,
+        "post_list_inc_create_date_after.htm": 1500,
+        "thread_post_list_title_right.htm": -1500,
+        "thread_list_inc_username_before.htm": 1500,
+        "thread_list_inc_username_after.htm": -1500
+    },
+    "overwrites_rank": [],
+    "dependencies": []
+}

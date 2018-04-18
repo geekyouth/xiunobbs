@@ -1,0 +1,38 @@
+<div class="card-header column">
+    <ul class="nav nav-tabs card-header-tabs">
+        <!--{hook well_content_column_nav_start.htm}-->
+        <?php if ($setting_route == 'list') { ?>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo url('content-setting-column-list');?>" data-active="list"><?php echo lang('well_content_column_list');?></a>
+        </li>
+        <?php } ?>
+
+        <li class="nav-item">
+        <?php if ($setting_route != 'update') { ?>
+            <a id="base" class="nav-link" href="<?php if ($setting_route == 'list') {echo url('content-setting-column-create');} else {echo 'javascript:void(0);';}?>" data-active="create"><?php echo lang('well_content_column_create');?></a>
+        <?php } else { ?>
+            <a id="base" class="nav-link" href="javascript:void(0);" data-active="update"><?php echo lang('well_content_column_edit');?></a>
+        <?php } ?>
+        </li>
+
+        <?php if ($setting_route == 'create' || $setting_route == 'update') { ?>
+        <li class="nav-item">
+            <a id="template" class="nav-link" href="javascript:void(0);" data-active="template"><?php echo lang('well_content_column_template');?></a>
+        </li>
+
+        <li class="nav-item">
+            <a id="index" class="nav-link " href="javascript:void(0);" data-active="index"><?php echo lang('well_content_column_index_display');?></a>
+        </li>
+
+        <li class="nav-item">
+            <a id="list" class="nav-link" href="javascript:void(0);" data-active="list"><?php echo lang('well_content_column_list_display');?></a>
+        </li>
+
+        <li class="nav-item">
+            <a id="accesson" class="nav-link" href="javascript:void(0);" data-active="accesson"><?php echo lang('well_privilege');?></a>
+        </li>
+        <?php } ?>
+
+        <!--{hook well_content_column_nav_end.htm}-->
+    </ul>
+</div>

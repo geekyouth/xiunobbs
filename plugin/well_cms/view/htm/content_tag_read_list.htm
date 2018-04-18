@@ -1,0 +1,85 @@
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_header.inc.htm');?>
+
+<!--{hook well_content_read_tag_list_start.htm}-->
+
+<div class="media admin-content">
+
+	<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_left_menu_info.htm');?>
+
+	<div class="media-body col-lg-10 pr-0">
+		<div class="content-right pt-3 pr-3">
+			<div class="d-flex justify-content-between">
+				<ol class="breadcrumb col">
+					<li class="breadcrumb-item"><a href="./"><i class="icon-home" aria-hidden="true"></i></a></li>
+					<li class="breadcrumb-item">
+						<a href="<?php echo url('content-tag');?>"><?php echo lang('well_tag_manage');?></a>
+					</li>
+					<li class="breadcrumb-item">
+						<?php echo $r['name'];?>
+					</li>
+					<!--{hook well_content_read_tag_list_breadcrumb_li.htm}-->
+				</ol>
+				<!--{hook well_content_read_tag_list_breadcrumb_after.htm}-->
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<table class="table table-bordered table-hover text-center bg-white">
+						<tbody>
+						<tr class="thread">
+							<td>
+								<?php echo lang('subject');?>
+							</td>
+							<td class="hidden-sm">
+								<?php echo lang('create_date');?>
+							</td>
+							<td>
+								<?php echo lang('well_thread_read');?>
+							</td>
+							<td class="hidden-sm">
+								<?php echo lang('reply');?>
+							</td>
+						</tr>
+						<?php if($count) { foreach($threadlist as &$_thread) { ?>
+						<tr>
+							<td class="td-subject text-left">
+								<a target="_blank" href="<?php echo url('thread-'.$_thread['tid']);?>"><?php echo $_thread['subject'];?></a>
+
+								<?php if($_thread['files'] > 0) { ?><i class="icon small filetype other"></i><?php } ?>
+
+								<?php if($_thread['closed'] > 0) { ?><i class="icon-lock"></i><?php } ?>
+							</td>
+							<td class="hidden-sm">
+								<?php echo date('Y-m-d',$_thread['create_date']);?>
+							</td>
+							<td>
+								<?php echo $_thread['views'];?>
+							</td>
+							<td class="hidden-sm">
+								<?php echo $_thread['posts'];?>
+							</td>
+						</tr>
+						<?php }} else { ?>
+						<tr>
+							<td colspan="8"><?php echo lang('none');?></td>
+						</tr>
+						<?php } ?>
+						</tbody>
+					</table>
+
+					<nav class="my-3"><ul class="pagination justify-content-center"><?php echo $pagination; ?></ul></nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--{hook well_content_read_tag_list_end.htm}-->
+
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_footer.inc.htm');?>
+
+<script>
+    $('#nav li[active="tag"]').addClass('active');
+</script>
+
+<!--{hook well_content_read_tag_list_js.htm}-->

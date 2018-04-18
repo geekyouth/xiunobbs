@@ -1,0 +1,152 @@
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_header.inc.htm');?>
+<!--{hook well_content_setting_column_list_start.htm}-->
+<div class="media admin-content">
+	<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_left_menu_setting.htm');?>
+	<div class="media-body col-lg-10 pr-0">
+		<div class="content-right pt-3 pr-3">
+			<div class="card">
+                <?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_setting_column.header.htm');?>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover text-center bg-white">
+                        <tbody>
+                        <tr class="thread">
+                            <td colspan="2">
+                                <?php echo lang('well_forum');?>
+                            </td>
+                            <td class="hidden-sm">
+                                <?php echo lang('well_forum_nav');?>
+                            </td>
+                            <td class="hidden-sm">
+                                <?php echo lang('well_comment');?>
+                            </td>
+                            <td>
+                                <?php echo lang('well_create');?>
+                            </td>
+                            <td>
+                                <?php echo lang('well_update');?>
+                            </td>
+                            <td>
+                                <?php echo lang('well_delete');?>
+                            </td>
+                        </tr>
+
+                        <?php if ($forumarr) { foreach($forumarr as $_fid=>$_forum) { ?>
+                        <!--频道-->
+                        <?php if ($_forum['well_forum_type'] == 1) { ?>
+
+                        <tr class="thread" fid="<?php echo $_forum['fid']; ?>">
+                            <td>
+                                <?php echo $_forum['name'].' <span class="font-weight-bold text-danger small hidden-sm">('.lang('well_content_channel').')</span>'; ?>
+                            </td>
+                            <td>
+
+                            </td>
+                            <td class="hidden-sm">
+                                <?php if ($_forum['well_nav_display']) {echo lang('well_nav_display_yes');} else {echo lang('well_nav_display_no');} ?>
+                            </td>
+                            <td class="hidden-sm">
+                                <?php if ($_forum['well_comment']) {echo lang('well_comment_yes');} else {echo lang('well_comment_no');} ?>
+                            </td>
+                            <td>
+                                <a class="small" href="<?php echo url('content-setting-column-create-'.$_forum['fid']);?>"><?php echo lang('well_forum_son_name'); ?></a>
+                            </td>
+                            <td>
+                                <a href="<?php echo url('content-setting-column-update-'.$_forum['fid']);?>"><?php echo lang('well_edit'); ?></a>
+                            </td>
+                            <td>
+                                <a data-href="<?php echo url('content-setting-column-delete-'.$_forum['fid']);?>" href="javascript:void(0);" class="delete"><?php echo lang('well_delete'); ?></a>
+                            </td>
+                        </tr>
+                        <!--子栏目-->
+                        <?php if (isset($_forum['son'])) { foreach($_forum['son'] as $son_fid=>$_son) { ?>
+
+                        <tr class="thread" fid="<?php echo $_son['fid']; ?>" style="background-color: var(--gray-100);">
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                <?php echo $_son['name'].' <span class="font-weight-bold text-danger small hidden-sm">('.lang('well_content_forum').')</span>'; ?>
+                            </td>
+                            <td class="hidden-sm">
+                                <?php if ($_son['well_nav_display']) {echo lang('well_nav_display_yes');} else {echo lang('well_nav_display_no');} ?>
+                            </td>
+                            <td class="hidden-sm">
+                                <?php if ($_son['well_comment']) {echo lang('well_comment_yes');} else {echo lang('well_comment_no');} ?>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                <a href="<?php echo url('content-setting-column-update-'.$_son['fid']);?>"><?php echo lang('well_edit'); ?></a>
+                            </td>
+                            <td>
+                                <a data-href="<?php echo url('content-setting-column-delete-'.$_son['fid']);?>" href="javascript:void(0);" class="delete"><?php echo lang('well_delete'); ?></a>
+                            </td>
+                        </tr>
+
+                        <?php }} ?>
+                        <?php } else { ?>
+
+                        <!--顶级栏目-->
+                        <tr class="thread" fid="<?php echo $_forum['fid']; ?>">
+                            <td>
+                                <?php echo $_forum['name'].' <span class="font-weight-bold small hidden-sm">('.lang('well_content_forum').')</span>'; ?>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td class="hidden-sm">
+                                <?php if ($_forum['well_nav_display']) {echo lang('well_nav_display_yes');} else {echo lang('well_nav_display_no');} ?>
+                            </td>
+                            <td class="hidden-sm">
+                                <?php if ($_forum['well_comment']) {echo lang('well_comment_yes');} else {echo lang('well_comment_no');} ?>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                <a href="<?php echo url('content-setting-column-update-'.$_forum['fid']);?>"><?php echo lang('well_edit'); ?></a>
+                            </td>
+                            <td>
+                                <a data-href="<?php echo url('content-setting-column-delete-'.$_forum['fid']);?>" href="javascript:void(0);" class="delete"><?php echo lang('well_delete'); ?></a>
+                            </td>
+                        </tr>
+
+                        <?php } ?>
+                        <?php }} else { ?>
+
+                        <tr>
+                            <td colspan="7"><?php echo lang('none');?></td>
+                        </tr>
+
+                        <?php } ?>
+
+                        </tbody>
+                    </table>
+                </div>
+			</div>
+            <!--{hook well_content_setting_column_list_before.htm}-->
+		</div>
+	</div>
+</div>
+<!--{hook well_content_setting_column_list_end.htm}-->
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_footer.inc.htm');?>
+<script>
+    $('table').on('click', 'a.delete', function() {
+        var jthis = $(this);
+        var href = $(this).data('href');
+        var jtr = jthis.parents('tr');
+        $.xpost(href, function (code, message) {
+            if (code == 0) {
+                jtr.remove();
+            } else {
+                $.alert(message);
+            }
+        });
+        return false;
+    });
+    $('#nav li[active="setting"]').addClass('active');
+    $('#menu li a[active="column"]').addClass('active');
+    $('a[data-active="list"]').addClass('active');
+</script>
+<!--{hook well_content_setting_column_list_js.htm}-->

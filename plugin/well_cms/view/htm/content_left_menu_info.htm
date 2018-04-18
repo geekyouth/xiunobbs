@@ -1,0 +1,62 @@
+<div id="cms-menu" class="bg-white col-6 col-sm-4 col-lg-2 hidden-sm hidden-md side-menu px-0">
+    <!--{hook well_content_index_left_ul_start.htm}-->
+    <ul id="menu">
+        <!--{hook well_content_index_left_li_start.htm}-->
+        <?php if($navlist){foreach ($navlist as $v){ ?>
+
+        <?php if($v['well_forum_type']==1){ ?>
+        <li onclick="cms_left_menu(<?php echo $v['fid']; ?>)">
+            <a href="javascript:void(0);" cid="<?php echo $v['fid']; ?>">
+            <i id="channel-<?php echo $v['fid']; ?>" class="<?php if ($cid == $v['fid']) {echo 'icon-minus-square';} else {echo 'icon-plus-square';} ?>"></i>
+            <?php echo $v['name']; ?>
+            <span class="float-right mr-4">
+                        <i id="icon-<?php echo $v['fid']; ?>" class="<?php if ($cid == $v['fid']) {echo 'icon-chevron-circle-down';} else {echo 'icon-chevron-circle-right';} ?>"></i>
+				</span>
+            </a>
+
+            <ul class="son-ul cms-left-menu-<?php echo $v['fid']; ?>" <?php if($cid==$v['fid']) {echo "style='display: block;'";}else{echo "style='display: none;'";} ?>>
+            <?php if(!empty($v['son'])){foreach ($v['son'] as $_v){ ?>
+        <li class="bg-light">
+            <a href="<?php echo url('content-list-'.$_v['fid'].'-'.$v['fid']); ?>" fid="<?php echo $_v['fid']; ?>">
+        <i class="icon-list-alt"></i>
+        <?php echo $_v['name']; ?>
+        <span class="float-right mr-4">
+            <i class="icon-angle-double-right"></i>
+        </span>
+        </a>
+        </li>
+        <?php }}else{ ?>
+        <li>
+            <a href="javascript:void(0);">
+                <?php echo lang('well_no_son_menu'); ?>
+            </a>
+        </li>
+        <?php } ?>
+
+    </ul>
+
+    </li>
+    <?php }else{ ?>
+    <li>
+        <a href="<?php echo url('content-list-'.$v['fid']); ?>" <?php if($fid==$v['fid']){echo "class='active'";} ?>>
+        <i class="icon-list-alt"></i>
+        <?php echo $v['name']; ?>
+        <span class="float-right mr-4">
+            <i class="icon-angle-double-right"></i>
+        </span>
+        </a>
+    </li>
+    <?php } ?>
+
+    <?php }}else{ ?>
+    <li>
+        <a href="javascript:void(0);">
+            <?php echo lang('well_no_menu'); ?>
+        </a>
+    </li>
+    <?php } ?>
+
+    <!--{hook well_content_index_left_li_end.htm}-->
+    </ul>
+    <!--{hook well_content_index_left_ul_end.htm}-->
+</div>

@@ -1,0 +1,166 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm');?>
+
+<!--{hook well_admin_setting_well_cms_start.htm}-->
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="btn-group mb-3" role="group">
+			<?php echo admin_tab_active($menu['setting']['tab'], 'cms');?>
+		</div>
+		<div class="card">
+			<div class="card-body">
+				<form action="<?php echo url('setting-cms');?>" method="post" id="form">
+				
+					<!--{hook well_admin_setting_well_web_type.htm}-->
+					
+					<div class="form-group row">
+						<label class="col-sm-2 form-control-label"><?php echo lang('well_web_type');?>：</label>
+						<div class="col-sm-10">
+							<?php echo $input['web_type'];?>
+						</div>
+					</div>
+
+                    <!--{hook well_admin_setting_well_register.htm}-->
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label"><?php echo lang('well_register');?>：</label>
+                        <div class="col-sm-10">
+                            <?php echo $input['register'];?>
+                        </div>
+                    </div>
+
+					<!--{hook well_admin_setting_well_mobile.htm}-->
+
+					<div class="form-group row">
+						<label class="col-sm-2 form-control-label"><?php echo lang('well_dome');?>：</label>
+						<div class="col-sm-10">
+							<?php echo $input['mobile'];?>
+							<p class="mt-3 text-grey small"><?php echo lang('well_dome_tips');?> </p>
+						</div>
+					</div>
+
+					<!--{hook well_admin_setting_well_width.htm}-->
+
+					<div class="form-group row">
+						<label class="col-sm-2 form-control-label"><?php echo lang('well_mainpic_width');?>：</label>
+						<div class="col-sm-10">
+							<?php echo $input['width'];?>
+							<p class="mt-3 text-grey small"><?php echo lang('well_mainpic_tips');?> </p>
+						</div>
+					</div>
+
+					<!--{hook well_admin_setting_well_mobile.htm}-->
+
+					<div class="form-group row">
+						<label class="col-sm-2 form-control-label"><?php echo lang('well_mainpic_height');?>：</label>
+						<div class="col-sm-10">
+							<?php echo $input['height'];?>
+							<p class="mt-3 text-grey small"><?php echo lang('well_mainpic_tips');?> </p>
+						</div>
+					</div>
+
+					<!--{hook well_admin_setting_well_slides.htm}-->
+
+					<div class="form-group row">
+						<label class="col-sm-2 form-control-label"><?php echo lang('well_slides');?>：</label>
+						<div class="col-sm-10">
+							<?php echo $input['slides'];?>
+							<p class="mt-3 text-grey small"><?php echo lang('well_slides_tips');?> </p>
+						</div>
+					</div>
+
+                    <!--{hook well_admin_setting_well_headline.htm}-->
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label"><?php echo lang('well_headline');?>：</label>
+                        <div class="col-sm-10">
+                            <?php echo $input['headline'];?>
+                            <p class="mt-3 text-grey small"><?php echo lang('well_headline_tips');?> </p>
+                        </div>
+                    </div>
+
+					<!--{hook well_admin_setting_well_guide.htm}-->
+
+					<div class="form-group row">
+						<label class="col-sm-2 form-control-label"><?php echo lang('well_guide');?>：</label>
+						<div class="col-sm-10">
+							<?php echo $input['guide'];?>
+                            <p class="mt-3 text-grey small"><?php echo lang('well_guide_tips');?> </p>
+						</div>
+					</div>
+
+                    <!--{hook well_admin_setting_well_recommend.htm}-->
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label"><?php echo lang('well_recommend');?>：</label>
+                        <div class="col-sm-10">
+                            <?php echo $input['recommend'];?>
+                            <p class="mt-3 text-grey small"><?php echo lang('well_recommend_tips');?> </p>
+                        </div>
+                    </div>
+
+                    <!--{hook well_admin_setting_well_tag.htm}-->
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label"><?php echo lang('well_tag');?>：</label>
+                        <div class="col-sm-10">
+                            <?php echo $input['tag'];?>
+                            <p class="mt-3 text-grey small"><?php echo lang('well_tips');?> </p>
+                        </div>
+                    </div>
+
+                    <!--{hook well_admin_setting_well_menu.htm}-->
+
+                    <!--<div class="form-group row">
+                        <label class="col-sm-2 form-control-label"><?php //echo lang('well_menu');?>：</label>
+                        <div class="col-sm-10">
+                            <?php //echo $input['menu'];?>
+                            <p class="mt-3 text-grey small"><?php //echo lang('well_tips');?> </p>
+                        </div>
+                    </div>-->
+
+					<!--{hook well_admin_setting_well_submit.htm}-->
+
+					<div class="form-group row">
+						<label for="inputPassword3" class="col-sm-2 form-control-label"></label>
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-primary btn-block" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('confirm');?></button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--{hook well_admin_setting_well_cms_end.htm}-->
+	
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+var jform = $('#form');
+var jsubmit = $('#submit');
+jform.on('submit', function() {
+	jform.reset();
+	jsubmit.button('loading');
+	var postdata = jform.serialize();
+	$.xpost(jform.attr('action'), postdata, function(code, message) {
+		if(code == 0) {
+			$.alert(message);
+			jsubmit.text(message).delay(1000).button('reset');
+		} else if(code < 0) {
+			$.alert(message);
+			jsubmit.button('reset');
+		} else {
+			jform.find('[name="'+code+'"]').alert(message).focus();
+			jsubmit.button('reset');
+		}
+	});
+	return false;
+});
+
+$('#nav_pc li.setting, #nav_mobile li.setting').addClass('active');
+
+</script>
+
+<!--{hook well_admin_setting_well_cms_js.htm}-->

@@ -1,0 +1,14 @@
+<?php 
+if (isset($haya_post_info_config['today_thread_hightlighter']) 
+	&& $haya_post_info_config['today_thread_hightlighter'] == 1
+) { 
+	if (date('Y-m-d', $_thread['create_date']) == date('Y-m-d')) {
+		$haya_post_info_today_thread_hightlighter_class = 'today';
+	} else {
+		$haya_post_info_today_thread_hightlighter_class = '';
+	}
+?>
+<span class="haya-post-info-username <?php echo $haya_post_info_today_thread_hightlighter_class; ?>">
+<?php
+}
+?>

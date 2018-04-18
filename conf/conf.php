@@ -2,7 +2,7 @@
 return array (
   'db' => 
   array (
-    'type' => 'mysql',
+    'type' => 'pdo_mysql',
     'mysql' => 
     array (
       'master' => 
@@ -44,25 +44,25 @@ return array (
     array (
       'host' => 'localhost',
       'port' => '11211',
-      'cachepre' => 'bbs_',
+      'cachepre' => 'ZPgXn_',
     ),
     'redis' => 
     array (
       'host' => 'localhost',
       'port' => '6379',
-      'cachepre' => 'bbs_',
+      'cachepre' => 'ZPgXn_',
     ),
     'xcache' => 
     array (
-      'cachepre' => 'bbs_',
+      'cachepre' => 'ZPgXn_',
     ),
     'yac' => 
     array (
-      'cachepre' => 'bbs_',
+      'cachepre' => 'ZPgXn_',
     ),
     'apc' => 
     array (
-      'cachepre' => 'bbs_',
+      'cachepre' => 'ZPgXn_',
     ),
     'mysql' => 
     array (
@@ -100,8 +100,8 @@ return array (
   'user_create_on' => 1,
   'user_resetpw_on' => 0,
   'nav_2_on' => 1,
-  'nav_2_forum_list_pc_on' => 0,
-  'nav_2_forum_list_mobile_on' => 0,
+  'nav_2_forum_list_pc_on' => 1,
+  'nav_2_forum_list_mobile_on' => 1,
   'admin_bind_ip' => 0,
   'cdn_on' => 0,
   'url_rewrite_on' => 0,
@@ -109,5 +109,6 @@ return array (
   'version' => '4.0.4',
   'static_version' => '?1.0',
   'installed' => 1,
+  'nav_2_bbs_on' => 1,
 );
 ?>

@@ -1,0 +1,8 @@
+<style type="text/css">
+img{border:0 !important;}
+</style>
+<?php 
+$msg_fmt = $first['message_fmt']; 
+$msg_fmt = preg_replace("/\[em_([0-9]*)\]/i","<img src='/plugin/Ty_face/face/arclist/$1.gif' border='0'/>",$msg_fmt);
+$first['message_fmt']=	$msg_fmt
+?>

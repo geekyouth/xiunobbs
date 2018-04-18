@@ -1,0 +1,370 @@
+<?php include _include(ADMIN_PATH.'view/htm/header.inc.htm'); ?>
+
+<div class="row">
+	<div class="col-sm-12">
+		
+		<div class="card">
+			<div class="card-body">
+				<form action="<?php echo url('plugin-setting-haya_post_info');?>" method="post" id="formcreate">
+					<h4 class="card-title mb-3">帖子增强设置</h4>
+					
+					<hr class="mt-0"/>
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="show_post_sort">
+							回复排序：
+						</label>
+						<div class="col-md-8">
+							<div class="custom-redio" id="show_post_sort">
+								<?php if (isset($config['show_post_sort']) && $config['show_post_sort'] == 1) { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_post_sort" value="1" checked="checked"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_post_sort" value="0"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } else { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_post_sort" value="1"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_post_sort" value="0" checked="checked"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } ?>
+							</div>		
+							<div class="figure-caption mt-2">
+								是否启用回复排序功能。
+							</div>
+						</div>
+					</div>					
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="post_default_sort">
+							回复默认排序：
+						</label>
+						<div class="col-md-8">
+							<div class="custom-redio" id="post_default_sort">
+								<?php if (isset($config['post_default_sort']) && $config['post_default_sort'] == 'desc') { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="post_default_sort" value="asc"> 正序
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="post_default_sort" value="desc" checked="checked"> 倒序
+									</label>
+								<?php } else { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="post_default_sort" value="asc" checked="checked"> 正序
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="post_default_sort" value="desc"> 倒序
+									</label>
+								<?php } ?>
+							</div>		
+							<div class="figure-caption mt-2">
+								设置帖子回复的默认排序，默认为正序。启用 “<span class="text-info">回复排序</span>” 后有效。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="show_see_first_floor">
+							只看楼主：
+						</label>
+						<div class="col-md-8">
+							<div class="custom-redio" id="show_see_first_floor">
+								<?php if (isset($config['show_see_first_floor']) && $config['show_see_first_floor'] == 1) { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_see_first_floor" value="1" checked="checked"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_see_first_floor" value="0"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } else { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_see_first_floor" value="1"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_see_first_floor" value="0" checked="checked"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } ?>
+							</div>		
+							<div class="figure-caption mt-2">
+								是否启用只看楼主功能，启用后数据量大后可能会有性能的影响，请确认后开启。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="show_see_him">
+							只看Ta：
+						</label>
+						<div class="col-md-8">
+							<div class="custom-redio" id="show_see_him">
+								<?php if (isset($config['show_see_him']) && $config['show_see_him'] == 1) { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_see_him" value="1" checked="checked"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_see_him" value="0"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } else { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_see_him" value="1"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_see_him" value="0" checked="checked"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } ?>
+							</div>		
+							<div class="figure-caption mt-2">
+								是否启用只看Ta功能，启用后数据量大后可能会有性能的影响，请确认后开启。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="post_show_first_floor">
+							回复显示楼主：
+						</label>
+						<div class="col-md-8">
+							<div class="custom-redio" id="post_show_first_floor">
+								<?php if (isset($config['post_show_first_floor']) && $config['post_show_first_floor'] == 1) { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="post_show_first_floor" value="1" checked="checked"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="post_show_first_floor" value="0"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } else { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="post_show_first_floor" value="1"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="post_show_first_floor" value="0" checked="checked"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } ?>
+							</div>		
+							<div class="figure-caption mt-2">
+								是否回复启用显示 “<span class="text-info">楼主</span>” 标识功能。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="at_user_to_notice">
+							@用户提醒：
+						</label>
+						<div class="col-md-8">
+							<div class="custom-redio" id="at_user_to_notice">
+								<?php if (isset($config['at_user_to_notice']) && $config['at_user_to_notice'] == 1) { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="at_user_to_notice" value="1" checked="checked"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="at_user_to_notice" value="0"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } else { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="at_user_to_notice" value="1"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="at_user_to_notice" value="0" checked="checked"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } ?>
+							</div>		
+							<div class="figure-caption mt-2">
+								是否启用@用户提醒功能，启用后被@的用户将会收到消息提醒。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="show_list_views">
+							帖子列表显示浏览量：
+						</label>
+						<div class="col-md-8">
+							<div class="custom-redio" id="show_list_views">
+								<?php if (isset($config['show_list_views']) && $config['show_list_views'] == 1) { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_list_views" value="1" checked="checked"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_list_views" value="0"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } else { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_list_views" value="1"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_list_views" value="0" checked="checked"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } ?>
+							</div>		
+							<div class="figure-caption mt-2">
+								是否启用帖子列表显示浏览量。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="show_index_list_forum">
+							首页帖子列表显示板块：
+						</label>
+						<div class="col-md-8">
+							<div class="custom-redio" id="show_index_list_forum">
+								<?php if (isset($config['show_index_list_forum']) && $config['show_index_list_forum'] == 1) { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_index_list_forum" value="1" checked="checked"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_index_list_forum" value="0"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } else { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_index_list_forum" value="1"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_index_list_forum" value="0" checked="checked"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } ?>
+							</div>		
+							<div class="figure-caption mt-2">
+								是否启用首页帖子列表显示板块，默认关闭。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="forum_show_pagination">
+							帖子列表分页：
+						</label>
+						<div class="col-md-8">
+							<div class="custom-redio" id="forum_show_pagination">
+								<?php if (isset($config['forum_show_pagination']) && $config['forum_show_pagination'] == 1) { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="forum_show_pagination" value="1" checked="checked"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="forum_show_pagination" value="0"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } else { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="forum_show_pagination" value="1"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="forum_show_pagination" value="0" checked="checked"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } ?>
+							</div>		
+							<div class="figure-caption mt-2">
+								是否启用在板块帖子列表后显示帖子的相关分页。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="show_setting_forum">
+							首页板块自定义：
+						</label>
+						<div class="col-md-8">
+							<div class="custom-redio" id="show_setting_forum">
+								<?php if (isset($config['show_setting_forum']) && $config['show_setting_forum'] == 1) { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_setting_forum" value="1" checked="checked"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_setting_forum" value="0"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } else { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_setting_forum" value="1"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="show_setting_forum" value="0" checked="checked"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } ?>
+							</div>		
+							<div class="figure-caption mt-2">
+								是否启用在首页显示自定义的板块主题。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-2">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="help">
+							首页显示板块：
+						</label>
+						<div class="col-md-8">
+							<div class="card">
+								<div class="container">
+									<div class="row has-success pt-2">
+										<?php foreach($forumlist as $_fid => $_forum) { ?>									
+											<div class="col-sm-6">
+												<label class="form-control-label">
+													<?php if (in_array($_fid, $index_show_fids)) { ?>
+														<input type="checkbox" class="checkbox" checked="checked" name="fid[]" value="<?php echo $_fid; ?>" />
+													<?php } else { ?>
+														<input type="checkbox" class="checkbox" name="fid[]" value="<?php echo $_fid; ?>" />
+													<?php } ?>
+													<?php echo $_forum['name']; ?>
+												</label>
+											</div>
+										<?php } ?>
+									</div>								
+								</div>								
+							</div>								
+							<div class="mb-2 mt-2 text-grey small">
+								选择需要在首页列表要显示的板块，启用 “<span class="text-info">首页板块自定义</span>” 后有效。
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row mb-3 mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="today_thread_hightlighter">
+							今日发帖时间高亮：
+						</label>
+						<div class="col-md-8">
+							<div class="custom-redio" id="today_thread_hightlighter">
+								<?php if (isset($config['today_thread_hightlighter']) && $config['today_thread_hightlighter'] == 1) { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="today_thread_hightlighter" value="1" checked="checked"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="today_thread_hightlighter" value="0"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } else { ?>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="today_thread_hightlighter" value="1"> <?php echo lang('enable'); ?>
+									</label>
+									<label class="custom-input custom-radio mr-3">
+										<input type="radio" name="today_thread_hightlighter" value="0" checked="checked"> <?php echo lang('disable'); ?>
+									</label>
+								<?php } ?>
+							</div>		
+							<div class="figure-caption mt-2">
+								是否启用在列表显示今日发帖时间为高亮。
+							</div>
+						</div>
+					</div>
+			
+					<div class="form-group row mt-4">
+						<label class="col-md-2 form-control-label text-md-right pr-0" for="user_favorite"></label>
+						<div class="col-md-2">
+							<button type="submit" class="btn btn-primary btn-block mr-2 mb-2" id="submit">保存</button>
+						</div>
+						<div class="col-md-2">
+							<a role="button" class="btn btn-secondary btn-block" href="javascript:history.back();">返回</a>
+						</div>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php include _include(ADMIN_PATH.'view/htm/footer.inc.htm'); ?>
+
+<script>
+$('#nav li.nav-item-plugin').addClass('active');
+</script>

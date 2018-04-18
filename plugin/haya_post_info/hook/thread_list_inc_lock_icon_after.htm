@@ -1,0 +1,16 @@
+<?php if (isset($haya_post_info_config['forum_show_pagination']) && $haya_post_info_config['forum_show_pagination'] == 1) { ?>	
+
+	<?php 
+	$haya_post_info_pagesize = $conf['postlist_pagesize']; 
+	$haya_post_info_pagination = haya_post_info_pagination(url("thread-$_thread[tid]-{page}"), $_thread['posts'] + 1, 5, $haya_post_info_pagesize);
+	?>
+
+	<?php if (!empty($haya_post_info_pagination)) { ?>
+		<span class="text-muted haya-post-info-break-normal">
+			<span class="text-danger ml-1">•</span>
+			<span class="text-grey ml-1">>></span>
+			<span class="text-grey haya-post-info-pagination ml-1">[<?php echo $haya_post_info_pagination; ?>]</span>
+		</span>
+	<?php } ?>
+	
+<?php } ?>

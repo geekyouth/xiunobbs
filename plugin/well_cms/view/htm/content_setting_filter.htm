@@ -1,0 +1,111 @@
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_header.inc.htm');?>
+
+<!--{hook well_content_setting_filter_start.htm}-->
+<div class="media admin-content">
+	<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_left_menu_setting.htm');?>
+	<div class="media-body col-lg-10 pr-0">
+		<div class="content-right pt-3 pr-3">
+			<div class="card">
+                <?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_setting_filter.header.htm');?>
+                <div class="card-body">
+                    <div class="row line-height-4">
+                        <div class="col-md-12">
+                            <form action="<?php echo $action; ?>" method="post" id="form">
+                                <div id="username" class="form-set" style="display: block;">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 form-control-label"><?php echo lang('well_content_filter_start');?>：</label>
+                                        <div class="col-sm-10">
+                                            <?php echo $input['username_enable'];?>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 form-control-label"><?php echo lang('well_keyword');?>：</label>
+                                        <div class="col-sm-10">
+                                            <?php echo $input['username_keyword'];?>
+                                            <p class="text-grey">
+                                                <?php echo lang('well_content_filter_username_tips');?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="content" class="form-set" style="display: none;">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 form-control-label"><?php echo lang('well_content_filter_start');?>：</label>
+                                        <div class="col-sm-10">
+                                            <?php echo $input['content_enable'];?>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 form-control-label"><?php echo lang('well_keyword');?>：</label>
+                                        <div class="col-sm-10">
+                                            <?php echo $input['content_keyword'];?>
+                                            <p class="text-grey">
+                                                <?php echo lang('well_content_filter_content_tips');?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!--{hook well_content_setting_filter_html_before.htm}-->
+                                </div>
+                                <!--{hook well_content_setting_filter_content_before.htm}-->
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"></label>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary btn-block" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('confirm');?></button>
+                                        <a role="button" class="btn btn-secondary btn-block mt-3" href="javascript:history.back();"><?php echo lang('back');?></a>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			<!--{hook well_content_setting_filter_before.htm}-->
+		</div>
+	</div>
+</div>
+<!--{hook well_content_setting_filter_end.htm}-->
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_footer.inc.htm');?>
+<script>
+    var jform = $("#form");
+    var jsubmit = $("#submit");
+    jform.on('submit', function(){
+        jform.reset();
+        jsubmit.button('loading');
+        var postdata = jform.serialize();
+        $.xpost(jform.attr('action'), postdata, function(code, message) {
+            if(code == 0) {
+                $.alert(message);
+                jsubmit.text(message).delay(1000).location(xn.url('content-setting-filter'));
+                //return;
+            } else {
+                $.alert(message);
+                jsubmit.button('reset');
+            }
+        });
+        return false;
+    });
+
+    var header = $(".filter");
+    var header_a = header.find('a');
+    header_a.on('click', function () {
+        $.each(header_a, function () {
+            $(this).removeClass('active');
+        });
+        $(this).addClass('active');
+        var id = $(this).attr("id");
+        var set = $(".form-set");
+        $.each(set, function () {
+            $(this).css('display', 'none');
+        });
+        $('form #' + id).css('display', 'block');
+    });
+
+    $('#nav li[active="setting"],#menu li a[active="filter"],a[data-active="username"]').addClass('active');
+
+    <!--{hook well_content_setting_filter_js.htm}-->
+</script>
+<!--{hook well_content_setting_filter_js.htm}-->

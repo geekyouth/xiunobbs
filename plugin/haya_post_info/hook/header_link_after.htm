@@ -1,0 +1,14 @@
+<?php
+if (isset($haya_post_info_config['today_thread_hightlighter']) 
+	&& $haya_post_info_config['today_thread_hightlighter'] == 1
+) { 
+?>
+<style>
+.haya-post-info-username.today .username {
+	color: var(--danger) !important;
+}
+.haya-post-info-username.today .date {
+	color: var(--danger) !important;
+}
+</style>
+<?php } ?>

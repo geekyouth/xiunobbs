@@ -1,0 +1,10 @@
+{
+    "name": "图片EXIF信息",
+    "brief": "查看图片EXIF信息，使用本插件之前请先开启php的exif模块",
+    "version": "1.0",
+    "bbs_version": "4.0.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "dependencies": []
+}

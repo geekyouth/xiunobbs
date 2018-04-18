@@ -1,0 +1,19 @@
+<?php if (isset($haya_post_info_config['show_see_him']) && $haya_post_info_config['show_see_him'] == 1) { ?>
+
+	<span class="text-grey ml-2">
+		<?php if (!empty($haya_post_info_see_user) && $haya_post_info_see_user == $thread['uid']) { ?>
+			<?php if (!empty($haya_post_info_orderby)) { ?>
+				<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid'], array('orderby' => $haya_post_info_orderby));?>">查看全部</a>
+			<?php } else { ?>
+				<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid']);?>">查看全部</a>
+			<?php } ?>
+		<?php } else { ?>
+			<?php if (!empty($haya_post_info_orderby)) { ?>
+				<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid'], array('orderby' => $haya_post_info_orderby, 'user' => $thread['uid']));?>">只看Ta</a>
+			<?php } else { ?>
+				<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid'], array('user' => $thread['uid']));?>">只看Ta</a>
+			<?php } ?>
+		<?php } ?>
+	</span>
+
+<?php } ?>

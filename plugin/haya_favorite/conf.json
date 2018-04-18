@@ -1,0 +1,16 @@
+{
+    "name": "帖子收藏",
+    "brief": "收藏自己喜欢的帖子，展示热门收藏的帖子。<br /><br /><span class='text-success'>更新</span>：优化用户收藏统计。",
+    "version": "2.5.19",
+    "author": "deatil",
+    "id": "haya_favorite",
+    "bbs_version": "4.0.3",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": {
+        "thread_plugin_body.htm": 500,
+        "my_common_mobile_my_thread_after": 500,
+        "my_common_my_thread_after": 500
+    },
+    "dependencies": []
+}

@@ -1,0 +1,159 @@
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_header.inc.htm');?>
+<!--{hook well_content_setting_author_list_start.htm}-->
+<div class="media admin-content">
+	<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_left_menu_setting.htm');?>
+	<div class="media-body col-lg-10 pr-0">
+		<div class="content-right pt-3 pr-3">
+			<div class="card">
+                <?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_setting_author.header.htm');?>
+                <div class="card-body">
+                    <form action="<?php echo url('content-setting-author-post'); ?>" method="post" id="form">
+                    <div class="set list">
+                    <table id="authorlist" class="table table-bordered table-hover text-center bg-white">
+                        <tbody>
+                        <tr class="thread">
+                            <td class="w-25">
+                                <?php echo lang('well_thread_author');?>
+                            </td>
+                            <td class="hidden-sm">
+                                <?php echo lang('threads');?>
+                            </td>
+                            <td>
+                                <?php echo lang('well_edit');?>
+                            </td>
+                            <td>
+                                <?php echo lang('well_delete');?>
+                            </td>
+                        </tr>
+                        <?php if ($arr) { foreach($arr as $k=>$_author) { ?>
+                        <tr>
+                            <td author="<?php echo $_author['id']; ?>">
+                                <?php echo $_author['name']; ?>
+                            </td>
+                            <td class="hidden-sm">
+                                <?php echo $_author['count']; ?>
+                            </td>
+                            <td>
+                                <input type="button" class="btn btn-primary" value="<?php echo lang('well_edit');?>">
+                            </td>
+                            <td>
+                                <a data-href="<?php echo url('content-setting-author-delete-'.$_author['id']);?>" href="javascript:void(0);" class="delete"><?php echo lang('well_delete'); ?></a>
+                            </td>
+                        </tr>
+                        <?php }} else { ?>
+                        <tr>
+                            <td colspan="4"><?php echo lang('none');?></td>
+                        </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                    </div>
+                    <div class="set create" style="display: none;">
+                        <div class="col-md-4 mx-auto">
+                            <div class="input-group mb-3">
+                                <input type="text" name="name" id="name" placeholder="<?php echo lang('well_author_name'); ?>" value="" class="form-control">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('confirm');?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+			</div>
+            <nav class="set list my-3">
+                <ul class="pagination justify-content-center"><?php echo $pagination; ?></ul>
+            </nav>
+            <!--{hook well_content_setting_author_list_before.htm}-->
+		</div>
+	</div>
+</div>
+<!--{hook well_content_setting_author_list_end.htm}-->
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_footer.inc.htm');?>
+<script>
+    var header = $(".author");
+    var header_a = header.find('a');
+    header_a.on('click', function () {
+        $.each(header_a, function () {
+            $(this).removeClass('active');
+        });
+        $(this).addClass('active');
+        var id = $(this).attr("id");
+        var set = $(".set");
+        $.each(set, function () {
+            $(this).css('display', 'none');
+        });
+        $("." + id).css('display', 'block');
+    });
+
+    var jform = $('#form');
+    var jsubmit = $('#submit');
+    jform.on('submit', function() {
+        jform.reset();
+        jsubmit.button('loading');
+        var postdata = jform.serialize();
+        $.xpost(jform.attr('action'), postdata, function (code, message) {
+            if (code == 0) {
+                $.alert(message);
+                jsubmit.button(message).delay(1000).location('');
+            } else {
+                $.alert(message);
+                jsubmit.button('reset');
+            }
+        });
+        return false;
+    });
+
+    jform.on('click', 'a.delete', function() {
+        var jthis = $(this);
+        var href = $(this).data('href');
+        var jtr = jthis.parents('tr');
+        $.xpost(href, function (code, message) {
+            if (code == 0) {
+                jtr.remove();
+            } else {
+                $.alert(message);
+            }
+        });
+        return false;
+    });
+
+    jform.on('click', 'input:button', function () {
+        var str = $(this).val() == "<?php echo lang('well_edit');?>" ? "<?php echo lang('confirm');?>" : "<?php echo lang('well_edit');?>";
+        $(this).val(str);
+        $(this).removeClass("btn-primary");
+        $(this).addClass("btn-danger");
+        var name = $(this).parents("tr").children("td:eq(0)");
+        var name_v = $.trim(name.text());
+        var text = name.find("input:text");
+        var author = name.attr("author");
+        // 添加文本框
+        if (!text.length) {
+            name.html("<input type=\"text\" name=\"update_name\" id=\"update_name\" value=\'" + name_v + "\' class=\"form-control\"><input type='hidden' id='name' name='name' value=\'" + name_v + "\'><input type='hidden' id='id' name='id' value=\'" + author + "\'>");
+        } else {
+            var namev = $('input[name="name"]').val();
+            var update_namev = $('input[name="update_name"]').val();
+            if (namev && update_namev && namev !== update_namev) {
+                var postdata = jform.serialize();
+                $.xpost(jform.attr('action'), postdata, function (code, message) {
+                    if (code == 0) {
+                        name.html(update_namev);
+                    } else {
+                        $.alert(message);
+                        jsubmit.button('reset');
+                    }
+                });
+            } else {
+                name.html(namev);
+            }
+            $(this).removeClass("btn-danger");
+            $(this).addClass("btn-primary");
+            return false;
+        }
+    });
+
+    $('#nav li[active="setting"]').addClass('active');
+    $('#menu li a[active="author"]').addClass('active');
+    $('a[data-active="list"]').addClass('active');
+</script>
+<!--{hook well_content_setting_author_list_js.htm}-->

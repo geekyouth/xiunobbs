@@ -1,0 +1,58 @@
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_header.inc.htm');?>
+
+<!--{hook well_content_list_start.htm}-->
+<div class="media admin-content">
+
+    <?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_left_menu_info.htm');?>
+
+    <div class="media-body col-lg-10 pr-0">
+        <div class="content-right pt-3 pr-3">
+
+            <div class="card">
+                <!--{hook well_content_list_breadcrumb_before.htm}-->
+                <div class="row justify-content-between m-0">
+                    <ol class="breadcrumb mb-0 ml-3" style="border: none;box-shadow:none;">
+                        <li class="breadcrumb-item"><a href="./"><i class="icon-home" aria-hidden="true"></i></a></li>
+                        <li class="breadcrumb-item">
+                            <?php echo $forum['name'];?>
+                        </li>
+                    </ol>
+
+                    <ol class="mb-0 mr-3">
+                        <!--{hook well_content_list_breadcrumb_li.htm}-->
+                        <li class="py-2">
+                            <a class="btn btn-info btn-sm" href="<?php echo url('content-create-'.$fid.'-'.$cid);?>"><?php echo lang('well_add_content');?></a>
+                        </li>
+                    </ol>
+                </div>
+                <!--{hook well_content_list_breadcrumb_after.htm}-->
+            </div>
+
+            <table class="table table-bordered table-hover threadlist text-center bg-white">
+                <tbody>
+                <!--{hook well_content_list_threadlist_before.htm}-->
+                <?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_list.inc.htm');?>
+                <!--{hook well_content_list_threadlist_after.htm}-->
+                </tbody>
+            </table>
+
+            <?php include _include(APP_PATH.'view/htm/thread_list_mod.inc.htm');?>
+            <!--{hook well_content_list_page_before.htm}-->
+            <nav class="my-3"><ul class="pagination justify-content-center"><?php echo $pagination; ?></ul></nav>
+
+        </div>
+    </div>
+
+</div>
+
+<!--{hook well_content_list_end.htm}-->
+
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_footer.inc.htm');?>
+
+<script>
+    $('#nav li[active="content"]').addClass('active');
+    $('#menu li a[cid="<?php echo $cid; ?>"]').addClass('active');
+    $('.son-ul li a[fid="<?php echo $fid; ?>"]').addClass('menu-active');
+</script>
+
+<!--{hook well_content_list_js.htm}-->

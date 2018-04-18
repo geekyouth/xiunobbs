@@ -1,0 +1,177 @@
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_header.inc.htm');?>
+<!--{hook well_content_setting_system_base_start.htm}-->
+<div class="media admin-content">
+	<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_left_menu_setting.htm');?>
+	<div class="media-body col-lg-10 pr-0">
+		<div class="content-right pt-3 pr-3">
+			<div class="card">
+                <?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_setting_system.header.htm');?>
+                <div class="card-body">
+                    <div class="row line-height-4">
+                        <div class="col-md-12">
+                            <form action="<?php echo url('content-setting-system-base');?>" method="post" id="form">
+
+                                <!--{hook well_content_setting_system_base_web_type.htm}-->
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php echo lang('well_web_type');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php echo $input['web_type'];?>
+                                    </div>
+                                </div>
+
+                                <!--{hook well_content_setting_system_base_register.htm}-->
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php echo lang('well_register');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php echo $input['register'];?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php echo lang('well_single_login');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php echo $input['single_login'];?>
+                                    </div>
+                                </div>
+
+                                <!--{hook well_content_setting_system_base_mobile.htm}-->
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php echo lang('well_dome');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php echo $input['mobile'];?>
+                                        <p class="mt-3 text-grey small"><?php echo lang('well_dome_tips');?> </p>
+                                    </div>
+                                </div>
+
+                                <!--{hook well_content_setting_system_base_width.htm}-->
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php echo lang('well_mainpic_width');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php echo $input['width'];?>
+                                        <p class="mt-3 text-grey small"><?php echo lang('well_mainpic_tips');?> </p>
+                                    </div>
+                                </div>
+
+                                <!--{hook well_content_setting_system_base_mobile.htm}-->
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php echo lang('well_mainpic_height');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php echo $input['height'];?>
+                                        <p class="mt-3 text-grey small"><?php echo lang('well_mainpic_tips');?> </p>
+                                    </div>
+                                </div>
+
+                                <!--{hook well_content_setting_system_base_slides.htm}-->
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php echo lang('well_slides');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php echo $input['slides'];?>
+                                        <p class="mt-3 text-grey small"><?php echo lang('well_slides_tips');?> </p>
+                                    </div>
+                                </div>
+
+                                <!--{hook well_content_setting_system_base_headline.htm}-->
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php echo lang('well_headline');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php echo $input['headline'];?>
+                                        <p class="mt-3 text-grey small"><?php echo lang('well_headline_tips');?> </p>
+                                    </div>
+                                </div>
+
+                                <!--{hook well_content_setting_system_base_guide.htm}-->
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php echo lang('well_guide');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php echo $input['guide'];?>
+                                        <p class="mt-3 text-grey small"><?php echo lang('well_guide_tips');?> </p>
+                                    </div>
+                                </div>
+
+                                <!--{hook well_content_setting_system_base_recommend.htm}-->
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php echo lang('well_recommend');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php echo $input['recommend'];?>
+                                        <p class="mt-3 text-grey small"><?php echo lang('well_recommend_tips');?> </p>
+                                    </div>
+                                </div>
+
+                                <!--{hook well_content_setting_system_base_tag.htm}-->
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php echo lang('well_tag');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php echo $input['tag'];?>
+                                        <p class="mt-3 text-grey small"><?php echo lang('well_tips');?> </p>
+                                    </div>
+                                </div>
+
+                                <!--{hook well_content_setting_system_base_menu.htm}-->
+
+                                <!--<div class="form-group row">
+                                    <label class="col-sm-2 form-control-label"><?php //echo lang('well_menu');?>：</label>
+                                    <div class="col-sm-10">
+                                        <?php //echo $input['menu'];?>
+                                        <p class="mt-3 text-grey small"><?php //echo lang('well_tips');?> </p>
+                                    </div>
+                                </div>-->
+
+                                <!--{hook well_content_setting_system_base_submit.htm}-->
+
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 form-control-label"></label>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary btn-block" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo lang('confirm');?></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			<!--{hook well_content_setting_system_base_before.htm}-->
+		</div>
+	</div>
+</div>
+<!--{hook well_content_setting_system_base_end.htm}-->
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_footer.inc.htm');?>
+
+<script>
+    var jform = $('#form');
+    var jsubmit = $('#submit');
+    jform.on('submit', function() {
+        jform.reset();
+        jsubmit.button('loading');
+        var postdata = jform.serialize();
+        $.xpost(jform.attr('action'), postdata, function(code, message) {
+            if(code == 0) {
+                $.alert(message);
+                jsubmit.text(message).delay(1000).button('reset');
+            } else if(code < 0) {
+                $.alert(message);
+                jsubmit.button('reset');
+            } else {
+                jform.find('[name="'+code+'"]').alert(message).focus();
+                jsubmit.button('reset');
+            }
+        });
+        return false;
+    });
+
+</script>
+<script>
+    $('#nav li[active="setting"]').addClass('active');
+    $('#menu li a[active="system"]').addClass('active');
+    $('a[data-active="base"]').addClass('active');
+</script>
+<!--{hook well_content_setting_system_base_js.htm}-->

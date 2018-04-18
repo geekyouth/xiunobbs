@@ -1,0 +1,82 @@
+<script>
+    var jattachparent = $('.attachlist_parent');
+    $('#addMetaAttach').on('change', function(e) {
+        var files = xn.get_files_from_event(e);
+        if (!files) return;
+        
+        // 并发下会 服务端 session 写入会有问题，由客户端控制改为串行
+        if (!jattachparent.find('.attachlist').length) {
+            jattachparent.append('<fieldset class="fieldset"><legend>上传的附件</legend><ul class="attachlist"><ul></fieldset>');
+        }
+        
+        var jprogress = jattachparent.find('.progress');
+        if(!jprogress.length) {
+            jprogress = $('<div class="progress"><div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div></div>').appendTo(jattachparent);
+        }
+        jprogressbar = jprogress.find('.progress-bar');
+
+        var sq_upload_image = function(file, upload_url, postdata, complete_callback, progress_callback, thumb_callback) {
+            postdata = postdata || {};
+            postdata.width = postdata.width || 1200;
+            postdata.height = postdata.height || 2400;
+
+            var ajax_upload_file = function(base64_data) {
+                var ajax_upload = function(upload_url, postdata, complete_callback) {
+                    $.xpost(upload_url, postdata, function(code, message) {
+                        if(code != 0) return complete_callback(code, message);
+                        if(complete_callback) complete_callback(0, message);
+                    }, function(percent) {
+                        if(progress_callback) progress_callback(percent);
+                    });
+                };
+
+                // 直接上传，不进行压缩
+                if(xn.substr(base64_data, 0, 10) == 'data:image') {
+                    var filename = file.name ? file.name : (file.type == 'image/png' ? 'capture.png' : 'capture.jpg');
+                    postdata.name = filename;
+                    postdata.data = base64_data;
+                    postdata.width = 0;
+                    postdata.height = 0;
+                    ajax_upload(upload_url, postdata, complete_callback);
+                }
+            };
+                
+            // 如果为 base64 则不需要 new FileReader()
+            if(xn.is_string(file) && xn.substr(file, 0, 10) == 'data:image') {
+                var base64_data = file;
+                if(thumb_callback) thumb_callback(base64_data);
+                ajax_upload_file(base64_data);
+            } else {
+                var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function() {
+                        var base64_data = this.result;
+                        if(thumb_callback) thumb_callback(base64_data);
+                        ajax_upload_file(base64_data);
+                    }
+            }
+	
+        };
+
+        $.each_sync(files, function(i, callback) {
+            var file = files[i];
+            // 由于这个上传的一定是图片，所以直接is_image: 1
+            sq_upload_image(file, xn.url('attach-create'), {is_image: 1}, function(code, message) {
+                if (code != 0) return $.alert(message);
+                // 把文件 append 到附件列表
+                var url = message.url;
+                var filetype = message.filetype;
+                var aid = message.aid;
+                $('.attachlist').append('<li aid="' + aid + '"><a href="' + message.url + '" target="_blank"><i class="icon filetype ' + filetype + '"></i> ' + message.orgfilename + '</a> <a href="javascript:void(0);" class="delete ml-2"><i class="icon-remove"></i> 删除</a></li>');
+                callback();
+                jprogress.hide();
+            }, function(percent) {
+                percent = xn.intval(percent);
+                jprogressbar.css('width', percent+'%');
+                jprogressbar.text(percent+'%');
+                jprogress.show();
+                console.log('progress:'+ percent); 
+            });
+        });
+    });
+</script>

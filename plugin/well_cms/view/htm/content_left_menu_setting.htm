@@ -1,0 +1,66 @@
+<div id="cms-menu" class="bg-white col-6 col-sm-4 col-lg-2 hidden-sm hidden-md side-menu px-0">
+    <!--{hook well_content_index_left_setting_ul_start.htm}-->
+    <ul id="menu">
+        <!--仅限管理员-->
+        <?php if ($gid == 1) { ?>
+        <li>
+            <a active="system" href="<?php echo url('content-setting-system-base'); ?>">
+                <i class="icon-list-alt"></i>
+                <?php echo lang('well_setting_system');?>
+                <span class="float-right mr-4">
+                    <i class="icon-angle-double-right"></i>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a active="column" href="<?php echo url('content-setting-column-list'); ?>">
+                <i class="icon-list-alt"></i>
+                <?php echo lang('well_content_column');?>
+                <span class="float-right mr-4">
+                    <i class="icon-angle-double-right"></i>
+                </span>
+            </a>
+        </li>
+        <!--{hook well_content_index_left_setting_li_admin.htm}-->
+        <?php } ?>
+        <!-- 版主 - 管理员 -->
+        <li>
+            <a active="filter" href="<?php echo url('content-setting-filter'); ?>">
+                <i class="icon-list-alt"></i>
+                <?php echo lang('well_content_filter');?>
+                <span class="float-right mr-4">
+                    <i class="icon-angle-double-right"></i>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a active="author" href="<?php echo url('content-setting-author-list'); ?>">
+                <i class="icon-list-alt"></i>
+                <?php echo lang('well_author');?>
+                <span class="float-right mr-4">
+                    <i class="icon-angle-double-right"></i>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a active="source" href="<?php echo url('content-setting-source-list'); ?>">
+                <i class="icon-list-alt"></i>
+                <?php echo lang('well_source');?>
+                <span class="float-right mr-4">
+                    <i class="icon-angle-double-right"></i>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a active="sitemap" href="<?php echo url('content-setting-sitemap-list'); ?>">
+                <i class="icon-list-alt"></i>
+                <?php echo lang('well_sitemap');?>
+                <span class="float-right mr-4">
+                    <i class="icon-angle-double-right"></i>
+                </span>
+            </a>
+        </li>
+        <!--{hook well_content_index_left_setting_li_before.htm}-->
+    </ul>
+    <!--{hook well_content_index_left_setting_ul_end.htm}-->
+</div>

@@ -1,0 +1,10 @@
+{
+    "name": "Ty- 表情插件",
+    "brief": "在快速回复栏，可以使用表情来快速回复 [腾悦兴趣交流社区修改适配，感谢原作者的源码，现在已经完美适配4.0.3版本https://tenyet.com.cn]",
+    "version": "1.0",
+    "bbs_version": "4.0.3",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "dependencies": []
+}

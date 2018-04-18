@@ -1,0 +1,82 @@
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_header.inc.htm');?>
+
+<!--{hook well_content_tag_list_start.htm}-->
+
+<div class="media admin-content">
+
+	<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_left_menu_info.htm');?>
+
+	<div class="media-body col-lg-10 pr-0">
+		<div class="content-right pt-3 pr-3">
+			<!--{hook well_content_tag_list_breadcrumb_before.htm}-->
+			<div class="d-flex justify-content-between">
+				<ol class="breadcrumb col">
+					<li class="breadcrumb-item"><a href="./"><i class="icon-home" aria-hidden="true"></i></a></li>
+					<li class="breadcrumb-item">
+						<?php echo lang('well_tag_manage');?> (<span id="count"><?php echo $count;?></span>)
+					</li>
+				</ol>
+				<!--{hook well_content_tag_list_breadcrumb_after.htm}-->
+			</div>
+
+			<ul class="row ui-ul">
+				<?php if($arr){foreach ($arr as $v){ ?>
+				<li class="col-6 col-md-3 col-lg-2 tagid-<?php echo $v['tagid']; ?>">
+					<div class="card">
+						<div class="card-body">
+							<ul class="d-flex justify-content-between mb-3 tap" data-href="<?php echo url('content-readtag-'.$v['tagid']);?>">
+								<li>
+									<?php echo lang('well_tag');?>：<?php echo $v['name'];?>
+								</li>
+							</ul>
+							<ul class="d-flex justify-content-between">
+								<li>
+									<?php echo lang('well_count');?>：<?php echo $v['count'];?>
+								</li>
+								<li class="text-right text-grey" onclick="well_delete_tag(<?php echo $v['tagid'].','.$v['count']; ?>)"><?php echo lang('delete');?>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</li>
+				<?php }}else{ ?>
+				<li class="col-md-12"><?php echo lang('well_no_tag');?></li>
+				<?php } ?>
+			</ul>
+
+			<nav class="my-3"><ul class="pagination justify-content-center"><?php echo $pagination; ?></ul></nav>
+		</div>
+	</div>
+</div>
+
+<!--{hook well_content_tag_list_end.htm}-->
+
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_footer.inc.htm');?>
+<script>
+    function well_delete_tag(tagid, count) {
+        if (count > 0) {
+            $.alert("<?php echo lang('well_delete_tag_fail');?>");
+        } else {
+            $.xpost(xn.url('content-tag'), {tagid: tagid}, function (code, message) {
+                if (code == 0) {
+                    $.alert(message);
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    $.alert(message);
+                }
+            });
+            return false;
+        }
+    }
+    $('.tap').on('click', function () {
+        var href = $(this).data('href');
+        if (href) {
+            window.location = href;
+        }
+    });
+</script>
+<script>
+    $('#nav li[active="tag"]').addClass('active');
+</script>

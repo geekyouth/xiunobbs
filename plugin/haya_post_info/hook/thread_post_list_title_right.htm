@@ -1,0 +1,56 @@
+<?php 
+if ((isset($haya_post_info_config['show_see_first_floor']) 
+	&& $haya_post_info_config['show_see_first_floor'] == 1)
+	|| (isset($haya_post_info_config['show_post_sort']) 
+	&& $haya_post_info_config['show_post_sort'] == 1)
+) { 
+?>	
+	<div class="postlist-sort d-inline-block" id="postlist" data-tid="<?php echo $thread['tid']; ?>">
+		<?php if (isset($haya_post_info_config['show_see_first_floor']) && $haya_post_info_config['show_see_first_floor'] == 1) { ?>	
+			<span class="haya-post-info-see-lz">
+				<span class="text-grey small">
+					<?php if (!empty($haya_post_info_see_user) && $haya_post_info_see_user == $thread['uid']) { ?>
+						<?php if (!empty($haya_post_info_orderby)) { ?>
+							<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid'], array('orderby' => $haya_post_info_orderby));?>">查看全部</a>
+						<?php } else { ?>
+							<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid']);?>">查看全部</a>
+						<?php } ?>
+					<?php } else { ?>
+						<?php if (!empty($haya_post_info_orderby)) { ?>
+							<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid'], array('orderby' => $haya_post_info_orderby, 'user' => $thread['uid']));?>">只看楼主</a>
+						<?php } else { ?>
+							<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid'], array('user' => $thread['uid']));?>">只看楼主</a>
+						<?php } ?>
+					<?php } ?>
+				</span>		
+			</span>
+		<?php } ?>
+		
+		<?php if (isset($haya_post_info_config['show_post_sort']) && $haya_post_info_config['show_post_sort'] == 1) { ?>	
+			<span class="haya-post-info ml-2">
+				<?php if (!empty($haya_post_info_see_user)) { ?>
+					<?php if ($haya_post_info_orderby == 'desc') { ?>
+						<a title="点击更改排序" tabindex="1" class="text-grey small haya-post-sort-btn" href="<?php echo url('thread-'.$thread['tid'], array('sort' => 'asc', 'user' => $haya_post_info_see_user));?>#postlist">
+							<i class="icon-sort-numeric-desc" class="desc"></i>
+						</a>
+					<?php } else { ?>
+						<a title="点击更改排序" tabindex="1" class="text-grey small haya-post-sort-btn" href="<?php echo url('thread-'.$thread['tid'], array('sort' => 'desc', 'user' => $haya_post_info_see_user));?>#postlist">
+							<i class="icon-sort-numeric-asc" class="asc"></i>
+						</a>
+					<?php } ?>
+				<?php } else { ?>
+					<?php if ($haya_post_info_orderby == 'desc') { ?>
+						<a title="点击更改排序" tabindex="1" class="text-grey small haya-post-sort-btn" href="<?php echo url('thread-'.$thread['tid'], array('sort' => 'asc'));?>#postlist">
+							<i class="icon-sort-numeric-desc" class="desc"></i>
+						</a>
+					<?php } else { ?>
+						<a title="点击更改排序" tabindex="1" class="text-grey small haya-post-sort-btn" href="<?php echo url('thread-'.$thread['tid'], array('sort' => 'desc'));?>#postlist">
+							<i class="icon-sort-numeric-asc" class="asc"></i>
+						</a>
+					<?php } ?>
+				<?php } ?>
+			</span>
+		<?php } ?>
+	</div>
+
+<?php } ?>

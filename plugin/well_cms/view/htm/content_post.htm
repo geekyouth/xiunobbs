@@ -1,0 +1,302 @@
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_header.inc.htm');?>
+
+<?php
+	// 公用一个模板
+	if($route == 'content' && $action == 'create') {
+		$form_title = lang('thread_create');
+		$form_action = url("content-create");
+		$form_submit_txt = lang('thread_create');
+		$form_subject = '';
+		$form_message = '';
+		$form_brief = '';
+		$form_tag = '';
+		$form_doctype = 1;
+		$isfirst = 1;
+		$quotepid = 0;
+		$mainpic = $mainpic;
+		$author_id = 0;
+		$source_id = 0;
+		$filelist = array();
+		// hook well_content_post_create.htm
+	} elseif($route == 'content' && $action == 'update') {
+		$form_title = lang('post_update');
+		$form_action = url("content-update-$pid");
+		$form_submit_txt = lang('post_update');
+		$form_subject = $thread['subject'];
+		$form_message = $post['message'];
+		$form_brief = $well_thread['brief'];
+		$form_tag = $tags;
+		$form_doctype = $post['doctype'];
+		$isfirst = $post['isfirst'];
+		$mainpic = $mainpic;
+		$quotepid = 0;
+		$author_id = $well_thread['author_id'];
+		$source_id = $well_thread['source_id'];
+		// hook well_content_post_update.htm
+	}
+
+    $input['author_id'] = form_select('author_id', $author_arr, $author_id);
+	$input['source_id'] = form_select('source_id', $source_arr, $source_id);
+
+	// hook well_content_post_start_init.htm
+
+	$filelist += (array)_SESSION('tmp_files');
+?>
+
+<!--{hook well_content_post_start.htm}-->
+
+
+
+<div class="media admin-content">
+
+    <?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_left_menu_info.htm');?>
+
+    <div class="media-body col-lg-10 pr-0">
+        <div class="content-right pt-3 pr-3">
+
+            <div class="card">
+                <div class="card-header">
+                    <?php echo $form_title; ?>
+                </div>
+                <form action="<?php echo $form_action;?>" method="post" id="form">
+                    <div class="card-body">
+                        <input type="hidden" name="fid" value="<?php echo $forum['fid'];?>" />
+                        <input type="hidden" name="doctype" value="<?php echo $form_doctype;?>" />
+                        <input type="hidden" name="quotepid" value="<?php echo $quotepid;?>" />
+
+                        <!--{hook well_content_post_hidden_before.htm}-->
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="<?php echo lang('subject');?>" name="subject" value="<?php echo $form_subject;?>" id="subject">
+                        </div>
+                        <!--{hook well_content_post_subject_after.htm}-->
+
+                        <div class="media row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="<?php echo lang('well_thread_brief_limit');?>" name="brief" id="brief" style="height: 65px;"><?php echo $form_brief;?></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <span>
+                                        <?php echo lang('well_tag_tips');?>
+                                    </span>
+                                    <input type="text" class="form-control" placeholder="<?php echo lang('well_tag');?>" name="tag" value="<?php echo $form_tag;?>" id="tag">
+                                </div>
+                            </div>
+
+                            <div class="media-body col-12">
+                                <div class="addpiclist small">
+                                    <label class="img_1">
+                                        <input type="hidden" name="pic" value="1" />
+                                        <img id="img_1" class="main-pic mb-1" src="<?php echo $mainpic[1]; ?>" style="max-width: 150px;width:100%;height: auto;" />
+                                        <span class="addpic">
+                                            <i class="icon-file-image-o"></i>
+                                            <?php echo lang('well_add_mainpic');?>
+                                            <input type="file" multiple="multiple" class="invisible" data-assoc="img_1" />
+                                            </span>
+                                    </label>
+
+                                    <!--{hook well_content_post_addpic.htm}-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--{hook well_content_post_subject_well_thread_after.htm}-->
+
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="<?php echo lang('message');?>" name="message" id="message" style="height: 300px;"><?php echo $form_message;?></textarea>
+                        </div>
+                        <!--作者-->
+                        <div class="media row">
+                            <div class="col-12 col-md-4">
+                                <div>
+                                    <div>
+                                        <div class="media">
+                                            <button type="button" class="btn btn-outline-secondary author" data-toggle="tooltip" data-placement="top" title="<?php echo lang('well_click_fill_in'); ?>"><?php echo lang('well_thread_author'); ?></button>
+                                            <div class="media-body">
+                                                <div class="form-group author_id col-8 col-md-6">
+                                                    <?php echo $input['author_id']; ?>
+                                                </div>
+                                                <div class="form-group author_name ml-3" style="display: none;">
+                                                    <input type="text" class="form-control" placeholder="<?php echo lang('well_author_name');?>" name="author_name" value="" id="author_name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--来源-->
+                            <div class="media-body col-12">
+                                <div class="media">
+                                    <button type="button" class="btn btn-outline-secondary source" data-toggle="tooltip" data-placement="top" title="<?php echo lang('well_click_fill_in'); ?>"><?php echo lang('well_thread_source'); ?></button>
+                                    <div class="media-body">
+                                        <div class="form-group source_id col-8 col-md-4">
+                                            <?php echo $input['source_id']; ?>
+                                        </div>
+                                        <div class="row source_name ml-0" style="display: none;">
+                                            <div class="form-group col-sm-12 col-md-4">
+                                                <input type="text" class="form-control" placeholder="<?php echo lang('well_source_name');?>" name="source_name" value="" id="source_name">
+                                            </div>
+                                            <div class="form-group col-sm-12 col-md-8">
+                                                <input type="text" class="form-control" placeholder="<?php echo lang('well_source_link');?>" name="source_link" value="" id="source_link">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <?php echo lang('well_flag');?> &nbsp;<?php echo $flag; ?>
+                        </div>
+
+                        <!--{hook well_content_post_message_after.htm}-->
+
+                        <div class="d-flex justify-content-between">
+                            <div class="attachlist_parent col-7">
+                                <a class="small text-left" href="javascript:void(0)">
+                                    <label class="addattach" id="addattach">
+                                        <i class="icon-folder-open-o"></i>
+                                        <?php echo lang('add_attach');?>
+                                        <input type="file"  multiple="multiple" class="invisible" />
+                                    </label>
+                                </a>
+                                <?php echo post_file_list_html($filelist, TRUE);?>
+                                <!--{hook well_content_post_bottom_right.htm}-->
+                            </div>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-info" id="submit" data-loading-text="<?php echo lang('submiting');?>..."> <?php echo $form_submit_txt;?> </button>
+                                <!--{hook well_content_post_bottom_left.htm}-->
+                            </div>
+                        </div>
+
+                        <!--{hook well_content_post_submit_after.htm}-->
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!--{hook well_content_post_end.htm}-->
+
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/content_footer.inc.htm');?>
+<script>
+    var jform = $('#form');
+    var jsubmit = $('#submit');
+    var jfid = "<?php echo $fid;?>";
+    jform.on('submit', function() {
+        jform.reset();
+        jsubmit.button('loading');
+        var postdata = jform.serialize();
+        $.xpost(jform.attr('action'), postdata, function(code, message) {
+            if(code == 0) {
+                $.alert(message);
+                jsubmit.button(message).delay(1000).location('<?php echo http_referer();?>');
+            } else if(xn.is_number(code)) {
+                alert(message);
+                jsubmit.button('reset');
+            } else {
+                $.alert(message);
+                //jform.find('[name="'+code+'"]').alert(message).focus();
+                jsubmit.button('reset');
+            }
+        });
+        return false;
+    });
+
+    var jattachparent = $('.attachlist_parent');
+    $('#addattach').on('change', function(e) {
+        var files = xn.get_files_from_event(e);
+        if (!files) return;
+
+        // 并发下会 服务端 session 写入会有问题，由客户端控制改为串行
+        if (!jattachparent.find('.attachlist').length) {
+            jattachparent.append('<fieldset class="fieldset"><legend><?php echo lang('uploaded_attach');?></legend><ul class="attachlist"><ul></fieldset>');
+        }
+
+        var jprogress = jattachparent.find('.progress');
+        if(!jprogress.length) {
+            jprogress = $('<div class="progress"><div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div></div>').appendTo(jattachparent);
+        }
+        jprogressbar = jprogress.find('.progress-bar');
+
+        $.each_sync(files, function(i, callback) {
+            var file = files[i];
+            xn.upload_file(file, xn.url('attach-create'), {is_image: 0}, function(code, message) {
+                if (code != 0) return $.alert(message);
+                // 把文件 append 到附件列表
+                var url = message.url;
+                var filetype = message.filetype;
+                var aid = message.aid;
+                $('.attachlist').append('<li aid="' + aid + '"><a href="' + message.url + '" target="_blank"><i class="icon filetype ' + filetype + '"></i> ' + message.orgfilename + '</a> <a href="javascript:void(0);" class="delete ml-2"><i class="icon-remove"></i> <?php echo lang('delete');?></a></li>');
+                callback();
+                jprogress.hide();
+            }, function(percent) {
+                percent = xn.intval(percent);
+                jprogressbar.css('width', percent+'%');
+                jprogressbar.text(percent+'%');
+                jprogress.show();
+                console.log('progress:'+ percent);
+            });
+        });
+    });
+
+    // 删除附件
+    jattachparent.on('click', 'a.delete', function() {
+        var jlink = $(this);
+        var jli = jlink.parents('li');
+        var aid = jli.attr('aid');
+        if(!window.confirm(lang.confirm_delete)) return false;
+        $.xpost(xn.url('attach-delete-'+aid), function(code, message) {
+            if(code != 0) return $.alert(message);
+            jlink.parent().remove();
+        });
+        return false;
+    });
+
+    var addpiclist = $('.addpiclist');
+    addpiclist.on('change', 'input[type="file"]', function(e) {
+
+        var jfile = $(this);
+        var jassoc = jfile.data('assoc') ? $('#'+jfile.data('assoc')) : null;
+        var files = xn.get_files_from_event(e);
+        if (!files) return;
+
+        $.each_sync(files, function(i, callback) {
+            var file = files[i];
+            xn.upload_file(file, xn.url('content-attach'), {
+                is_image: 1,
+                width: "<?php echo $pic_width; ?>",
+                height: "<?php echo $pic_height; ?>",
+                action: 'clip',//裁切
+                assoc: jfile.data('assoc')
+            }, function(code, message) {
+                if (code != 0) return $.alert(message);
+                // 替换到图片位置
+                var url = message.url;
+                jassoc.attr('src',url);
+                /*jassoc.css('max-width',150);
+                jassoc.css('height','auto');*/
+                callback();
+            });
+        });
+    });
+
+    jform.on('click', '.author', function() {
+        $('.author_name,.author_id').toggle(300);
+    });
+    jform.on('click', '.source', function() {
+        $('.source_name,.source_id').toggle(300);
+    });
+
+    $('#nav li[active="content"]').addClass('active');
+    $('#menu li a[cid="<?php echo $cid; ?>"]').addClass('active');
+    $('.son-ul li a[fid="<?php echo $fid; ?>"]').addClass('menu-active');
+
+</script>
+<!--{hook well_content_post_js.htm}-->
+<!--会插入bbs插件{hook post_js.htm}-->

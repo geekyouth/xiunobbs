@@ -1,0 +1,11 @@
+{
+    "name": "qq表情",
+    "brief": "在回复里面发QQ表情",
+    "version": "0.1",
+    "bbs_version": "4.0",
+    "installed": 0,
+    "enable": 0,
+    "hooks_rank": [],
+    "overwrites_rank": [],
+    "dependencies": []
+}

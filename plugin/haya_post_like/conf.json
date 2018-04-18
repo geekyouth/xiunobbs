@@ -1,0 +1,19 @@
+{
+    "name": "帖子点赞",
+    "brief": "对喜欢的帖子点赞及对喜欢的回复点赞。<br /><br /><span class='text-success'>更新</span>：新增回复点赞位置及添加对回复已点赞颜色设置，优化热门回复统计。",
+    "version": "2.5.8",
+    "author": "deatil",
+    "id": "haya_post_like",
+    "bbs_version": "4.0.3",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": {
+        "thread_plugin_body.htm": 600,
+        "thread_list_inc_posts_after.htm": 600,
+        "post_list_inc_create_date_after": -1600,
+        "post_list_inc_quote_before": 1600,
+        "post_list_inc_filelist_after": -1600,
+        "thread_postlist_before": 600
+    },
+    "dependencies": []
+}

@@ -1,0 +1,205 @@
+<?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
+
+<div class="row">
+    <div class="col-lg-12">
+        <!--{hook well_channel_breadcrumb_before.htm}-->
+        <ol class="breadcrumb d-none d-md-flex">
+            <li class="breadcrumb-item"><a href="./"><i class="icon-home" aria-hidden="true"></i></a></li>
+            <li class="breadcrumb-item active">
+                <h1>
+                    <a href="<?php echo $header['mobile_link'];?>"><?php echo $forum['name'];?></a>
+                </h1>
+            </li>
+            <!--{hook well_channel_breadcrumb.htm}-->
+        </ol>
+    </div>
+
+    <div class="col-lg-4 padding-right">
+        <div class="card" style="min-height: 402px;">
+            <div id="carouselExampleIndicators" class="carousel slide " data-ride="carousel">
+
+                <ol class="carousel-indicators">
+                    <?php for ($i = 0; $i < (count($slide) / 2); $i++) { ?>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="<?php echo $i; ?>"<?php if($i == 0) {echo 'class="active"';} ?>></li>
+                    <?php } ?>
+                </ol>
+
+                <div class="carousel-inner">
+                    <?php if ($slide) { $i=0;foreach($slide as &$_thread) { $i++; ?>
+                    <?php if ($i % 2 == 1) { ?>
+                    <div class="carousel-item <?php if ($i == 1) {echo 'active';} ?>">
+                        <div class="row">
+                            <?php } ?>
+
+                            <div class="col-6 <?php if ($i % 2 == 1) {echo 'pl-0 pr-1';} elseif ($i%2 == 0) {echo 'pl-1 pr-0';} ?>">
+                                <a href="<?php echo $_thread['url'];?>">
+                                    <img class="d-block w-100" src="<?php echo $_thread['mainpic']; ?>" alt='<?php echo $_thread['subject'];?>'>
+                                    <!--<div class="carousel-caption d-none d-md-block">
+                                        <h2>
+                                            <?php echo $_thread['subject'];?>
+                                        </h2>
+                                    </div>-->
+                                </a>
+                            </div>
+
+                            <?php if($i%2 == 0) { ?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php }} ?>
+                </div>
+
+            </div>
+
+            <!--头条-->
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <ul class="ul_round nowrap">
+                        <?php if ($headline) {foreach($headline as $_thread) { ?>
+                        <li class="tap ml-2" data-href="<?php echo $_thread['url'];?>">
+                            <h2>
+                                <a href="<?php echo $_thread['url'];?>" title='<?php echo $_thread['subject'];?>' aria-label='<?php echo $_thread['subject'];?>'>
+                                <div class="ellipsis">
+                                    <?php echo $_thread['subject'];?>
+                                </div>
+                                </a>
+                            </h2>
+                        </li>
+                        <?php }} ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5 padding-right padding-left">
+        <div class="card" style="min-height: 402px;">
+            <div class="py-1 px-4">
+                <ul>
+                    <?php if ($guide) { $i=0; foreach ($guide as $_thread) { $i++; ?>
+                    <li <?php if ($i != count($guide)) {echo 'class="thread"';} elseif ($i == count($guide)) {echo 'class="mt-2"';}?>>
+                    <h2 class="font-weight-bold nowrap">
+                        <a href="<?php echo $_thread['url'];?>" title='<?php echo $_thread['subject'];?>' aria-label='<?php echo $_thread['subject'];?>'>
+                        <div class="ellipsis">
+                            <?php echo $_thread['subject'];?>
+                        </div>
+                        </a>
+                    </h2>
+                    <a href="<?php echo $_thread['url'];?>" title='<?php echo $_thread['subject'];?>' aria-label='<?php echo $_thread['subject'];?>'>
+                    <p class="m-t-sm mb-1 text-grey break-all">
+                        <?php echo $_thread['brief']?$_thread['brief']:lang('well_no_guide_brief');?>
+                    </p>
+                    </a>
+                    </li>
+                    <?php }} ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 padding-left d-none d-lg-block">
+        <div class="card" style="min-height: 402px;">
+            <div class="card-header"><?php echo lang('well_recommended_thread'); ?></div>
+            <ul class="mt-2 ml-2 bg-white nowrap">
+                <?php if($recommend){foreach($recommend as $_thread) { ?>
+                <li class="w-100 mb-2">
+                    <a href="<?php echo $_thread['url'];?>" title='<?php echo $_thread['subject'];?>' aria-label='<?php echo $_thread['subject'];?>'>
+                    <div class="ellipsis">
+                        <?php echo $_thread['subject'];?>
+                    </div>
+                    </a>
+                </li>
+                <?php }} ?>
+            </ul>
+
+            <div class="card-header"><?php echo lang('well_hot_tag'); ?></div>
+            <div class="p-2">
+                <ul>
+                    <?php if($well_tag){foreach($well_tag as $_tag) { ?>
+                    <li class="float-left mr-2 mb-1">
+                        <a href="<?php echo url('tag-'.$_tag['tagid']);?>" title="<?php echo $_tag['name'];?>">
+                            <?php echo $_tag['name'];?>
+                        </a>
+                    </li>
+                    <?php }} ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <?php if ($forums) { $i=0; foreach ($forums as $_forum) { $i++; ?>
+    <div class="col-md-6 <?php if($i%2 == 0) {echo 'padding-left';} else {echo 'padding-right';}?>">
+        <div class="card">
+            <div class="card-header">
+                <div class="row justify-content-between m-0">
+                    <div>
+                        <strong>
+                        <a href="<?php echo $_forum['url'];?>" title='<?php echo $_forum['name'];?>'>
+                            <?php echo $_forum['name']; ?>
+                        </a>
+                        </strong>
+                    </div>
+                    <div>
+                        <a href="<?php echo $_forum['url'];?>">
+                            <i class="icon-angle-double-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-0">
+                <!--头条内容-->
+                <div class="col-md-4" style="padding:.4rem;">
+                    <ul class="row nowrap">
+                        <?php if (!empty($_forum['headline'])) { foreach ($_forum['headline'] as &$_thread) { ?>
+                        <li class="col-6 col-md-12">
+                            <a href="<?php echo $_thread['url'];?>" title='<?php echo $_thread['subject'];?>' aria-label='<?php echo $_thread['subject'];?>'>
+                            <img class="d-block w-100" src="<?php echo $_thread['mainpic']; ?>" alt='<?php echo $_thread['subject'];?>'>
+
+                            <div class="ellipsis">
+                                <?php echo $_thread['subject'];?>
+                            </div>
+                            </a>
+                        </li>
+                        <?php }}else{ ?>
+                        <li class="col-md-12">
+                            <img class="main-pic" src="./plugin/well_cms/view/image/nopic.png" width="170" height="128">
+                            <p class="p-2 m-0">
+                                <?php echo lang('well_no_recommended');?>
+                            </p>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+
+                <div class="col-md-8" style="padding:.4rem;">
+                    <ul class="ul_round nowrap">
+                        <!--最新内容-->
+                        <?php if (!empty($_forum['news'])) { foreach ($_forum['news'] as $_thread) { ?>
+                        <li class="tap" data-href='<?php echo $_thread['url'];?>'>
+                        <h2>
+                            <a href="<?php echo $_thread['url'];?>" title='<?php echo $_thread['subject'];?>' aria-label='<?php echo $_thread['subject'];?>'>
+                            <div class="ellipsis">
+                                <?php echo $_thread['subject'];?>
+                            </div>
+                            </a>
+                        </h2>
+                        </li>
+                        <?php }} ?>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <?php }} ?>
+</div>
+
+<?php include _include(APP_PATH . './plugin/well_cms/view/htm/footer.inc.htm');?>
+
+<script>
+    $('#nav li[fid="<?php echo $fid;?>"]').addClass('active');
+</script>
