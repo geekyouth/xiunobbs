@@ -186,7 +186,13 @@ if($ajax) {
 		message(0, $postlist);
 	}
 } else {
-	include _include(APP_PATH.'plugin/xn_search/htm/search.htm');
+	// @squid 判断如果有定义常量，使用对应目录下面的模板
+	if (defined('SQ_MOBILE_PATH')) {
+		$is_search = true;
+		include _include(APP_PATH . SQ_MOBILE_PATH . 'view/other_plugin/search.htm');
+	} else {
+		include _include(APP_PATH.'plugin/xn_search/htm/search.htm');
+	}
 }
 
 

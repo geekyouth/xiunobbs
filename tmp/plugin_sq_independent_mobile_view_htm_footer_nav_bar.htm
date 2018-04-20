@@ -1,0 +1,50 @@
+<?php
+    if($is_index) {
+?>
+<div class="bottom-placehold"></div>
+<?php
+    }
+?>
+<div class="sq-bottom-nav">
+    <ul id="bottom-menu" class="list-unstyled">
+        <li><a href=".">首页</a></li>
+        <li><a href="javascript:;" onclick="sq.showForumList(this);">板块</a></li>
+        <li>
+            <?php if(empty($uid)) { ?>
+                <a href="<?php echo url('user-login');?>">+</a>
+            <?php } else { ?>
+                <a href="<?php echo url("thread-create-$fid");?>">+</a>
+            <?php } ?>
+        </li>
+        <li><a href="?my.htm">我的</a></li>
+    </ul>
+    <ul id="forumList" class="list-unstyled">
+        <?php foreach($forumlist_show as $_forum) { ?>
+            <li>
+                <a class="nav-link" href="<?php echo url("forum-$_forum[fid]");?>"><?php echo $_forum['name'];?></a>
+            </li>
+        <?php } ?>
+    </ul>
+</div>
+
+<script>
+    var sq = {
+        forumListShow: false,
+        showForumList: function(node) {
+            let targetNode = $('#forumList');
+            if (!this.forumListShow) {
+                targetNode.css('display', 'block');
+                setTimeout(() => {
+                    targetNode.css('top', '-' + targetNode.height() + 'px');
+                    targetNode.css('opacity', '1');
+                    this.forumListShow = true;
+                }, 100);
+            } else {
+                targetNode.css('display', 'none');
+                targetNode.css('top', '0');
+                targetNode.css('opacity', '0');
+                this.forumListShow = false;
+            }
+        },
+    };
+</script>

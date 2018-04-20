@@ -1,0 +1,15 @@
+<script>
+    // 处理搜索动作
+    sq.searchBar = {
+        form: $('#sq-search'),
+        range: $('#sq-search input[name="range"]'),
+        keyword: $('#sq-search input[name="keyword"]')
+    }
+
+    sq.searchBar.form.on('submit', function() {
+        var range = sq.searchBar.range.checked();
+        var keyword = sq.searchBar.keyword.val();
+        window.location = xn.url('search-' + xn.urlencode(keyword) + '-' + range);
+        return false;
+    });
+</script>
