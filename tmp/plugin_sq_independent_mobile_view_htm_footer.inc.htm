@@ -55,18 +55,55 @@
 	</script>
 	<script src="<?php echo $conf['view_url'];?>js/bbs.js<?php echo $static_version;?>"></script>
 	<script>
-    // 处理搜索动作
-    sq.searchBar = {
-        form: $('#sq-search'),
-        range: $('#sq-search input[name="range"]'),
-        keyword: $('#sq-search input[name="keyword"]')
-    }
+    var sq = {
+        forumListShow: false, // 论坛列表菜单是否开启
+        showForumList: function(node) {
+            let targetNode = $('#forumList'),
+                maskNode   = $('#forumListMask');
+            if (!this.forumListShow) {
+                targetNode.css('display', 'block');
+                maskNode.css('width', document.body.clientWidth + 'px');
+                maskNode.css('height', $('.sq-bottom-nav').offset().top + 'px');
+                maskNode.css('display', 'block');
+                setTimeout(() => {
+                    targetNode.css('top', '-' + targetNode.height() + 'px');
+                    targetNode.css('opacity', '1');
+                    this.forumListShow = true;
+                }, 100);
+            } else {
+                targetNode.css('display', 'none');
+                targetNode.css('top', '0');
+                targetNode.css('opacity', '0');
+                maskNode.css('width', 0);
+                maskNode.css('height', 0);
+                maskNode.css('display', 'none');
+                this.forumListShow = false;
+            }
+        },
+        consoleLog: function() {
+            console.log(this);
+        },
+        searchBar: {
+            form: $('#sq-search'),
+            range: $('#sq-search input[name="range"]'),
+            keyword: $('#sq-search input[name="keyword"]')
+        }
+    };
 
+    // 处理搜索动作
     sq.searchBar.form.on('submit', function() {
         var range = sq.searchBar.range.checked();
         var keyword = sq.searchBar.keyword.val();
         window.location = xn.url('search-' + xn.urlencode(keyword) + '-' + range);
         return false;
+    });
+
+    // 处理点击其他地方收起底部论坛ul的onclick
+    $('body').click(function(event){
+        if (sq.forumListShow) {
+            event.stopPropagation();
+            sq.showForumList();
+        }
     });
 </script><script>
 // 版主管理：精华

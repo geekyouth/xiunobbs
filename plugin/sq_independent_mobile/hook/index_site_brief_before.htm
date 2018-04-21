@@ -1,0 +1,26 @@
+<div class="card card-site-info">
+	<div class="m-3">
+		<a href="?my.htm" style="cursor: default;">
+			<h5 class="text-center"><img src="<?php echo $user['avatar_url'];?>" style="width: 128px; height: 128px; border-radius: 64px;"/></h5>
+			<!-- <div class="small line-height-3"><?php echo $conf['sitebrief'];?></div> -->
+		</a>
+	</div>
+	<div class="card-footer p-2">
+		<table class="w-100 small">
+			<tr align="center">
+				<td>
+					<span class="text-muted">我的主题</span><br>
+					<b><a href="?my-thread.htm"><?php echo $user['threads'];?></a></b>
+				</td>
+				<td>
+					<span class="text-muted">我的帖子</span><br>
+					<b><a href="?my-post.htm"><?php echo $user['posts'];?></a></b>
+				</td>
+				<td>
+					<span class="text-muted">积分</span><br>
+					<b><?php echo $user['credits'];?></b>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

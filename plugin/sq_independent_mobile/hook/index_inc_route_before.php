@@ -28,4 +28,4 @@ function isMobile() {
 }
 
 defined('IS_MOBILE') OR define('IS_MOBILE', isMobile() ? 1 : 0); // 判断是否手机端
-if(IS_MOBILE) define('SQ_MOBILE_PATH', 'plugin/sq_independent_mobile/');
+define('SQ_MOBILE_PATH', 'plugin/sq_independent_mobile/');

@@ -12,6 +12,12 @@ if($action == 'digest') {
 	$pagination = pagination(url("user-$uid-{page}-1"), $digests, $page, $pagesize);
 	$threadlist = thread_digest_find_by_uid($uid, $page, $pagesize);
 	
+	if(IS_MOBILE) {
+	$show_search = 2;
+	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/other_plugin/xn_digest/my_digest.htm');
+	return;
+}
+	
 	include _include(APP_PATH.'plugin/xn_digest/view/htm/my_digest.htm');
 }
 if($action == 'post') {
@@ -27,7 +33,11 @@ if($action == 'post') {
 	
 	post_list_access_filter($postlist, $gid);
 
-	
+	if(IS_MOBILE) {
+	$show_search = 2;
+	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/other_plugin/xn_mypost/my_post.htm');
+	return;
+}
 	
 	include _include(APP_PATH.'plugin/xn_mypost/view/htm/my_post.htm');
 	
@@ -43,11 +53,11 @@ is_numeric($action) AND $action = '';
 
 $active = $action;
 
-if(empty($action)) {
-	$is_my = true;
+if(empty($action) && IS_MOBILE) {
+	$show_search = 2;
 	$header['title'] = lang('my_home');
 	include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/my.htm');
-	exit();
+	return;
 }
 
 if(empty($action)) {
@@ -73,7 +83,11 @@ if(empty($action)) {
 	
 	if($method == 'GET') {
 		
-		
+		if(IS_MOBILE) {
+	$show_search = 2;
+	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/htm/my_password.htm');
+	return;
+}
 		
 		include _include(APP_PATH.'view/htm/my_password.htm');
 		
@@ -109,7 +123,11 @@ if(empty($action)) {
 	$pagination = pagination(url('my-thread-{page}'), $totalnum, $page, $pagesize);
 	$threadlist = mythread_find_by_uid($uid, $page, $pagesize);
 	
-	
+	if(IS_MOBILE) {
+	$show_search = 2;
+	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/htm/my_thread.htm');
+	return;
+}
 	
 	include _include(APP_PATH.'view/htm/my_thread.htm');
 
@@ -174,7 +192,11 @@ elseif ($action == 'favorite') {
 		$threadlist = haya_favorite_find($cond, array('create_date' => -1), $page, $pagesize);
 		$pagination = pagination(url("my-favorite-{page}"), $haya_favorite_count, $page, $pagesize);
 		
-		
+		if(IS_MOBILE) {
+	$show_search = 2;
+	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/other_plugin/haya_favorite/my_favorite.htm');
+	return;
+}
 		
 		include _include(APP_PATH.'plugin/haya_favorite/view/htm/my_favorite.htm');
 

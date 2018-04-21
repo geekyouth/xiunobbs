@@ -63,9 +63,9 @@ if($action == 'create') {
 		$header['mobile_linke'] = url("forum-$fid");
 		
 		if(IS_MOBILE) {
-	$is_thread_create = true;
-	include(APP_PATH . SQ_MOBILE_PATH . '/view/htm/post.htm');
-	exit();
+	$show_search = 2;
+	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/htm/post.htm');
+	return;
 }
 		
 		include _include(APP_PATH.'view/htm/post.htm');
@@ -328,7 +328,11 @@ if (isset($haya_post_like_config['open_post'])
 	$haya_post_like_pids = haya_post_like_find_by_pids_and_uid($haya_post_like_post_ids, $uid, count($haya_post_like_post_ids));
 }
 
-
+if(IS_MOBILE) {
+	$show_search = 2; // 头部不显示东西
+	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/htm/thread.htm');
+	return;
+}
 	
 	include _include(APP_PATH.'view/htm/thread.htm');
 }

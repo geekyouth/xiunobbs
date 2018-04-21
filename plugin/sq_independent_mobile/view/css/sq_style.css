@@ -1,18 +1,28 @@
-.sq-search-bar {padding: 4px;}
+.sq-search-bar {padding: 4px 4px 0px 4px;}
 .sq-search-bar #sq-search-submit{
     border-top-right-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
 }
 
+.sq-transverse-ul {overflow: hidden; margin-bottom: 0;}
+.sq-transverse-ul>li {float: left;}
 
 /** 预留一个高度，以免遮挡 */
-.bottom-placehold {height: 4rem; flex: 0 0 auto; background: #343a40;}
+.bottom-placehold {height: 4rem; flex: 0 0 auto;}
 .bottom-placehold::after {content: "";}
+.sq-bottom-background {background: #343a40;}
 
 .sq-bottom-nav {position: fixed; bottom: 0; left: 0; width: 100%; height: 4rem; line-height: 4rem; background: orange; opacity: 1; border-top-left-radius: 5px; border-top-right-radius: 5px;}
 .sq-bottom-nav>#bottom-menu>li {width: 25%; text-align: center; float: left; color: white; letter-spacing: 2px; font-weight: bold;}
 .sq-bottom-nav>#bottom-menu>li>a {color: white;}
 .sq-bottom-nav>#bottom-menu>li:not(:last-child) {border-right: 1px solid #ced4da63;}
+
+#forumListMask {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 
 .sq-bottom-nav>#forumList {
     display: none;
@@ -27,6 +37,7 @@
     border-top-right-radius: 5px;
     line-height: 1rem;
     opacity: 0;
+    z-index: 999;
     transition: all 0.3s;
 }
 .sq-bottom-nav>#forumList>li:not(:last-child) {border-bottom: 1px solid #ced4da63;}

@@ -27,3 +27,9 @@
 <?php exit;?>	2018-04-16 09:48:24	0.0.0.0	/xiunobbs/?post-delete-29.htm	0	Error[2]: session_start(): Cannot send session cache limiter - headers already sent, File: D:\localhost\xiunobbs\tmp\model_session.func.php, Line: 210
 <?php exit;?>	2018-04-16 09:48:46	0.0.0.0	/xiunobbs/?post-delete-28.htm	0	Error[2]: session_start(): Cannot send session cache limiter - headers already sent, File: D:\localhost\xiunobbs\tmp\model_session.func.php, Line: 210
 <?php exit;?>	2018-04-16 09:51:10	0.0.0.0	/xiunobbs/?post-delete-27.htm	0	Error[2]: session_start(): Cannot send session cache limiter - headers already sent, File: D:\localhost\xiunobbs\tmp\model_session.func.php, Line: 210
+<?php exit;?>	2018-04-20 10:15:34	127.0.0.1	/?thread-create-2.htm	1	Error[8]: Undefined variable: is_index, File: D:\localhost\xiunobbs\tmp\plugin_sq_independent_mobile_view_htm_header.inc.htm, Line: 131
+<?php exit;?>	2018-04-20 10:15:34	127.0.0.1	/?thread-create-2.htm	1	Error[8]: Undefined variable: is_forum, File: D:\localhost\xiunobbs\tmp\plugin_sq_independent_mobile_view_htm_header.inc.htm, Line: 131
+<?php exit;?>	2018-04-20 10:15:34	127.0.0.1	/?thread-create-2.htm	1	Error[8]: Undefined variable: is_search, File: D:\localhost\xiunobbs\tmp\plugin_sq_independent_mobile_view_htm_header.inc.htm, Line: 133
+<?php exit;?>	2018-04-20 10:15:34	127.0.0.1	/?thread-create-2.htm	1	Error[8]: Undefined variable: is_my, File: D:\localhost\xiunobbs\tmp\plugin_sq_independent_mobile_view_htm_header.inc.htm, Line: 133
+<?php exit;?>	2018-04-20 10:15:34	127.0.0.1	/?thread-create-2.htm	1	Error[8]: Undefined variable: is_index, File: D:\localhost\xiunobbs\tmp\plugin_sq_independent_mobile_view_htm_footer.inc.htm, Line: 22
+<?php exit;?>	2018-04-20 10:15:34	127.0.0.1	/?thread-create-2.htm	1	Error[8]: Undefined variable: is_index, File: D:\localhost\xiunobbs\tmp\plugin_sq_independent_mobile_view_htm_footer_nav_bar.htm, Line: 2

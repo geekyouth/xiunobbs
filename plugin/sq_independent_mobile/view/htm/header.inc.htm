@@ -61,10 +61,8 @@
 	<!-- <?php // include _include(APP_PATH.'view/htm/header_nav.inc.htm');?> -->
 	<!-- @squid 2018年4月19日09:51:56 这里应该加一个搜索框 -->
 	<?php
-		if($is_index || $is_forum) {
-			include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/header_search.htm');
-		} else if ($is_search || $is_my || $is_thread_create){
-
+		if($show_search) {
+			if($show_search == 1) include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/header_search.htm');
 		} else {
 			include _include(APP_PATH.'view/htm/header_nav.inc.htm');
 		}

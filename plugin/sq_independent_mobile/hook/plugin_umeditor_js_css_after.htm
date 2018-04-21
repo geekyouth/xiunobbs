@@ -1,0 +1,9 @@
+<?php if(SQ_MOBILE_PATH) { ?>
+<script>
+    // 500毫秒之后将百度ueditor的z-index设为空
+    setTimeout(() => {
+        $('.edui-container').css('z-index', 0);
+    }, 500);
+    // $('.edui-body-container').css('z-index', '');
+</script>
+<?php } ?>

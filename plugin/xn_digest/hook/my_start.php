@@ -6,5 +6,7 @@ if($action == 'digest') {
 	$pagination = pagination(url("user-$uid-{page}-1"), $digests, $page, $pagesize);
 	$threadlist = thread_digest_find_by_uid($uid, $page, $pagesize);
 	
+	// hook plugin_xn_digest_digest_end.php
+	
 	include _include(APP_PATH.'plugin/xn_digest/view/htm/my_digest.htm');
 }

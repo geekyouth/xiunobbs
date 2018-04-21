@@ -5,14 +5,27 @@
 <div class="row">
 	<div class="col-lg-9 main">
 		<!--{hook index_main_start.htm}-->
+
+		<div class="card card-toplist">
+			<div class="card-header" style='<?php if(SQ_MOBILE_PATH) echo "text-align: center; padding: 0.3rem 1.25rem; font-weight: bold;"; ?>'>置顶</div>
+			<div class="card-body">
+				<ul class="list-unstyled toplist mb-0">
+					<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/top_list.inc.htm');?>
+				</ul>
+			</div>
+		</div>
+
 		<div class="card card-threadlist">
-			<div class="card-header">
+			<div class="card-header" style='<?php if(SQ_MOBILE_PATH) echo "text-align: center; padding: 0.3rem 1.25rem; font-weight: bold;"; ?>'>
+				<!--
 				<ul class="nav nav-tabs card-header-tabs">
 					<li class="nav-item">
 						<a class="nav-link <?php echo $active == 'default' ? 'active' : '';?>" href="./<?php echo url("$route");?>"><?php echo lang('new_thread');?></a>
 					</li>
 					<!--{hook index_thread_list_nav_item_after.htm}-->
 				</ul>
+				-->
+				最新
 			</div>
 			<div class="card-body">
 				<ul class="list-unstyled threadlist mb-0">
@@ -76,5 +89,4 @@
 <script>
 $('li[data-active="fid-0"]').addClass('active');
 </script>
-
 <!--{hook index_js.htm}-->

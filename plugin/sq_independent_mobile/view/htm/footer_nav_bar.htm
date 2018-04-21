@@ -1,10 +1,5 @@
-<?php
-    if($is_index) {
-?>
-<div class="bottom-placehold"></div>
-<?php
-    }
-?>
+<div class="bottom-placehold <?php if($is_index) echo 'sq-bottom-background';?>"></div>
+<div id="forumListMask" onclick="sq.showForumList();"></div>
 <div class="sq-bottom-nav">
     <ul id="bottom-menu" class="list-unstyled">
         <li><a href=".">首页</a></li>
@@ -26,25 +21,3 @@
         <?php } ?>
     </ul>
 </div>
-
-<script>
-    var sq = {
-        forumListShow: false,
-        showForumList: function(node) {
-            let targetNode = $('#forumList');
-            if (!this.forumListShow) {
-                targetNode.css('display', 'block');
-                setTimeout(() => {
-                    targetNode.css('top', '-' + targetNode.height() + 'px');
-                    targetNode.css('opacity', '1');
-                    this.forumListShow = true;
-                }, 100);
-            } else {
-                targetNode.css('display', 'none');
-                targetNode.css('top', '0');
-                targetNode.css('opacity', '0');
-                this.forumListShow = false;
-            }
-        },
-    };
-</script>
