@@ -1,0 +1,1 @@
+if(!IS_MOBILE) {

@@ -1,7 +1,7 @@
 <div class="card card-site-info">
 	<div class="m-3">
 		<a href="?my.htm" style="cursor: default;">
-			<h5 class="text-center"><img src="<?php echo $user['avatar_url'];?>" style="width: 128px; height: 128px; border-radius: 64px;"/></h5>
+				<h5 class="text-center"><img src="<?php if($user['avatar_url']) {echo $user['avatar_url'];} else { echo 'view/img/avatar.png';}?>" style="width: 128px; height: 128px; border-radius: 64px;"/></h5>
 			<!-- <div class="small line-height-3"><?php echo $conf['sitebrief'];?></div> -->
 		</a>
 	</div>

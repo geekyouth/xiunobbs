@@ -109,7 +109,6 @@ if(!defined('SKIP_ROUTE')) {
 		case 'mod': 	include _include(APP_PATH.'route/mod.php'); 	break;
 		case 'browser': include _include(APP_PATH.'route/browser.php'); break;
 		
-		case 'qq_login':		include _include(APP_PATH.'plugin/xn_qq_login/route/qq_login.php'); 	break;
 		case 'search': include _include(APP_PATH.'plugin/xn_search/route/search.php'); break;case 'vcode': include _include(APP_PATH.'plugin/xn_vcode/route/vcode.php'); break;
 		default: 
 			

@@ -42,9 +42,40 @@
 				<br>
 				<!--{hook my_profile_login_date_after.htm}-->
 			</div>
+			<div style="width: 100%;">
+				<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#logout_modal">退出登陆</button>
+			</div>
 		</div>	
 	</slot>
 </template>
+
+<!-- 模态框 -->
+<div class="modal fade" id="logout_modal">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+
+		<!-- 模态框头部 -->
+		<div class="modal-header">
+			<h4 class="modal-title">确认退出？</h4>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		</div>
+
+		<!-- 模态框主体 -->
+		<div class="modal-body" style="text-align: center;">
+			<button class="btn btn-danger" onclick="javascript:window.location = '?user-logout.htm';">是</button>
+			<button class="btn btn-secondary" onclick="$('#logout_modal').modal('hide');">否</button>
+		</div>
+
+		<!-- 模态框底部 -->
+<!-- 		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+		</div>
+-->
+
+		</div>
+	</div>
+</div>
 
 <script>
 $('a[data-active="menu-my"]').addClass('active');
@@ -76,5 +107,5 @@ $('a[data-active="my-profile"]').addClass('active');
 			}
 		);
 	});
-	
+
 </script>
