@@ -1,10 +1,10 @@
 {
-    "name": "手机端独立模板",
-    "brief": "手机端和PC端区分显示",
+    "name": "企业钉钉用户登陆",
+    "brief": "企业钉钉用户登陆",
     "version": "1.0",
     "bbs_version": "4.0.0",
     "installed": 1,
-    "enable": 0,
+    "enable": 1,
     "hooks_rank": [],
     "dependencies": []
 }

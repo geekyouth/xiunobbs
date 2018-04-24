@@ -2642,7 +2642,11 @@ function is_email($email, &$err) {
 }
 
 function is_username($username, &$err = '') {
-	
+	$ddPluginConf = file_get_contents(APP_PATH . '/plugin/sq_dd_autoLogin/conf.json');
+$ddPluginConf = json_decode($ddPluginConf, true);
+if ($ddPluginConf['enable'] == 1) { // 如果钉钉自动登陆开启，那么用户名不进行验证
+	return true;
+}
 	$len = mb_strlen($username, 'UTF-8');
 	if($len > 16) {
 		$err = lang('username_too_long', array('length'=>$len));
@@ -3233,7 +3237,7 @@ function message($code, $message, $extra = array()) {
 	$arr['message'] = $message;
 	$header['title'] = $conf['sitename'];
 	
-	if(!IS_MOBILE) {
+	
 	
 	// 防止 message 本身出现错误死循环
 	static $called = FALSE;
@@ -3256,31 +3260,7 @@ function message($code, $message, $extra = array()) {
 			}
 		}
 	}
-	} else {
-	$show_search = 2; // 不显示头部，也不显示搜索框
-
-	// 防止 message 本身出现错误死循环
-	static $called = FALSE;
-	$called ? exit(xn_json_encode($arr)) : $called = TRUE;
-	if($ajax) {
-		echo xn_json_encode($arr);
-	} else {
-		if(IN_CMD) {
-			if(is_array($message) || is_object($message)) {
-				print_r($message);
-			} else {
-				echo $message;
-			}
-			exit;
-		} else {
-			if(defined('MESSAGE_HTM_PATH')) {
-				include _include(MESSAGE_HTM_PATH);
-			} else {
-				include _include(APP_PATH . SQ_MOBILE_PATH . "view/htm/message.htm");
-			}
-		}
-	}
-}
+	
 	exit;
 }
 
