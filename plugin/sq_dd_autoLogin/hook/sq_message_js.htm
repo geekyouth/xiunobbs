@@ -1,0 +1,8 @@
+<script>
+	$(function(){
+		var jumpTime = (int)'<?php echo $jumpTime; ?>';
+		setTimeout(function(){
+			window.location = '<?php echo $jumpHref; ?>';
+		}, jumpTime * 1000);
+	});
+</script>

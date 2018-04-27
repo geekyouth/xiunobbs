@@ -121,6 +121,7 @@ function get_image($url,$save_dir='',$filename='',$type=0){
 	if(!file_exists($save_dir)&&!mkdir($save_dir,0777,true)){
 		return array('file_name'=>'','save_path'=>'','error'=>5);
 	}
+	
 	//获取远程文件所采用的方法
 	if($type){
 		$ch=curl_init();
@@ -158,3 +159,156 @@ function saveImage($path) {
 	fclose($fp);
 }
 
+/**
+ * 下载压缩后的图片（没用）
+ * @param unknown $url
+ * @param unknown $percent
+ */
+function get_compress_image($url, $save_dir='', $filename='') {
+	if(trim($url)==''){
+		return array('file_name'=>'','save_path'=>'','error'=>1);
+	}
+	if(trim($save_dir)==''){
+		$save_dir='./';
+	}
+	if(trim($filename)==''){//保存文件名
+		/* 原来的判断
+		 $ext=strrchr($url,'.');
+		 if($ext!='.gif'&&$ext!='.jpg'&&$ext!='.png'){
+		 return array('file_name'=>'','save_path'=>'','error'=>3);
+		 }
+		 $filename=time().$ext;
+		 */
+		// 保存原来的文件名
+		if(!preg_match('/\/([^\/]+\.[a-z]{3,4})$/i', $url, $matches)){
+			return array('file_name'=>'','save_path'=>'','error'=>3);
+		}
+		$filename = strToLower($matches[1]);
+	}
+	if(0!==strrpos($save_dir,'/')){
+		$save_dir.='/';
+	}
+	//创建保存目录
+	if(!file_exists($save_dir)&&!mkdir($save_dir,0777,true)){
+		return array('file_name'=>'','save_path'=>'','error'=>5);
+	}
+	
+	list($width, $height, $type, $attr) = getimagesize($url);
+	$imageInfo = array(
+			'width' => $width,
+			'height' => $height,
+			'type' => image_type_to_extension($type,false),
+			'attr' => $attr
+	);
+	$fun = 'imagecreatefrom' . $imageInfo['type'];
+	$simg = $fun($url);
+	// 将图片宽高等比60%保存
+	$new_width = $imageInfo['width'] * 0.6;
+	$new_height = $imageInfo['height'] * 0.6;
+	$image_thump = imagecreatetruecolor($new_width, $new_height);
+	imagecopyresampled($image_thump, $simg, 0, 0, 0, 0, $new_width, $new_height, $imageInfo['width'], $imageInfo['height']);
+	imagedestroy($simg);
+	$funcs = 'image'.$imageInfo['type'];
+	$funcs($image_thump, $save_dir . $filename);
+	
+	return array('file_name'=>$filename,'save_path'=>$save_dir.$filename,'error'=>0);
+}
+
+/*
+ message(0, '登录成功');
+ message(1, '密码错误');
+ message(-1, '数据库连接失败');
+ 
+ code:
+ < 0 全局错误，比如：系统错误：数据库丢失连接/文件不可读写
+ = 0 正确
+ > 0 一般业务逻辑错误，可以定位到具体控件，比如：用户名为空/密码为空
+ */
+function sq_message($code, $message, $extra = array(), $jumpTime = 3, $jumpHref = './') {
+	global $ajax, $header, $conf;
+	
+	$arr = $extra;
+	$arr['code'] = $code.'';
+	$arr['message'] = $message;
+	$header['title'] = $conf['sitename'];
+	
+	// hook model_message_start.php
+	
+	// 防止 message 本身出现错误死循环
+	static $called = FALSE;
+	$called ? exit(xn_json_encode($arr)) : $called = TRUE;
+	if($ajax) {
+		echo xn_json_encode($arr);
+	} else {
+		if(IN_CMD) {
+			if(is_array($message) || is_object($message)) {
+				print_r($message);
+			} else {
+				echo $message;
+			}
+			exit;
+		} else {
+			if(defined('MESSAGE_HTM_PATH')) {
+				include _include(MESSAGE_HTM_PATH);
+			} else {
+				// 判断是否有开启手机独立
+				$indepConfig = file_get_contents(APP_PATH . "plugin/sq_dd_autoLogin/conf.json");
+				$indepConfig = json_decode($indepConfig, true);
+				if ($indepConfig['enable'] && sq_is_mobile()) {
+					$show_search = 2; // 不显示搜索栏
+					include APP_PATH . "plugin/sq_dd_autoLogin/view/htm/indep_message.htm";
+				} else {
+					include APP_PATH . "plugin/sq_dd_autoLogin/view/htm/message.htm";
+				}
+			}
+		}
+	}
+	// hook model_message_end.php
+	exit;
+}
+
+/** 根据钉钉用户id读取用户信息 */
+function dd_user_read($ddUserId) {
+	$db = $_SERVER['db'];
+	$tablepre = $db->tablepre;
+	$sql = "SELECT * FROM {$tablepre}sq_dduser a JOIN {$tablepre}user b ON a.u_id = b.uid WHERE a.dd_id = '$ddUserId'";
+	$user = $db->sql_find_one($sql);
+	return $user;
+}
+
+/** 插入钉钉用户信息 */
+function dd_user_create($uid, $ddUserId, $ddUsername) {
+	$arr = ['u_id' => $uid, 'dd_id' => $ddUserId, 'dd_name' => $ddUsername];
+	$result = db_insert('sq_dduser', $arr);
+	return $result;
+}
+
+/** 判断是否手机浏览 */
+function sq_is_mobile() {
+	// 如果有HTTP_X_WAP_PROFILE则一定是移动设备
+	if (isset($_SERVER['HTTP_X_WAP_PROFILE'])) {
+		return true;
+	}
+	// 如果via信息含有wap则一定是移动设备,部分服务商会屏蔽该信息
+	if (isset($_SERVER['HTTP_VIA'])) {
+		// 找不到为flase,否则为true
+		return stristr($_SERVER['HTTP_VIA'], "wap") ? true : false;
+	}
+	// 脑残法，判断手机发送的客户端标志,兼容性有待提高。其中'MicroMessenger'是电脑微信
+	if (isset($_SERVER['HTTP_USER_AGENT'])) {
+		$clientkeywords = array('nokia','sony','ericsson','mot','samsung','htc','sgh','lg','sharp','sie-','philips','panasonic','alcatel','lenovo','iphone','ipod','blackberry','meizu','android','netfront','symbian','ucweb','windowsce','palm','operamini','operamobi','openwave','nexusone','cldc','midp','wap','mobile','MicroMessenger');
+		// 从HTTP_USER_AGENT中查找手机浏览器的关键字
+		if (preg_match("/(" . implode('|', $clientkeywords) . ")/i", strtolower($_SERVER['HTTP_USER_AGENT']))) {
+			return true;
+		}
+	}
+	// 协议法，因为有可能不准确，放到最后判断
+	if (isset ($_SERVER['HTTP_ACCEPT'])) {
+		// 如果只支持wml并且不支持html那一定是移动设备
+		// 如果支持wml和html但是wml在html之前则是移动设备
+		if ((strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') !== false) && (strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false || (strpos($_SERVER['HTTP_ACCEPT'], 'vnd.wap.wml') < strpos($_SERVER['HTTP_ACCEPT'], 'text/html')))) {
+			return true;
+		}
+	}
+	return false;
+}

@@ -2,17 +2,17 @@
     var sq = {
         forumListShow: false, // 论坛列表菜单是否开启
         showForumList: function(node) {
-            let targetNode = $('#forumList'),
+            var targetNode = $('#forumList'),
                 maskNode   = $('#forumListMask');
             if (!this.forumListShow) {
                 targetNode.css('display', 'block');
                 maskNode.css('width', document.body.clientWidth + 'px');
                 maskNode.css('height', $('.sq-bottom-nav').offset().top + 'px');
                 maskNode.css('display', 'block');
-                setTimeout(() => {
+                setTimeout(function() {
                     targetNode.css('top', '-' + targetNode.height() + 'px');
                     targetNode.css('opacity', '1');
-                    this.forumListShow = true;
+                    sq.forumListShow = true;
                 }, 100);
             } else {
                 targetNode.css('display', 'none');
@@ -21,11 +21,8 @@
                 maskNode.css('width', 0);
                 maskNode.css('height', 0);
                 maskNode.css('display', 'none');
-                this.forumListShow = false;
+                sq.forumListShow = false;
             }
-        },
-        consoleLog: function() {
-            console.log(this);
         },
         searchBar: {
             form: $('#sq-search'),

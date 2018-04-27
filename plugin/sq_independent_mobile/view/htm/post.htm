@@ -118,7 +118,7 @@ jform.on('submit', function() {
 	var postdata = jform.serialize();
 	$.xpost(jform.attr('action'), postdata, function(code, message) {
 		if(code == 0) {
-			$.alert(message);
+			$.alert(message, 1, 'sm');
 			jsubmit.button(message).delay(1000).location('<?php echo $location;?>');
 		} else if(xn.is_number(code)) {
 			alert(message);
@@ -185,6 +185,8 @@ jattachparent.on('click', 'a.delete', function() {
 jform.find('[name="fid"]').checked(<?php echo $fid;?>);
 
 $('li[data-active="fid-<?php echo $fid;?>"]').addClass('active');
+// 发表主题的时候active底部菜单
+$('#bottom-menu>li:eq(2)').addClass('bottom-active');
 
 </script>
 
