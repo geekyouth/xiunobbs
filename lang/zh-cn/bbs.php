@@ -109,6 +109,7 @@ return array(
 	'user_login_successfully'=>'登录成功',
 	'user_send_sucessfully'=>'发送成功',
 	'user_create'=>'用户注册',
+	'user_create_not_on'=>'未开启用户注册',
 	'user_create_sucessfully'=>'用户注册成功',
 	'user_login'=>'用户登录',
 	'user_profile'=>'个人资料',

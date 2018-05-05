@@ -1,3 +1,4 @@
+<script src="https://g.alicdn.com/dingding/open-develop/1.9.0/dingtalk.js"></script>
 <script>
     var sq = {
         forumListShow: false, // 论坛列表菜单是否开启
@@ -28,7 +29,25 @@
             form: $('#sq-search'),
             range: $('#sq-search input[name="range"]'),
             keyword: $('#sq-search input[name="keyword"]')
+        },
+        repairThumbImg: function() {
+            var imgDiv      = $('.sq-thumb-img');
+            var imgDivWidth = imgDiv.width();
+            var imgWidth    = (imgDivWidth / 3.3 ); // 图片的宽度
+            var imgHeight   = imgWidth * 3 / 4; // 高度为宽度的3/4
+            var marginWidth = (imgDivWidth - (imgWidth * 3)) / 2;
+            imgDiv.find('div').css({width: imgWidth, height: imgHeight});
+            imgDiv.find('div:not(:last-child)').css('margin-right', marginWidth);
+        },
+        getCookie: function (name) {
+            var arr, reg = new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+            if(arr = document.cookie.match(reg)) {
+                return unescape(arr[2]);
+            } else {
+                return null;
+            }
         }
+
     };
 
     // 处理搜索动作
@@ -38,6 +57,23 @@
         window.location = xn.url('search-' + xn.urlencode(keyword) + '-' + range);
         return false;
     });
+    
+    // 解决底部菜单在输入的时候会弹上去的问题
+    window.onresize = function() {
+        var windowHeight = $(window).height(); // 获取窗口的可见高度,不是整个文档的高度
+        var screenHeight = window.screen.availHeight; // 获取浏览器的屏幕的可用高度
+        // alert('window:' + windowHeight + ',screen:' + screenHeight);
+        var u = navigator.userAgent;
+        if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) { // 如果是安卓或者linux的话
+            if (windowHeight <= screenHeight / (3 / 2)) {
+                $('.sq-bottom-nav').css({'position': 'absoult', 'display': 'none'});
+            } else {
+                $('.sq-bottom-nav').css({'position': 'fixed', 'display': 'block'});
+            }
+        }
+
+        sq.repairThumbImg(); // 窗口变化导致的图片大小不正确问题
+    }
 
     // 处理点击其他地方收起底部论坛ul的onclick
     $('body').click(function(event){
@@ -45,5 +81,89 @@
             event.stopPropagation();
             sq.showForumList();
         }
+    });
+
+    // 处理预览图div的宽高问题
+    $(function() {
+        sq.repairThumbImg();
+    });
+
+    /** 钉钉内部的jsapi */
+    dd.ready(function() {
+        // dd.runtime.permission.requestAuthCode({
+        //     corpId: 'dingde55314a8e20f3f6', //企业id
+        //     onSuccess: function (info) {
+        //         alert(JSON.stringify(info));
+        //     },
+        //     onFail: function(err) {
+        //         alert(JSON.stringify(err));
+        //     }
+        // });
+
+        /** 顶部返回按钮的逻辑 */
+        document.addEventListener('backbutton', function(e) {
+            var referrer = document.referrer; // 上一页的地址
+            var location = window.location.href; // 当前页
+            var loginReferrer, createReferrer, postReferrer, logining = false;
+            if (referrer.indexOf('dd_login') > -1) {
+                loginReferrer = true; // 上一页是钉钉授权登陆的地址
+            } else if (referrer.indexOf('thread-create-0') > -1) {
+                createReferrer = true; // 发表新贴
+            } else if (referrer.indexOf('post-create') > -1) {
+                postReferrer = true; // 回复帖子
+            }
+
+            if (location.indexOf('dd_login') > -1) {
+                logining = true; // 如果是登陆页，直接退出
+            }
+
+            if (logining) {
+                dd.biz.navigation.close({
+                    onSuccess : function(result) {
+                        /*result结构
+                        {}
+                        */
+                    },
+                    onFail : function(err) {}
+                });
+            }
+
+            var isIndex = '<?php echo $is_index; ?>';
+            if (isIndex || loginReferrer) { // 如果是首页，直接关闭应用
+                dd.device.notification.confirm({
+                    message: "退出论坛",
+                    title: "提示",
+                    buttonLabels: ['是', '否'],
+                    onSuccess : function(result) {
+                        //onSuccess将在点击button之后回调
+                        if (result.buttonIndex == 0) {
+                            dd.biz.navigation.close({
+                                onSuccess : function(result) {
+                                    /*result结构
+                                    {}
+                                    */
+                                },
+                                onFail : function(err) {}
+                            });
+                        } else {
+                            return;
+                        }
+                        /*
+                        {
+                            buttonIndex: 0 //被点击按钮的索引值，Number类型，从0开始
+                        }
+                        */
+                    },
+                    onFail : function(err) {}
+                });
+                
+                e.preventDefault(); // 阻止返回
+            } else if (createReferrer || postReferrer) { // 如果上一页是发帖的话
+                window.location = 'http://loc.xiunobbs.com';
+                // window.location = "<?php echo APP_PATH; ?>";
+                e.preventDefault(); // 阻止返回
+            }
+            
+        });
     });
 </script>

@@ -1,0 +1,28 @@
+<template include="./plugin/sq_independent_mobile/view/htm/my_notice.header.template.htm">
+	<slot name="my_nav">
+		<ul class="nav nav-tabs card-header-tabs">
+			<!--{hook my_nav_notice_before.htm}-->
+			<!-- 			 
+			<li class="nav-item">
+				<a class="nav-link" href="<?php echo url("my-notice");?>" data-active="my-notice"><?php echo lang('notice');?></a>
+			</li>
+			 -->
+			<!-- @squid 下面是我的添加 -->
+			<?php foreach ($notice_menu as $k=>$v) { 
+					if(!isset($v['url']) || !isset($v['name'])) continue; //不安接入规范些直接不显示
+			?>
+			<li class="nav-item">
+				<a class="nav-link" notice-type="<?php echo $k; ?>" href="<?php echo $v['url'];?>"><?php echo $v['name'];?></a>
+			</li>
+			<?php } ?>
+			<!--{hook my_nav_notice_after.htm}-->
+		</ul>
+	</slot>
+</template>
+
+<script>
+// 设置顶部的nav栏激活状态
+$('a[notice-type=<?php echo $type; ?>]').addClass('active');
+// 设置底部菜单的激活状态
+$('#bottom-menu>li:eq(3)').addClass('bottom-active');
+</script>

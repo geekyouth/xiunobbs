@@ -58,6 +58,9 @@
 <script src="<?php echo $conf['view_url'];?>js/md5.js"></script>
 
 <script>
+// 打开用户的时候active底部菜单
+$('#bottom-menu>li:eq(4)').addClass('bottom-active');
+
 var jform = $('#form');
 var jsubmit = $('#submit');
 var jemail = $('#email');

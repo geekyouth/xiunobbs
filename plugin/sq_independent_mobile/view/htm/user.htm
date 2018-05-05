@@ -1,4 +1,4 @@
-<template include="./view/htm/user.template.htm">
+<template include="./plugin/sq_independent_mobile/view/htm/user.template.htm">
 	<slot name="user_body">
 		<div class="row line-height-4">
 			<div class="col-md-2 col-sm-12 text-center">
@@ -6,10 +6,25 @@
 				<br><b><?php echo $_user['username'];?> </b>
 				<!--{hook user_profile_username_after.htm}-->
 			</div>
+			<!-- 隐藏下面的信息
 			<div class="col-4 col-sm-5">
 				<span class="text-muted"><?php echo lang('threads');?>：</span><?php echo $_user['threads'];?>
 				<br><span class="text-muted"><?php echo lang('posts');?>：</span><?php echo $_user['posts'];?>
 				<!--{hook user_profile_posts_after.htm}-->
+			</div>
+			-->
+			<div class="col-md-12">
+				<ul class="list-unstyled sq-transverse-ul">
+					<li style="width: 33%;">
+						<span class="text-muted"><?php echo lang('threads');?>：</span><?php echo $user['threads'];?>
+					</li>
+					<li style="width: 33%;">
+						<span class="text-muted"><?php echo lang('posts');?>：</span><?php echo $user['posts'];?>
+					</li>
+					<li style="width: 33%;">
+						<span class="text-muted"><?php echo lang('haya_favorite_count'); ?>：</span><a href="<?php echo url("my-favorites"); ?>" target="_blank"><?php echo intval($user['favorites']);?></a>
+					</li>
+				</ul>
 			</div>
 			<div class="col-auto">
 				<span class="text-muted"><?php echo lang('user_group');?>：</span><?php echo $_user['groupname'];?>

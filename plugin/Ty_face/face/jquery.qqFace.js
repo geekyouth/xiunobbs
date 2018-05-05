@@ -21,18 +21,27 @@
 			if($('#'+id).length<=0){
 				strFace = '<div id="'+id+'" style="position:absolute;display:none;z-index:1000;" class="qqFace">' +
 							  '<table border="0" cellspacing="0" cellpadding="0"><tr>';
+
+				var oneRem = window.getComputedStyle(document.documentElement)["fontSize"]; // 1rem的值
+				oneRem = oneRem.substring(0, oneRem.length - 2);
+				var mediaWidth = $('.card.card-postlist').parent().width();
+				var oneRowCount = Math.floor(mediaWidth / (oneRem * 2.5));
+
 				for(var i=1; i<=59; i++){
 					labFace = '['+tip+i+']';
-					strFace += '<td><img style="width: 1.8rem;" src="'+path+i+'.gif" onclick="$(\'#'+option.assign+'\').insertAtCaret(\'' + labFace + '\');" /></td>';
-					if( i % 10 == 0 ) strFace += '</tr><tr>';
+					strFace += '<td><img style="width: 2.5rem; max-width: none;" src="'+path+i+'.gif" onclick="$(\'#'+option.assign+'\').insertAtCaret(\'' + labFace + '\');" /></td>';
+					if( i % oneRowCount == 0 ) strFace += '</tr><tr>';
 				}
-				strFace += '</tr></table></div>';
+				strFace += '</tr></table>';
+				strFace += '<div style="width: 100%; height: 3rem;"></div>';
+				'</div>'
 			}
 			$(this).parent().append(strFace);
 			var offset = $(this).position();
 			var top = offset.top + $(this).outerHeight();
 			$('#'+id).css('top',top);
-			$('#'+id).css('left',offset.left);
+			// $('#'+id).css('left',offset.left);
+			$('#'+id).css('right', 0);
 			$('#'+id).show();
 			e.stopPropagation();
 		});

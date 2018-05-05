@@ -1,3 +1,4 @@
+<?php exit;
 function isMobile() { 
   // 如果有HTTP_X_WAP_PROFILE则一定是移动设备
   if (isset($_SERVER['HTTP_X_WAP_PROFILE'])) {
@@ -27,5 +28,10 @@ function isMobile() {
   return false;
 }
 
+// 读取sq_independent_mobile的配置，如果开启，就使用该插件下面的视图
+$indepPluginConf = file_get_contents(APP_PATH . '/plugin/sq_independent_mobile/conf.json');
+$indepPluginConf = json_decode($indepPluginConf, true);
+defined('SQ_INDEP') OR define('SQ_INDEP', $indepPluginConf); // 判断是否手机独立模板
+
 defined('IS_MOBILE') OR define('IS_MOBILE', isMobile() ? 1 : 0); // 判断是否手机端
-define('SQ_MOBILE_PATH', 'plugin/sq_independent_mobile/');
+define('SQ_MOBILE_PATH', SQ_INDEP ? 'plugin/sq_independent_mobile/' : ''); // 如果手机独立模板开启，那么定义一个插件目录

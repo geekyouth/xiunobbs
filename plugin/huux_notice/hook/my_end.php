@@ -19,6 +19,8 @@ elseif($action == 'notice') {
 		$header['title'] = lang('notice');
 		$header['mobile_title'] = lang('notice');
 
+		// hook huux_notice_get_end.php
+		
 		include _include(APP_PATH.'plugin/huux_notice/view/htm/my_notice.htm');
 
 	} elseif($method == 'POST') {

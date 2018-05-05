@@ -160,7 +160,7 @@ function saveImage($path) {
 }
 
 /**
- * 下载压缩后的图片（没用）
+ * 下载压缩后的图片
  * @param unknown $url
  * @param unknown $percent
  */
@@ -255,7 +255,6 @@ function sq_message($code, $message, $extra = array(), $jumpTime = 3, $jumpHref 
 				$indepConfig = file_get_contents(APP_PATH . "plugin/sq_dd_autoLogin/conf.json");
 				$indepConfig = json_decode($indepConfig, true);
 				if ($indepConfig['enable'] && sq_is_mobile()) {
-					$show_search = 2; // 不显示搜索栏
 					include APP_PATH . "plugin/sq_dd_autoLogin/view/htm/indep_message.htm";
 				} else {
 					include APP_PATH . "plugin/sq_dd_autoLogin/view/htm/message.htm";

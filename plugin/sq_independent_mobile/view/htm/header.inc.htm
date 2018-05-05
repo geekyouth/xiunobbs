@@ -50,10 +50,6 @@
 	
 	<!--{hook header_link_after.htm}-->
 	
-	<!-- 本地调试 -->
-	<link rel="stylesheet" href="<?php echo 'http://192.168.1.193/xiunobbs/' . SQ_MOBILE_PATH . 'view/css/sq_style.css'; ?>" />
-	<!-- <link rel="stylesheet" href="<?php echo '/' . SQ_MOBILE_PATH . 'view/css/sq_style.css'; ?>" /> -->
-	
 </head>
 
 <body>
@@ -65,7 +61,7 @@
 	<!-- @squid 2018年4月19日09:51:56 这里应该加一个搜索框 -->
 	<?php
 		if($show_search) {
-			if($show_search == 1) include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/header_search.htm');
+			include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/header_search.htm');
 		}
 		// else {
 		//  	include _include(APP_PATH.'view/htm/header_nav.inc.htm');

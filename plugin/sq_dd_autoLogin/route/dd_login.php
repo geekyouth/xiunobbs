@@ -23,11 +23,16 @@ if (!$ddUserId) sq_message(10000, '非法访问'); // 当钉钉id没有传值的
 $ddUser = dd_user_read($ddUserId);
 
 if ($ddUser) {
+	
+	if ($user) {
+		http_location('./');// 如果已经是登陆状态
+	}
+	
 	// squid 
 	$_SESSION['uid'] = $ddUser['uid'];
 	user_token_set($ddUser['uid']);
 	user_update($ddUser['uid'], array('login_ip' => $longip, 'login_date' => $time , 'logins+' => 1)); // 更新用户的登陆信息和次数
-	sq_message(0, lang('user_login_successfully'), [], 1, './?my.htm');
+	sq_message(0, lang('user_login_successfully'), [], 1);
 	// http_location('http://loc.xiunobbs.com/');
 } else {
 	
@@ -92,7 +97,7 @@ if ($ddUser) {
 			user_update($result['uid'], array('avatar'=>$time)); // 更新用户表里面的头像数据
 		}
 		
-		// 	sq_message(0, jump('登陆成功', http_referer(), 2));
+		// sq_message(0, jump('登陆成功', http_referer(), 2));
 		// sq_message(0, lang('user_login_successfully'), [], 3, './?my.htm'); // 这里等待够长了，直接跳转吧
 		http_location('./?my.htm');
 	} else { // 如果非json数据，提示错误

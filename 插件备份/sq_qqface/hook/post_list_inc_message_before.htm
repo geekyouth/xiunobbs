@@ -1,0 +1,5 @@
+<?php 
+$msg = $_post['message_fmt']; 
+$msg = preg_replace("/\[em_([0-9]*)\]/i","<img src='http://192.168.1.193/xiunobbs/plugin/sq_qqface/static/img/$1.gif' style='border: 0;'/>",$msg);
+$_post['message_fmt']=	$msg			
+?>

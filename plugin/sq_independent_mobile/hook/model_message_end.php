@@ -1,5 +1,5 @@
 } else {
-	$show_search = 2; // 不显示头部，也不显示搜索框
+	// $show_search = 2; // 不显示头部，也不显示搜索框
 
 	// 防止 message 本身出现错误死循环
 	static $called = FALSE;
