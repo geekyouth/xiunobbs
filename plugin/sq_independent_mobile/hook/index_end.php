@@ -3,7 +3,12 @@
 // sort($threadlist);
 
 $is_index = 1; // 主页
+$is_index_one = ($page == 1); // 判断是否主页并且是第一页
 // $showImageMaxSize = '300000'; // 最大图片显示k
+
+if($order == $conf['order_default']) {
+	$toplist3 = thread_top_find(0);
+}
 
 include _include(APP_PATH . SQ_MOBILE_PATH . '/model/plugin.func.php');
 
@@ -42,11 +47,13 @@ if(IS_MOBILE) {
 
 	foreach($toplist3 as $key => $value) {
 		unset($threadlist[$key]); // 将贴列表里面置顶的贴删除，以免重复，那么这个threadlist就是新贴
-	} 
+	}
 	
-	$lastThread = thread_find_by_fids($fids, $page, 3, 'tid', $threads); // 查找最新的10张贴
-	foreach($lastThread as $k => $v) {
-		unset($threadlist[$k]); // 去重
+	$lastThread = thread_find_by_fids($fids, 1, 3, 'tid', $threads); // 查找最新的3张贴
+	if ($page == 1) { // 只有在第一页的时候才去掉重复的
+		foreach($lastThread as $k => $v) {
+			unset($threadlist[$k]); // 去重
+		}
 	}
 	
 	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/pc_htm/index.htm'); // PC端首页

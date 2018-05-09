@@ -91,8 +91,8 @@ Utf-8、gb2312都支持的汉字截取函数
 cut_str(字符串, 截取长度, 开始长度, 编码); 
 编码默认为 utf-8 
 开始长度默认为 0 
-*/function cut_str($string, $sublen, $start = 0, $code = 'UTF-8') 
-{ 
+*/
+function cut_str($string, $sublen, $start = 0, $code = 'UTF-8') { 
 	if($code == 'UTF-8') { 
 		$pa ="/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/"; 
 		preg_match_all($pa, $string, $t_string);

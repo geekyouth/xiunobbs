@@ -28,7 +28,7 @@
 			</div>
 			<div class="col-md-6" style="padding-left: 2px;">
 				<div class="card sq-lastlist">
-					<div class="card-header" style='text-align: center; padding: 0.3rem 1.25rem; font-weight: bold;'>最新</div>
+					<div class="card-header" style='text-align: center; padding: 0.3rem 1.25rem; font-weight: bold;'>最新发帖</div>
 					<div class="card-body">
 						<ul class="list-unstyled toplist mb-0">
 							<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/pc_htm/last_list.inc.htm');?>
@@ -139,11 +139,7 @@ $('li[data-active="fid-0"]').addClass('active');
 
 // 将热门贴和最新贴的框高设置为一样
 $(function() {
-	var hotListNode  = $('.sq-hotlist'),
-		lastListNode = $('.sq-lastlist');
-	var hotHeight  = hotListNode.height();
-	var lastHeight = lastListNode.height();
-	hotHeight > lastHeight ? lastListNode.height(hotHeight) : hotListNode.height(lastHeight) ;
+	sq.setHotNewSameHeight();
 });
 
 </script>

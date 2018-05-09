@@ -1,3 +1,6 @@
+/** 公共class */
+.sq-not-play {display: none;}
+
 /** 顶部搜索框 */
 .sq-search-bar {
     display: flex;
@@ -43,7 +46,7 @@ main#body {padding-top: 0.1rem;}
     background-size: 100% auto;
     background-repeat: no-repeat;
 }
-.sq-thumb-img>div:not(:last-child) {margin-right: o.25rem;}
+.sq-thumb-img>div:not(:last-child) {margin-right: 0.25rem;}
 
 .sq-desc {padding-left: 3.65rem; color: #ccc; overflow: hidden; height: 100%}
 
@@ -112,7 +115,7 @@ main#body {padding-top: 0.1rem;}
     transition: all 0.3s;
 }
 .sq-bottom-nav>#forumList>li:not(:last-child) {border-bottom: 1px solid #ced4da63;}
-.sq-bottom-nav>#forumList>li>a {color: white; font-weight: bold; padding: 0.5rem 0;}
+.sq-bottom-nav>#forumList>li>a {color: white; font-weight: bold; padding: 0.5rem 0; display: block; height: 100%; width: 100%;}
 
 /** 解决原来底部的字体会浮上表层 **/
 .text-muted>.container>.row>.col {position: static;}

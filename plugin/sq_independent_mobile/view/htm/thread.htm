@@ -226,6 +226,12 @@ jform.on('submit', function() {
 			// 回复数 +1
 			var jposts = $('.posts');
 			jposts.html(xn.intval(jposts.html()) + 1);
+
+			// 处理加积分的信息
+			var liPid = $(jli).attr('data-pid');
+			setTimeout(function() {
+				$('li[data-pid=' + liPid + ']').find('.alert.alert-danger').addClass('sq-not-play');
+			}, 3000);
 			
 		} else if(code < 0) {
 			$.alert(message);

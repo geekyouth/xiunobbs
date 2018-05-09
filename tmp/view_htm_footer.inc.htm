@@ -91,6 +91,23 @@
             imgDiv.find('div').css({width: imgWidth, height: imgHeight});
             imgDiv.find('div:not(:last-child)').css('margin-right', marginWidth);
         },
+        setHotNewSameHeight: function() {
+            var hotListNode  = $('.sq-hotlist'),
+                lastListNode = $('.sq-lastlist');
+            var hotHeight  = hotListNode.height();
+            var lastHeight = lastListNode.height();
+            hotHeight > lastHeight ? lastListNode.height(hotHeight) : hotListNode.height(lastHeight) ;
+        },
+        sqThreadTagClick:  function(e){
+            var href = $(this).parent().attr('href') || $(this).parent().data('href');
+            if(e.target.nodeName == 'INPUT') return true;
+            if(e.ctrlKey) {
+                window.open(href);
+                return false;
+            } else {
+                window.location = href;
+            }
+        },
         getCookie: function (name) {
             var arr, reg = new RegExp("(^| )"+name+"=([^;]*)(;|$)");
             if(arr = document.cookie.match(reg)) {
@@ -125,6 +142,7 @@
         }
 
         sq.repairThumbImg(); // 窗口变化导致的图片大小不正确问题
+        sq.setHotNewSameHeight(); // 窗口大小变化导致的热门和最新不一致的问题
     }
 
     // 处理点击其他地方收起底部论坛ul的onclick
@@ -138,6 +156,7 @@
     // 处理预览图div的宽高问题
     $(function() {
         sq.repairThumbImg();
+        $('.sq-thread-tag').on('click', sq.sqThreadTagClick);
     });
 
     /** 钉钉内部的jsapi */
@@ -180,7 +199,7 @@
                 });
             }
 
-            var isIndex = '<?php echo $is_index; ?>';
+            var isIndex = '<?php echo $is_index_one; ?>';
             if (isIndex || loginReferrer) { // 如果是首页，直接关闭应用
                 dd.device.notification.confirm({
                     message: "退出论坛",
@@ -211,7 +230,7 @@
                 
                 e.preventDefault(); // 阻止返回
             } else if (createReferrer || postReferrer) { // 如果上一页是发帖的话
-                window.location = 'http://loc.xiunobbs.com';
+                window.location = './';
                 // window.location = "<?php echo APP_PATH; ?>";
                 e.preventDefault(); // 阻止返回
             }
