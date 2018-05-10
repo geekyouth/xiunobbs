@@ -1,6 +1,16 @@
 					<!--{hook thread_list_inc_start.htm}-->
 
-					<?php if($lastThread) { foreach($lastThread as &$_thread) { ?>
+					<?php 
+					if($hotList) { 
+						$have_allowtop = 0;
+						foreach($hotList as &$_thread) {
+							$_thread['allowtop'] = forum_access_mod($_thread['fid'], $gid, 'allowtop');
+							if($_thread['allowtop']) $have_allowtop = 1;
+						}
+					}
+					?>
+
+					<?php if($hotList) { foreach($hotList as &$_thread) { ?>
 					<li class="media thread tap <?php echo $_thread['top_class'];?> " data-href="<?php echo url("thread-$_thread[tid]");?>" data-tid="<?php echo $_thread['tid'];?>">
 						<div class="sq-thread-tag">
 							<?php if($have_allowtop) { ?>
@@ -68,6 +78,13 @@
 							</div>
 						</div>
 
+						<?php if($_thread['images_url']) { ?>
+							<div class="sq-thumb-img">
+								<?php foreach($_thread['images_url'] as $_image) { ?>
+									<div style="background-image: url(./upload/attach/thumb/<?php echo $_image['filename']; ?>);"></div>
+								<?php } ?>
+							</div>
+						<?php } ?>
 					</li>
 					<?php }} else { ?>
 					<li>

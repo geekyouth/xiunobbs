@@ -29,6 +29,14 @@ function get_desc_by_tid($tid) {
 	return $data;
 }
 
+function get_hot_thread($num) {
+	$data = db_find('thread', [], ['views' => 0], 1, $num, '', ['tid']);
+	$tids = arrlist_values($data, 'tid');
+	$threadList = thread_find_by_tids($tids);
+	$threadList = arrlist_multisort($threadList, 'views', false);
+	return $threadList;
+}
+
 /**
  * 下载压缩后的图片
  * @param unknown $url

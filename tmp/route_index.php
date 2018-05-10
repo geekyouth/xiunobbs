@@ -115,6 +115,11 @@ if(IS_MOBILE) {
 	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/htm/index.htm');
 	return;
 } else {
+	$hotList = get_hot_thread(3); // 热门贴
+	echo '<pre>';
+	var_dump($hotList);
+	echo '</pre>';
+	
 	if($digest == 1) $is_index = 0; // 如果是精华帖页，不显示那3个框
 
 	foreach($toplist3 as $key => $value) {

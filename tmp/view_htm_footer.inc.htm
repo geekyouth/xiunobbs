@@ -99,7 +99,7 @@
             hotHeight > lastHeight ? lastListNode.height(hotHeight) : hotListNode.height(lastHeight) ;
         },
         sqThreadTagClick:  function(e){
-            var href = $(this).parent().attr('href') || $(this).parent().data('href');
+            var href = $(this).parents('.tap').attr('href') || $(this).parents('.tap').data('href');
             if(e.target.nodeName == 'INPUT') return true;
             if(e.ctrlKey) {
                 window.open(href);
@@ -156,7 +156,7 @@
     // 处理预览图div的宽高问题
     $(function() {
         sq.repairThumbImg();
-        $('.sq-thread-tag').on('click', sq.sqThreadTagClick);
+        $('.sq-thread-tag>.media-body').on('click', sq.sqThreadTagClick);
     });
 
     /** 钉钉内部的jsapi */
