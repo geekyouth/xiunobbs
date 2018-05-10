@@ -1,0 +1,34 @@
+<div class="bottom-placehold">
+    <!-- Powered by <a href="http://bbs.xiuno.com/" target="_blank" class="text-muted"><b>Xiuno BBS <span><?php echo $conf['version'];?></span></b></a> -->
+</div>
+<div id="forumListMask" onclick="sq.showForumList();"></div>
+<div class="sq-bottom-nav">
+    <ul id="bottom-menu" class="list-unstyled">
+        <li bottom-active="fid-0"><a href=".">首页</a></li>
+        <li><a href="javascript:;" onclick="sq.showForumList(this);">板块</a></li>
+        <li>
+            <?php if(empty($uid)) { ?>
+                <a href="<?php echo url('user-login');?>">+</a>
+            <?php } else { ?>
+                <a href="<?php echo url("thread-create-$fid");?>">+</a>
+            <?php } ?>
+        </li>
+        <li>
+            <a href="<?php echo url('my-notice');?>">消息
+                <?php if($user['unread_notices']) {?>
+                <span class="unread badge badge-danger badge-pill" id="my_notice">
+                    <?php echo $user['unread_notices']; ?>
+                </span>
+                <?php } ?>
+            </a>
+        </li>
+        <li><a href="<?php echo url('my');?>">我的</a></li>
+    </ul>
+    <ul id="forumList" class="list-unstyled">
+        <?php foreach($forumlist_show as $_forum) { ?>
+            <li forum-id="<?php echo $_forum[fid];?>">
+                <a class="nav-link" href="<?php echo url("forum-$_forum[fid]");?>"><?php echo $_forum['name'];?></a>
+            </li>
+        <?php } ?>
+    </ul>
+</div>

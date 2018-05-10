@@ -294,6 +294,11 @@ $(function() {
 	resize_image();
 	resize_table();
 	$(window).on('resize', resize_image);
+	// 将底部菜单的第二个板块按钮根据现在的板块设置active样式
+	var fid = "<?php echo $fid; ?>";
+	var forumName = $('li[forum-id=' + fid + ']>a').html();
+	$('#bottom-menu>li:eq(1)>a').html(forumName);
+	$('#bottom-menu>li:eq(1)').addClass('bottom-active');
 });
 
 // 输入框自动伸缩

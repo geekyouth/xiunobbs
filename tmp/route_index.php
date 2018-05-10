@@ -116,9 +116,6 @@ if(IS_MOBILE) {
 	return;
 } else {
 	$hotList = get_hot_thread(3); // 热门贴
-	echo '<pre>';
-	var_dump($hotList);
-	echo '</pre>';
 	
 	if($digest == 1) $is_index = 0; // 如果是精华帖页，不显示那3个框
 

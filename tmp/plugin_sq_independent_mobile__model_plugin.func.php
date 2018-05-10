@@ -29,6 +29,7 @@ function get_desc_by_tid($tid) {
 	return $data;
 }
 
+/** 根据个数获得热门贴 */
 function get_hot_thread($num) {
 	$data = db_find('thread', [], ['views' => 0], 1, $num, '', ['tid']);
 	$tids = arrlist_values($data, 'tid');

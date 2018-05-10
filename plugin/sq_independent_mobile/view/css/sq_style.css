@@ -126,16 +126,18 @@ main#body {padding-top: 0.1rem;}
 }
 
 /** 解决百度编辑器的图标太小，不方便点击的问题 */
-.edui-container .edui-toolbar {height: 4rem;}
-.edui-container .edui-btn-toolbar {height: 4rem;}
-.edui-container .edui-btn-toolbar .edui-btn-xnimg {height: 3rem;}
-.edui-container .edui-btn-toolbar .edui-btn-xnimg .edui-icon-xnimg {
-    height: 3rem;
-    width: 3rem;
-    background-image: url(http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/img.png);
-    background-position: 0 0;
-}
-edui-container .edui-btn-toolbar .edui-btn-xnimg>input {
-    width: 3rem;
-    height: 3rem;
+@media screen and (max-width: 639px){
+    .edui-container .edui-toolbar {height: 4rem;}
+    .edui-container .edui-btn-toolbar {height: 4rem;}
+    .edui-container .edui-btn-toolbar .edui-btn-xnimg {height: 3rem;}
+    .edui-container .edui-btn-toolbar .edui-btn-xnimg .edui-icon-xnimg {
+        height: 3rem;
+        width: 3rem;
+        background-image: url(http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/img.png);
+        background-position: 0 0;
+    }
+    edui-container .edui-btn-toolbar .edui-btn-xnimg>input {
+        width: 3rem;
+        height: 3rem;
+    }
 }
