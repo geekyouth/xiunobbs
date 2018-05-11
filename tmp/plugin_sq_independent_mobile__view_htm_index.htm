@@ -141,7 +141,8 @@ if ($haya_favorite_config['show_hot_favorite'] == 1) {
 <script>
 $('li[data-active="fid-0"]').addClass('active');
 // 将底部菜单的首页设置为激活状态
-$('li[bottom-active="fid-0"]').addClass('bottom-active');
+$('#bottom-menu>li:eq(0)').addClass('bottom-active');
+$('#bottom-menu>li:eq(0)>a>div').addClass('icon-active');
 </script>
 <?php if(!empty($threadlist)) { ?>
 <script>

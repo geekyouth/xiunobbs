@@ -4,25 +4,39 @@
 <div id="forumListMask" onclick="sq.showForumList();"></div>
 <div class="sq-bottom-nav">
     <ul id="bottom-menu" class="list-unstyled">
-        <li bottom-active="fid-0"><a href=".">首页</a></li>
-        <li><a href="javascript:;" onclick="sq.showForumList(this);">板块</a></li>
         <li>
-            <?php if(empty($uid)) { ?>
-                <a href="<?php echo url('user-login');?>">+</a>
-            <?php } else { ?>
-                <a href="<?php echo url("thread-create-$fid");?>">+</a>
-            <?php } ?>
+            <a href=".">
+                <div></div>
+                <span>首页</span>
+            </a>
         </li>
         <li>
-            <a href="<?php echo url('my-notice');?>">消息
-                <?php if($user['unread_notices']) {?>
+            <a href="javascript:;" onclick="sq.showForumList(this);">
+                <div></div>
+                <span>板块</span>
+            </a>
+        </li>
+        <li>
+            <?php $addUrl = empty($uid) ? url('user-login') : url("thread-create-$fid"); ?>
+            <a href="<?php echo $addUrl;?>"><div></div></a>
+        </li>
+        <li>
+            <a href="<?php echo url('my-notice');?>">
+                <div></div>
+                <span>消息</span>
+            </a>
+            <?php if($user['unread_notices']) {?>
                 <span class="unread badge badge-danger badge-pill" id="my_notice">
                     <?php echo $user['unread_notices']; ?>
                 </span>
-                <?php } ?>
+            <?php } ?>
+        </li>
+        <li>
+            <a href="<?php echo url('my');?>">
+                <div></div>
+                <span>我的</span>
             </a>
         </li>
-        <li><a href="<?php echo url('my');?>">我的</a></li>
     </ul>
     <ul id="forumList" class="list-unstyled">
         <?php foreach($forumlist_show as $_forum) { ?>
