@@ -26,10 +26,19 @@ if (isset($haya_post_info_config['forum_show_pagination'])
 							
 							<?php } ?>
 							
+							<?php
+if($_thread['is_secret']) { // 如果是匿名模式，跳转到自己的信息页
+    $_thread['uid'] = 0;
+}
+?>
 							<a href="<?php echo url("user-$_thread[uid]");?>" tabindex="-1" class="ml-1 mt-1 mr-3">
 								<img class="avatar-3" src="<?php echo $_thread['user_avatar_url'];?>">
 							</a>
-							
+							<?php
+if($_thread['is_secret']) { // 如果是匿名模式，跳转到自己的信息页
+    $_thread['uid'] = 0;
+}
+?>
 						
 							<div class="media-body">
 								<div class="subject break-all">
@@ -115,7 +124,11 @@ if (isset($haya_post_info_config['today_thread_hightlighter'])
 ?>
 
 										
-										
+										<?php
+if($_thread['last_secret']) { 
+    $_thread['lastusername'] = '******';
+}
+?>
 										<?php if($_thread['lastuid']) { ?>
 										<span>
 											<span class="text-grey mx-2">←</span>

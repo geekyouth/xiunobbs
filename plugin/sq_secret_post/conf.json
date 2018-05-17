@@ -1,0 +1,10 @@
+{
+    "name": "匿名发帖",
+    "brief": "匿名发帖",
+    "version": "1.0",
+    "bbs_version": "4.0.0",
+    "installed": 1,
+    "enable": 1,
+    "hooks_rank": [],
+    "dependencies": []
+}

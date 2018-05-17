@@ -1,0 +1,5 @@
+<?php
+if($thread['is_secret']) { // 如果是匿名模式，跳转到自己的信息页
+    $thread['uid'] = 0;
+}
+?>

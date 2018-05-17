@@ -1,143 +1,53 @@
 <?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/header.inc.htm');?>
+<style>
+	.sq-right {
+		background-image: url(./plugin/sq_independent_mobile/view/images/icon/right.png);
+	}
+</style>
 
-
-
-<div class="btn-group mb-3 d-lg-none" role="group" id="my_mobile_nav">
-
-	
-	<a role="button" class="btn btn-secondary" data-active="menu-my" href="<?php echo url('my');?>">个人资料</a>
-	
-	
-	
-	<a role="button" class="btn btn-secondary" data-active="menu-my-thread" href="<?php echo url('my-thread');?>">论坛帖子</a>
-	<a role="button" class="btn btn-secondary" data-active="menu-my-notice" href="<?php echo url('my-notice');?>"><?php echo lang('notice');?></a>
-	
+<div class="row">
+	<div class="col-4">
+		<div>
+			<img src="<?php echo $user['avatar_url'];?>" />
+		</div>
+	</div>
+	<div class="col-8">
+		<div style="display: inline-block;">
+			<div><?php echo $user['username'];?></div>
+			<div>签到</div>
+		</div>
+		<div style="display: inline-block;">
+			>
+		</div>
+	</div>
+	<div class="col-12">
+		<ul class="list-unstyled list-inline">
+			<li class="list-inline-item">1<br/>主题</li>
+			<li class="list-inline-item">5<br/>帖子</li>
+			<li class="list-inline-item">0<br/>收藏</li>
+			<li class="list-inline-item">10<br/>积分</li>
+		</ul>
+	</div>
 </div>
 
 <div class="row">
-	<!-- 左侧菜单 -->
-	<div class="col-lg-2 hidden-md hidden-sm" id="my_aside">
-		<div class="card">
-			<div class="card-body text-center">
-				
-				<img class="avatar-4" src="<?php echo $user['avatar_url'];?>">
-				<br><?php echo $user['username'];?>
-				
-			</div>
-			<div class="list-group list-group-flush text-center">
-				
-				<a href="<?php echo url('my');?>" class="list-group-item list-group-item-action" data-active="menu-my">个人资料</a>
-				
-				
-				
-				<a href="<?php echo url('my-thread');?>" class="list-group-item list-group-item-action" data-active="menu-my-thread">论坛帖子</a>
-						<a href="<?php echo url('my-notice');?>" class="list-group-item list-group-item-action" data-active="menu-my-notice"><?php echo lang('notice');?></a>
-				
-			</div>
-		</div>
-	</div>
-	<!-- 右侧内容 -->
-	<div class="col-lg-10" id="my_main">
-		
-		<div class="card">
-			<div class="card-header">
-				
-				
-		<ul class="nav nav-tabs card-header-tabs">
-			
-			
-			
-			<li class="nav-item">
-				<a class="nav-link " href="<?php echo url("my");?>" data-active="my-profile"><?php echo lang('my_basic_profile');?></a>
-			</li>
-			
-			
-			
-			<li class="nav-item">
-				<a class="nav-link" href="<?php echo url("my-password");?>" data-active="my-password"><?php echo lang('modify_password');?></a>
-			</li>
-			
-			
-			
-			<!-- 
-			<li class="nav-item">
-				<a class="nav-link" href="<?php echo url("my-avatar");?>" data-active="my-avatar"><?php echo lang('modify_avatar');?></a>
-			</li>
-			-->
-			
-			
-			
-		</ul>
-	
-				
-			</div>
-			<div class="card-body">
-				
-				
-		<div class="row line-height-4">
-			<div class="col-md-6 mx-auto">
-				<div class="form-group text-center">
-					<img id="avatar_img" class="logo-4" src="<?php echo $user['avatar_url'];?>">
-				</div>
-				<div>
-					<span class="text-muted"><?php echo lang('username');?>：</span><?php echo $user['username'];?> </br>
-					<span class="text-danger"><?php echo lang('email');?>：</span><?php echo $user['email'];?>
-				</div>
-				<div class="form-group custom-file">
-					<input type="file" id="avatar_upload" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp"  class="upload custom-file-input" value="<?php echo lang('modify_avatar');?>"/>
-					<label class="custom-file-label" for="customFile">选择头像</label>
-				</div>
-				<div class="progress mt-2">
-					<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"  id="avatar_progress"></div>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<ul class="list-unstyled sq-transverse-ul">
-					<li style="width: 33%;">
-						<span class="text-muted"><?php echo lang('threads');?>：</span><?php echo $user['threads'];?>
-					</li>
-					<li style="width: 33%;">
-						<span class="text-muted"><?php echo lang('posts');?>：</span><?php echo $user['posts'];?>
-					</li>
-					<li style="width: 33%;">
-						<span class="text-muted"><?php echo lang('haya_favorite_count'); ?>：</span><a href="<?php echo url("my-favorites"); ?>" target="_blank"><?php echo intval($user['favorites']);?></a>
-					</li>
-				</ul>
-				<!--
-				<span class="text-muted"><?php echo lang('threads');?>：</span><?php echo $user['threads'];?>
-				<br><span class="text-muted"><?php echo lang('posts');?>：</span><?php echo $user['posts'];?>
-				<br><span class="text-muted"><?php echo lang('haya_favorite_count'); ?>：</span><a href="<?php echo url("my-favorites"); ?>" target="_blank"><?php echo intval($user['favorites']);?></a>
-					<br><span class="text-muted"><?php echo lang('sg_credits');?>：</span><?php echo $user['credits'];?>					<br><span class="text-muted"><?php echo lang('digests');?>：</span><?php echo $user['digests'];?>
-				-->
-			</div>
-			<div class="col-md-6">
-				<span class="text-muted"><?php echo lang('user_group');?>：</span><?php echo $user['groupname'];?>
-				<br><span class="text-muted"><?php echo lang('create_date');?>：</span><?php echo $user['create_date_fmt'];?>
-				<br><span class="text-muted"><?php echo lang('last_login_date');?>：</span><?php echo $user['login_date_fmt'];?>
-				<br>
-				
-			</div>
-			<div style="width: 100%;">
-				<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#logout_modal">退出登陆</button>
-			</div>
-		</div>	
-	
-				
-			</div>
-		</div>
-		
-	</div>
+	我的等级
+	<span class="sq-right"></span>
+</div>
+<div class="row">
+	我的帖子
+</div>
+<div class="row">
+	我的收藏
+</div>
+<div class="row">
+	浏览历史
+</div>
+<div class="row">
+	<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#logout_modal">退出登陆</button>
 </div>
 
-
-
 <?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer.inc.htm');?>
-
-
-
-<script>
-// $('a[data-active="menu-my"]').addClass('active');
-</script>
 
 <!-- 模态框 -->
 <div class="modal fade" id="logout_modal">
@@ -179,7 +89,7 @@ $('#bottom-menu>li:eq(4)>a>div').addClass('icon-active');
 	var jprogress = $('#avatar_progress');
 	var jimg = $('#avatar_img');
 	jprogress.hide();
-	javatar_upload.on('change', function(e) {
+	javatar_upload.on('change', function(e) { // 上传头像的操作
 		var files = xn.get_files_from_event(e);
 		xn.upload_file(
 			files[0], 

@@ -22,8 +22,6 @@ if(empty($action)) {
 	
 	$header['title'] = lang('my_home');
 	
-	
-	
 	include _include(APP_PATH.'view/htm/my.htm');
 	
 /*	

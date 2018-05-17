@@ -64,6 +64,8 @@ function notice_send($fromuid, $recvuid, $message, $type = 99) {
 
 	$nid = notice__create($arr);
 	if($nid === FALSE) return FALSE;
+	
+	// hook notice_send_end.php
 
 	// 更新统计数据	
 	user__update($recvuid, array('unread_notices+'=>1, 'notices+'=>1));
@@ -188,6 +190,8 @@ function notice_format(&$notice){
 	$notice['name'] = isset($notice_menu[$notice['type']]['name']) ? $notice_menu[$notice['type']]['name'] :'message';
 	$notice['class'] = isset($notice_menu[$notice['type']]['class']) ? $notice_menu[$notice['type']]['class'] :'info';
 	$notice['icon'] = isset($notice_menu[$notice['type']]['icon']) ? $notice_menu[$notice['type']]['icon'] :'';
+	
+	// hook notice_format_end.php
 
 }
 

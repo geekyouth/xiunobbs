@@ -146,6 +146,7 @@ function db_update($table, $cond, $update, $d = NULL) {
 	
 	$condadd = db_cond_to_sqladd($cond);
 	$sqladd = db_array_to_update_sqladd($update);
+	
 	if(!$sqladd) return FALSE;
 	return db_exec("UPDATE {$d->tablepre}$table SET $sqladd $condadd", $d);
 }

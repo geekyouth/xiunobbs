@@ -71,6 +71,7 @@ $sg_group = setting_get('sg_group');
 $user_mythread = db_find_one('mythread',  array('uid'=>$uid), array('tid'=>-1), array('tid'));
 $user_create_date = db_find_one('thread', array('tid'=>$user_mythread['tid']), array(), array('create_date'));
 
+$post['is_secret'] = $arr['is_secret'];
 	
 	$pid = post__create($post, $gid);
 	if($pid === FALSE) return FALSE;
@@ -88,6 +89,7 @@ $user_create_date = db_find_one('thread', array('tid'=>$user_mythread['tid']), a
 	);
 	
 	
+$thread['is_secret'] = $arr['is_secret'];
 	
 	$tid = thread__create($thread);
 	if($tid === FALSE) {
@@ -375,6 +377,12 @@ function thread_format(&$thread) {
 	$thread['pages'] = ceil($thread['posts'] / $conf['postlist_pagesize']);
 		
 	
+
+if($thread['is_secret']) {
+    $thread['username'] = '******';
+	$thread['user_avatar_url'] = 'view/img/avatar.png';
+	$thread['user'] = $user;
+}
 	// todo
 	// 如果版块启用了主题分类，则查询。
 	global $time;

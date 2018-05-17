@@ -56,6 +56,10 @@ function post_create($arr, $fid, $gid) {
 	global $conf, $time;
 	
 	
+$isSecret = param('is_secret');
+$isSecret = $isSecret == 'on' ? 1 : 0;
+
+$arr['is_secret'] = $isSecret;
 	
 	$pid = post__create($arr, $gid);
 	if(!$pid) return $pid;
@@ -88,6 +92,12 @@ function post_create($arr, $fid, $gid) {
 	user_update_group($uid);
 	
 	
+
+// 如果是匿名回帖的话，隐藏该回帖信息
+if ($arr['is_secret']) {
+    $tablepre = $_SERVER['db']->tablepre;
+    db_exec("UPDATE {$tablepre}thread SET `last_secret` = 1 WHERE tid = {$tid}");
+}
 	if(search_type() == 'fulltext') {
 		$s = strip_tags($message);
 		$words = search_cn_encode($s);
@@ -462,6 +472,11 @@ function post_format(&$post) {
 	$post['classname'] = 'post';
 	
 	
+if($post['is_secret']) {
+    $post['username'] = '******';
+	$post['user_avatar_url'] = 'view/img/avatar.png';
+	$post['user'] = $user;
+}
 
 }
 

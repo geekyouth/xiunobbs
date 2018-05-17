@@ -1,0 +1,5 @@
+<?php
+if($_notice['is_secret']) { // 如果是匿名模式，跳转到自己的信息页
+    $_notice['fromuid'] = 0;
+}
+?>

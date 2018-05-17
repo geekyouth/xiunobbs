@@ -1,0 +1,118 @@
+<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/header.inc.htm');?>
+
+
+
+<!-- 手机导航 / Mobile navigation -->
+<div class="btn-group mb-3 d-lg-none" role="group" id="user_mobile_nav">
+	
+	<a role="button" class="btn btn-secondary" data-active="menu-user" href="<?php echo url("user-$_uid");?>">个人资料</a>
+	
+	
+	
+	<a role="button" class="btn btn-secondary" data-active="menu-user-thread" href="<?php echo url("user-thread-$_uid");?>">论坛帖子</a>
+	
+</div>
+
+<div class="row">
+
+	<!-- PC 导航 / Mobile navigation -->
+	<div class="col-lg-2 hidden-md hidden-sm" id="user_aside">
+		<div class="card">
+			<div class="card-body text-center">
+				<img class="avatar-4" src="<?php echo $_user['avatar_url'];?>">
+				<br><?php echo $_user['username'];?>
+				
+			</div>
+			<div class="list-group list-group-flush text-center" id="user_nav">
+				
+				<a href="<?php echo url("user-$_uid");?>" class="list-group-item list-group-item-action" data-active="menu-user">个人资料</a>
+				
+				
+				
+				<a href="<?php echo url("user-thread-$_uid");?>" class="list-group-item list-group-item-action" data-active="menu-user-thread">论坛帖子</a>
+				
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-10" id="user_main">
+		
+		<div class="card">
+			<div class="card-header">
+				
+				
+		<ul class="nav nav-tabs card-header-tabs">
+			
+			<li class="nav-item">
+				<a class="nav-link" href="<?php echo url("user-$_uid");?>" data-active="user-profile"><?php echo lang('my_basic_profile');?></a>
+			</li>
+			
+		</ul>
+	
+				
+			</div>
+			<div class="card-body">
+				
+				
+		<div class="row line-height-4">
+			<div class="col-md-2 col-sm-12 text-center">
+				<img class="logo-4" src="<?php echo $_user['avatar_url'];?>">
+				<br><b><?php echo $_user['username'];?> </b>
+				
+			</div>
+			<!-- 隐藏下面的信息
+			<div class="col-4 col-sm-5">
+				<span class="text-muted"><?php echo lang('threads');?>：</span><?php echo $_user['threads'];?>
+				<br><span class="text-muted"><?php echo lang('posts');?>：</span><?php echo $_user['posts'];?>
+									<br><span class="text-muted"><?php echo lang('sg_credits');?>：</span><?php echo $_user['credits'];?>					<br><span class="text-muted"><?php echo lang('digests');?>：</span><?php echo $_user['digests'];?>
+			</div>
+			-->
+			<div class="col-md-12">
+				<ul class="list-unstyled sq-transverse-ul">
+					<li style="width: 33%;">
+						<span class="text-muted"><?php echo lang('threads');?>：</span><?php echo $user['threads'];?>
+					</li>
+					<li style="width: 33%;">
+						<span class="text-muted"><?php echo lang('posts');?>：</span><?php echo $user['posts'];?>
+					</li>
+					<li style="width: 33%;">
+						<span class="text-muted"><?php echo lang('haya_favorite_count'); ?>：</span><a href="<?php echo url("my-favorites"); ?>" target="_blank"><?php echo intval($user['favorites']);?></a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-auto">
+				<span class="text-muted"><?php echo lang('user_group');?>：</span><?php echo $_user['groupname'];?>
+				<br><span class="text-muted"><?php echo lang('create_date');?>：</span><?php echo $_user['create_date_fmt'];?>
+				<br><span class="text-muted"><?php echo lang('last_login_date');?>：</span><?php echo $_user['login_date_fmt'];?>
+				<?php if($gid == 1) { ?>
+				<br><span class="text-danger"><?php echo lang('email');?>：</span><?php echo $_user['email'];?><br>
+				<?php } ?>
+				
+				
+			</div>
+		</div>
+		
+		<?php if(!empty($group['allowdeleteuser'])) { ?>
+			<a role="button" class="btn btn-danger confirm btn-block my-3" data-confirm-text="<?php echo lang('confirm_delete_user');?>" data-method="post" href="<?php echo url("mod-deleteuser-$_user[uid]");?>"><?php echo lang('delete_user');?></a>
+		<?php } ?>
+		
+		
+		
+	
+				
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+
+
+<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer.inc.htm');?>
+
+
+
+<script>$('a[data-active="menu-user"]').addClass('active');</script>
+
+<script>
+$('a[data-active="user-profile"]').addClass('active');
+</script>

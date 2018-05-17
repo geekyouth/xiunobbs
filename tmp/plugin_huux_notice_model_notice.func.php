@@ -64,6 +64,14 @@ function notice_send($fromuid, $recvuid, $message, $type = 99) {
 
 	$nid = notice__create($arr);
 	if($nid === FALSE) return FALSE;
+	
+	
+$isSecret = param('is_secret');
+$isSecret = $isSecret == 'on' ? 1 : 0;
+if ($isSecret) {
+    $tablepre = $_SERVER['db']->tablepre;
+    db_exec("UPDATE {$tablepre}notice SET `is_secret` = 1 WHERE nid = {$nid}");
+}
 
 	// 更新统计数据	
 	user__update($recvuid, array('unread_notices+'=>1, 'notices+'=>1));
@@ -188,6 +196,12 @@ function notice_format(&$notice){
 	$notice['name'] = isset($notice_menu[$notice['type']]['name']) ? $notice_menu[$notice['type']]['name'] :'message';
 	$notice['class'] = isset($notice_menu[$notice['type']]['class']) ? $notice_menu[$notice['type']]['class'] :'info';
 	$notice['icon'] = isset($notice_menu[$notice['type']]['icon']) ? $notice_menu[$notice['type']]['icon'] :'';
+	
+	
+if($notice['is_secret']) {
+    $notice['from_username'] = '******';
+    $notice['from_user_avatar_url'] = 'view/img/avatar.png';
+}
 
 }
 

@@ -103,22 +103,22 @@ main#body {padding-top: 0.1rem;}
     margin: 0px auto;
     background-size: 1.8rem;
 }
-.sq-bottom-nav>#bottom-menu>li:nth-child(1)>a>div {background-image: url('http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/icon/ios-home-outline.png');}
-.sq-bottom-nav>#bottom-menu>li:nth-child(1)>a>div.icon-active {background-image: url('http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/icon/ios-home.png');}
-.sq-bottom-nav>#bottom-menu>li:nth-child(2)>a>div {background-image: url('http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/icon/ios-list-outline.png');}
-.sq-bottom-nav>#bottom-menu>li:nth-child(2)>a>div.icon-active {background-image: url('http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/icon/ios-list.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(1)>a>div {background-image: url('../images/icon/ios-home-outline.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(1)>a>div.icon-active {background-image: url('../images/icon/ios-home.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(2)>a>div {background-image: url('../images/icon/ios-list-outline.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(2)>a>div.icon-active {background-image: url('../images/icon/ios-list.png');}
 .sq-bottom-nav>#bottom-menu>li:nth-child(3)>a {line-height: 3.5rem;} /* 中间的垂直居中 */
 .sq-bottom-nav>#bottom-menu>li:nth-child(3)>a>div {
     width: 2.8rem;
     height: 2.8rem;
     background-size: 2.8rem;
-    background-image: url('http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/icon/add contacts.png');
+    background-image: url('../images/icon/add contacts.png');
 }
 .sq-bottom-nav>#bottom-menu>li:nth-child(3)>a>div.icon-active {transform: rotate(45deg);}
-.sq-bottom-nav>#bottom-menu>li:nth-child(4)>a>div {background-image: url('http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/icon/ios-bell-outline.png');}
-.sq-bottom-nav>#bottom-menu>li:nth-child(4)>a>div.icon-active {background-image: url('http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/icon/ios-bell.png');}
-.sq-bottom-nav>#bottom-menu>li:nth-child(5)>a>div {background-image: url('http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/icon/ios-circle-outline.png');}
-.sq-bottom-nav>#bottom-menu>li:nth-child(5)>a>div.icon-active {background-image: url('http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/icon/ios-circle-filled.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(4)>a>div {background-image: url('../images/icon/ios-bell-outline.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(4)>a>div.icon-active {background-image: url('../images/icon/ios-bell.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(5)>a>div {background-image: url('../images/icon/ios-circle-outline.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(5)>a>div.icon-active {background-image: url('../images/icon/ios-circle-filled.png');}
 
 .sq-bottom-nav>#bottom-menu>li>a>span {display: block; font-size: 0.8rem; letter-spacing: 1px;}
 .sq-bottom-nav>#bottom-menu #my_notice {
@@ -173,7 +173,7 @@ main#body {padding-top: 0.1rem;}
     .edui-container .edui-btn-toolbar .edui-btn-xnimg .edui-icon-xnimg {
         height: 3rem;
         width: 3rem;
-        background-image: url(http://loc.xiunobbs.com/plugin/sq_independent_mobile/view/images/img.png);
+        background-image: url(../images/img.png);
         background-position: 0 0;
     }
     edui-container .edui-btn-toolbar .edui-btn-xnimg>input {

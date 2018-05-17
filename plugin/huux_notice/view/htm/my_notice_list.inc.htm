@@ -1,4 +1,5 @@
 <?php if($noticelist) { foreach($noticelist as &$_notice) { ?>
+<!--{hook my_notice_list_before.htm}-->
 <li class="notice media text-small <?php echo $_notice['isread'] == 1 ? 'isread' : '';?>" data-nid="<?php echo $_notice['nid']?>" >
 
  	<?php if($_notice['type'] == 1 || $_notice['type'] == 3 || $_notice['type'] == 99){?>
@@ -16,7 +17,7 @@
  	 	 	 	 	 	<span class="username text-grey font-weight-bold mr-1"><?php echo $_notice['name'];?></span>
  	 	 	 	 	 	<span class="date text-grey"><?php echo $_notice['create_date_fmt'];?></span> 	 	 	 	 	 	   
  	 	 	 	 	</div>
- 	 	 	 	<?php }else{?>
+				<?php }else{?>
  	 	 	 	 	<div>
  	 	 	 	 	 	<span class="username text-grey font-weight-bold mr-1"><a class="text-grey" href="<?php echo url("user-$_notice[fromuid]");?>"><?php echo $_notice['from_username'];?></a></span>
  	 	 	 	 	 	<span class="date text-grey"><?php echo $_notice['create_date_fmt'];?></span> 	 	 	  
