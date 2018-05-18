@@ -27,11 +27,6 @@ if($thread_list_from_default) {
 	// hook thread_find_by_fids_before.php
 	$threadlist = thread_find_by_fids($fids, $page, $pagesize, $order, $threads);
 	
-// 	echo '<pre>';
-// 	var_dump($threadlist);
-// 	echo '</pre>';
-// 	die;
-	
 }
 
 // 查找置顶帖

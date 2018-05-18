@@ -92,14 +92,14 @@
             imgDiv.find('div').css({width: imgWidth, height: imgHeight});
             imgDiv.find('div:not(:last-child)').css('margin-right', marginWidth);
         },
-        setHotNewSameHeight: function() {
+        setHotNewSameHeight: function() { // 将热门和最新的高度设为一样
             var hotListNode  = $('.sq-hotlist'),
                 lastListNode = $('.sq-lastlist');
             var hotHeight  = hotListNode.height();
             var lastHeight = lastListNode.height();
             hotHeight > lastHeight ? lastListNode.height(hotHeight) : hotListNode.height(lastHeight) ;
         },
-        sqThreadTagClick:  function(e){
+        sqThreadTagClick:  function(e){ // 打开一个帖子，方便pc端操作
             var href = $(this).parents('.tap').attr('href') || $(this).parents('.tap').data('href');
             if(e.target.nodeName == 'INPUT') return true;
             if(e.ctrlKey) {
@@ -158,6 +158,9 @@
     $(function() {
         sq.repairThumbImg();
         $('.sq-thread-tag>.media-body').on('click', sq.sqThreadTagClick);
+        $('#sq-search .search-icon').on('click', function(){ // 为搜索图标加上一个提交的动作
+            $('#sq-search').submit();
+        });
     });
 
     /** 钉钉内部的jsapi */

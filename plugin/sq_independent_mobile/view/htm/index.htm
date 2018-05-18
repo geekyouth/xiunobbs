@@ -7,16 +7,16 @@
 		<!--{hook index_main_start.htm}-->
 
 		<div class="card card-toplist">
-			<div class="card-header" style='<?php if(SQ_MOBILE_PATH) echo "text-align: center; padding: 0.3rem 1.25rem; font-weight: bold;"; ?>'>置顶</div>
+			<div class="card-header" style='<?php if(SQ_MOBILE_PATH) echo "padding: 0px; font-weight: bold; font-size: 1.25rem;"; ?>'>首页置顶</div>
 			<div class="card-body">
-				<ul class="list-unstyled toplist mb-0">
+				<div class="body-content">
 					<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/top_list.inc.htm');?>
-				</ul>
+				</div>
 			</div>
 		</div>
 
 		<div class="card card-threadlist">
-			<div class="card-header" style='<?php if(SQ_MOBILE_PATH) echo "text-align: center; padding: 0.3rem 1.25rem; font-weight: bold;"; ?>'>
+			<div class="card-header" style='<?php if(SQ_MOBILE_PATH) echo "padding: 0px; font-weight: bold; font-size: 1.25rem;"; ?>'>
 				<!--
 				<ul class="nav nav-tabs card-header-tabs">
 					<li class="nav-item">
@@ -25,7 +25,7 @@
 					<!--{hook index_thread_list_nav_item_after.htm}-->
 				</ul>
 				-->
-				最新
+				最新内容
 			</div>
 			<div class="card-body">
 				<ul class="list-unstyled threadlist mb-0">

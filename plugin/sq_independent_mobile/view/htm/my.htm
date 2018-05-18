@@ -6,45 +6,30 @@
 </style>
 
 <div class="row">
-	<div class="col-4">
-		<div>
+	<div class="col-12">
+		<div class="sq-my-avatar">
 			<img src="<?php echo $user['avatar_url'];?>" />
 		</div>
-	</div>
-	<div class="col-8">
-		<div style="display: inline-block;">
-			<div><?php echo $user['username'];?></div>
-			<div>签到</div>
+		<div class="sq-my-info-group">
+			<div class="sq-my-username"><?php echo $user['username'];?></div>
+			<div class="sq-my-email">Email:&nbsp;<?php echo $user['email'];?></div>
 		</div>
-		<div style="display: inline-block;">
-			>
+		<div class="sq-my-change-avatar">
+			<div>更换头像</div>
+			<!-- <input type="file" id="avatar_upload" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp"  class="upload custom-file-input" value="<?php echo lang('modify_avatar');?>"/>
+			<label class="custom-file-label" for="customFile">更换头像</label> -->
 		</div>
 	</div>
-	<div class="col-12">
-		<ul class="list-unstyled list-inline">
-			<li class="list-inline-item">1<br/>主题</li>
-			<li class="list-inline-item">5<br/>帖子</li>
-			<li class="list-inline-item">0<br/>收藏</li>
-			<li class="list-inline-item">10<br/>积分</li>
-		</ul>
+	<div class="col-12 sq-my-login-info">
+		<div class="row">
+			<div class="col-4"><?php echo $user['threads'];?><br/><span class="text-muted">主题数</span></div>
+			<div class="col-4"><?php echo $user['posts'];?><br/><span class="text-muted">帖子数</span></div>
+			<div class="col-4"><?php echo intval($user['favorites']);?><br/><span class="text-muted">收藏数</span></div>
+		</div>
 	</div>
-</div>
-
-<div class="row">
-	我的等级
-	<span class="sq-right"></span>
-</div>
-<div class="row">
-	我的帖子
-</div>
-<div class="row">
-	我的收藏
-</div>
-<div class="row">
-	浏览历史
-</div>
-<div class="row">
-	<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#logout_modal">退出登陆</button>
+	<div class="col-12 sq-my-logout-btn">
+		<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#logout_modal">退出登陆</button>
+	</div>
 </div>
 
 <?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer.inc.htm');?>

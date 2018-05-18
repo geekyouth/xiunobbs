@@ -1,4 +1,8 @@
 <?php if(SQ_INDEP) { ?>
-    <link rel="stylesheet" href="<?php echo 'http://192.168.1.193/xiunobbs/' . SQ_MOBILE_PATH . 'view/css/sq_style.css'; ?>" />
+    <?php if(IS_MOBILE) { ?>
+    <link rel="stylesheet" href="<?php echo './' . SQ_MOBILE_PATH . 'view/css/sq_style.mobile.css'; ?>" />
     <!-- <link rel="stylesheet" href="<?php echo '/' . SQ_MOBILE_PATH . 'view/css/sq_style.css'; ?>" /> -->
+    <?php } else { ?>
+    <link rel="stylesheet" href="<?php echo './' . SQ_MOBILE_PATH . 'view/css/sq_style.pc.css'; ?>" />
+    <?php } ?>
 <?php } ?>

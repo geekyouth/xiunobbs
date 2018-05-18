@@ -1,0 +1,414 @@
+/** 公共class */
+body {background: #FFFFFF;}
+.sq-not-play {display: none;}
+
+/** 用户登陆页 */
+.sq-user-header {
+    margin-top: 6rem;
+}
+.sq-user-header>div {
+    width: 10rem;
+    height: 10rem;
+    margin: 0 auto;
+}
+.sq-user-header>div>img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 10rem;
+    border: 1px solid #ccc;
+}
+.sq-login-email {
+    margin-top: 6rem;
+    padding: 0 0.8rem;
+}
+.sq-login-email>input {
+    border: 0px;
+    border-top: 1px solid #ccc;
+    border-radius: 0px;
+    padding: 0.8rem 0;
+    font-size: 1.1rem;
+}
+.sq-login-email>input:focus {
+    border-color: #ccc;
+    box-shadow: none;
+}
+.sq-login-pwd {
+    padding: 0 0.8rem;
+}
+.sq-login-pwd>input {
+    border: 0px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    padding: 0.8rem 0;
+    font-size: 1.1rem;
+}
+.sq-login-pwd>input:focus {
+    border-color: #ccc;
+    box-shadow: none;
+}
+.sq-login-create {
+    padding: 0.8rem;
+}
+.sq-login-create a>small {
+    color: #424242;
+    font-weight: 600;
+}
+.sq-login-btn {margin-top: 6rem;}
+.sq-login-btn>button {
+    background: #424242;
+    color: white;
+    font-weight: 600;
+    border-radius: 2rem;
+    padding: 0.8rem;
+}
+
+/** 用户页 **/
+.sq-my-avatar {
+    width: 6rem;
+    height: 6rem;
+    margin: 0 auto;
+}
+.sq-my-avatar>img {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 6rem;
+}
+.sq-my-info-group {
+    text-align: center;
+}
+.sq-my-info-group>.sq-my-username {
+    font-size: 2rem;
+}
+
+/** 顶部搜索框 */
+.sq-search-bar {
+    display: flex;
+    flex: 0 0 auto;
+    padding: 0.3rem 15px 0;
+}
+.sq-search-bar>form {
+    display: flex;
+    flex: 1 0 auto;
+}
+.sq-search-bar #sq-search-submit{
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+#sq-search input[name=keyword] {
+    font-size: 1.1rem;
+    width: 95%;
+    margin: 0 auto;
+    /* box-shadow: none; */
+    padding: 0.3rem 1.5rem;
+    border-radius: 1rem;
+    border: 0px;
+    box-shadow: 0px 0px 3px rgba(173, 181, 189, 0.25);
+}
+#sq-search span.search-icon {
+    background-image: url(../images/icon/search.png);
+    width: 1.1rem;
+    height: 1.1rem;
+    position: absolute;
+    top: 0.6rem;
+    right: 1.25rem;
+    z-index: 3;
+}
+#sq-search .input-group-append {
+    display: none;
+}
+
+/** 我的页面的信息列表 */
+.sq-transverse-ul {overflow: hidden; margin-bottom: 0;}
+.sq-transverse-ul>li {float: left;}
+
+/** main.body */
+main#body {padding-top: 0.1rem;}
+
+/** 置顶列表 **/
+.card-toplist .card-body>.body-content {
+    display: flex;
+}
+.card-toplist .card-body>.body-content>.outside {width: 50%;}
+.card-toplist .card-body>.body-content>.outside:first-child {
+    padding-right: 0.8rem;
+}
+.card-toplist .card-body>.body-content>.outside:last-child {
+    padding-left: 0.8rem;
+}
+.card-toplist .outside>.toplist-item {
+    padding: 0.6rem;
+    border-radius: 0.25rem;
+    box-shadow: 0px 0px 3px rgba(173, 181, 189, 0.25);
+}
+
+.card-toplist {
+    background: white;
+    border: 0px;
+    border-radius: 0px;
+    box-shadow: none;
+}
+.card-toplist>.card-header {
+    border-bottom: 0px;
+    background-image: none;
+    background-color: white;
+}
+.card-toplist>.card-body {
+    padding: 0px;
+}
+.card-toplist>.card-body .body-content {
+    margin-top: 10px;
+}
+.toplist-header {
+    height: 3rem;
+    margin-bottom: 0.8rem;
+    position: relative;
+}
+.toplist-header>span:first-child {
+    color: #2B2B2B;
+    text-shadow: 0 0 #2B2B2B;
+    font-family: Microsoft YaHei;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+.toplist-header>.sq-float-tag {
+    position: absolute;
+    right: -0.6rem;
+    top: 1.7rem;
+    background: #F7D768;
+    color: #CCA130;
+    border-top-left-radius: 0.4rem;
+    border-bottom-left-radius: 0.4rem;
+    padding: 0 0.4rem;
+    font-size: 0.8rem;
+}
+.toplist-desc>.toplist-desc-img {
+    width: 100%;
+    height: 6rem;
+    margin: 0 auto;
+    background-size: 100% auto;
+    background-position-y: 50%;
+    background-repeat: no-repeat;
+}
+.toplist-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    margin-top: 0.8rem;
+}
+.toplist-bottom>.toplist-bottom-username {
+    color: #686868;
+    font-weight: 600;
+}
+.toplist-bottom>.toplist-bottom-date {
+    font-size: 0.85rem;
+    color: rgba(134, 142, 150, 0.8) !important;
+}
+
+/** 主题列表 */
+.card-threadlist {
+    background: white;
+    border: 0px;
+    border-radius: 0px;
+    box-shadow: none;
+}
+.card-threadlist>.card-header {
+    border-bottom: 0px;
+    background-image: none;
+    background-color: white;
+}
+.card-threadlist>.card-body {
+    padding: 0px;
+}
+
+.threadlist>li.thread {
+    background: #f5f5f5;
+    margin: 10px 0;
+    border-radius: 8px;
+    padding: 0.7rem;
+}
+
+.sq-thread-tag {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex: 1 0 auto;
+    align-items: center;
+}
+.sq-thread-tag>a {margin-top: 0px !important;}
+
+.sq-thread-tag .avatar-3 {
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 3.2rem;
+}
+
+.sq-thread-tag>.media-body>.d-flex.justify-content-between.small.mt-1 {
+    margin-top: 0px !important;
+}
+
+.media.thread.tap {flex-wrap: wrap;}
+.sq-thumb-img {
+    margin: 12px 0;
+    width: 100%;
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: flex-start;
+    /* padding-left: 3.65rem; */
+}
+.sq-thumb-img>img {width: 5rem; height: 5rem;}
+.sq-thumb-img>div {
+    width: 5rem;
+    height: 3.75rem;
+    background-position-y: 50%;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+}
+.sq-thumb-img>div:not(:last-child) {margin-right: 0.25rem;}
+
+.sq-desc {
+    margin: 12px 0;
+    /* padding-left: 3.65rem; */
+    color: #ccc;
+    overflow: hidden;
+    height: 100%
+}
+
+.sq-tag-bottom {
+    width: 100%;
+}
+
+/** 底部菜单 */
+/** 预留一个高度，以免遮挡 */
+.bottom-placehold {height: 2.5rem; flex: 0 0 auto;}
+.bottom-placehold::after {content: "";}
+.sq-bottom-background {background: #343a40;}
+
+.sq-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+}
+.sq-bottom-nav>#bottom-menu {
+    margin-bottom: 0px;
+    overflow: hidden;
+    height: 3.2rem;
+    /* line-height: 2.5rem; */
+    background: #F8F8F8;
+    opacity: 1;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+/* 激活状态 */
+.sq-bottom-nav li.bottom-active {
+    background: #D2E4F8;
+}
+
+.sq-bottom-nav>#bottom-menu>li {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    float: left;
+    color: white;
+    font-weight: bold;
+}
+.sq-bottom-nav>#bottom-menu>li:first-child {border-top-left-radius: 5px;}
+.sq-bottom-nav>#bottom-menu>li:last-child {border-top-right-radius: 5px;}
+.sq-bottom-nav>#bottom-menu>li>a {
+    color: #000000;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding-top: 0.2rem;
+}
+
+.sq-bottom-nav>#bottom-menu>li>a>div {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin: 0px auto;
+    background-size: 1.8rem;
+}
+.sq-bottom-nav>#bottom-menu>li:nth-child(1)>a>div {background-image: url('../images/icon/ios-home-outline.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(1)>a>div.icon-active {background-image: url('../images/icon/ios-home.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(2)>a>div {background-image: url('../images/icon/ios-list-outline.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(2)>a>div.icon-active {background-image: url('../images/icon/ios-list.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(3)>a {line-height: 3.5rem;} /* 中间的垂直居中 */
+.sq-bottom-nav>#bottom-menu>li:nth-child(3)>a>div {
+    width: 2.8rem;
+    height: 2.8rem;
+    background-size: 2.8rem;
+    background-image: url('../images/icon/add contacts.png');
+}
+.sq-bottom-nav>#bottom-menu>li:nth-child(3)>a>div.icon-active {transform: rotate(45deg);}
+.sq-bottom-nav>#bottom-menu>li:nth-child(4)>a>div {background-image: url('../images/icon/ios-bell-outline.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(4)>a>div.icon-active {background-image: url('../images/icon/ios-bell.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(5)>a>div {background-image: url('../images/icon/ios-circle-outline.png');}
+.sq-bottom-nav>#bottom-menu>li:nth-child(5)>a>div.icon-active {background-image: url('../images/icon/ios-circle-filled.png');}
+
+.sq-bottom-nav>#bottom-menu>li>a>span {display: block; font-size: 0.8rem; letter-spacing: 1px;}
+.sq-bottom-nav>#bottom-menu #my_notice {
+    position: absolute; 
+    float: left; 
+    padding-left: 0.4em; 
+    padding-right: 0.4em;
+    top: 0px;
+    right: 23%;
+}
+.sq-bottom-nav>#bottom-menu>li:not(:last-child) {border-right: 1px solid #ced4da63;}
+
+#forumListMask {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.sq-bottom-nav>#forumList {
+    display: none;
+    position: absolute;
+    float: left;
+    width: 20%;
+    left: 20%;
+    top: 0px;
+    text-align: center;
+    background: #F8F8F8;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    line-height: 1rem;
+    opacity: 0;
+    z-index: 9999;
+    transition: all 0.3s;
+}
+.sq-bottom-nav>#forumList>li:not(:last-child) {border-bottom: 1px solid #ced4da63;}
+.sq-bottom-nav>#forumList>li>a {color: #000000; font-weight: bold; padding: 0.5rem 0; display: block; height: 100%; width: 100%; font-size: 0.8rem;}
+
+/** 解决原来底部的字体会浮上表层 **/
+.text-muted>.container>.row>.col {position: static;}
+
+/** 解决页数的层级太高的问题 */
+.page-item.active .page-link {
+    z-index: 0;
+}
+
+/** 解决百度编辑器的图标太小，不方便点击的问题 */
+@media screen and (max-width: 639px){
+    #body > .container > .row > div {padding: 0.5rem 0.85rem;}
+
+    .edui-container .edui-toolbar {height: 4rem;}
+    .edui-container .edui-btn-toolbar {height: 4rem;}
+    .edui-container .edui-btn-toolbar .edui-btn-xnimg {height: 3rem;}
+    .edui-container .edui-btn-toolbar .edui-btn-xnimg .edui-icon-xnimg {
+        height: 3rem;
+        width: 3rem;
+        background-image: url(../images/img.png);
+        background-position: 0 0;
+    }
+    edui-container .edui-btn-toolbar .edui-btn-xnimg>input {
+        width: 3rem;
+        height: 3rem;
+    }
+}
