@@ -1,4 +1,4 @@
-else if($action == 'getsess') {
+else if($action == 'getsess') { // 获得当前sq定义的tmp_files_sq，如果session里面有该下标，返回一个组装好的html
 
     $filelistSq = $_SESSION['tmp_files_sq'];
 

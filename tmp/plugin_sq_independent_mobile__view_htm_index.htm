@@ -7,7 +7,7 @@
 		
 
 		<div class="card card-toplist">
-			<div class="card-header" style='<?php if(SQ_MOBILE_PATH) echo "padding: 0px; font-weight: bold; font-size: 1.25rem;"; ?>'>首页置顶</div>
+			<div class="card-header <?php if(SQ_MOBILE_PATH) echo 'card-header-title'; ?>">首页置顶</div>
 			<div class="card-body">
 				<div class="body-content">
 					<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/top_list.inc.htm');?>
@@ -16,7 +16,7 @@
 		</div>
 
 		<div class="card card-threadlist">
-			<div class="card-header" style='<?php if(SQ_MOBILE_PATH) echo "padding: 0px; font-weight: bold; font-size: 1.25rem;"; ?>'>
+			<div class="card-header <?php if(SQ_MOBILE_PATH) echo 'card-header-title'; ?>">
 				<!--
 				<ul class="nav nav-tabs card-header-tabs">
 					<li class="nav-item">

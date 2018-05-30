@@ -12,7 +12,7 @@ if(IS_MOBILE) {
 		}
 	}
 
-	$dontShowAuthor = true;
+	$dontShowAuthor = true; // 不要显示作者的头像
 
 	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/htm/my_thread.htm');
 	return;

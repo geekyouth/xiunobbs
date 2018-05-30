@@ -1,5 +1,5 @@
 // 将两个图片数组合并
-$sess_tmp_files_sq = $_SESSION['tmp_files_sq'];
+$sess_tmp_files_sq = $_SESSION['tmp_files_sq']; // 获得session里面定义的文件
 $sess_tmp_files = array_merge($sess_tmp_files, $sess_tmp_files_sq);
 
 $attach_dir_save_rule = array_value($conf, 'attach_dir_save_rule', 'Ym'); // 获得保存路径的规则

@@ -13,7 +13,7 @@
             }
         }
 
-        $showSearchCond = true;
+        $showSearchCond = true; // 显示搜索的条件
 
 		$show_search = 2;
         include _include(APP_PATH . SQ_MOBILE_PATH . 'view/other_plugin/search.htm');

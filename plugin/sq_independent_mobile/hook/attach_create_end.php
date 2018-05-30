@@ -1,5 +1,5 @@
 <?php exit;
-    $notSess = param('not_sess');
+    $notSess = param('not_sess'); // not_sess表示这个文件不应该存到原来的SESSION['tmp_files']里面
     if ($notSess) {
         empty($_SESSION['tmp_files_sq']) AND $_SESSION['tmp_files_sq'] = array();
         $sqN = count($_SESSION['tmp_files_sq']);

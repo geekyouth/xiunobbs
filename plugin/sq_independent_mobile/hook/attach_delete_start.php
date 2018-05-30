@@ -1,7 +1,7 @@
 <?php exit;
-    $isSq = param(3);
+    $isSq = param(3); // 判断删除的图片是否sq定义的
     if($isSq) {
-        if(substr($aid, 0, 1) == '_'){
+        if(substr($aid, 0, 1) == '_'){ // 如果是tmp文件，未保存到数据库的
             $key = intval(substr($aid, 1));
             $tmp_files = _SESSION('tmp_files_sq');
             !isset($tmp_files[$key]) AND message(-1, lang('item_not_exists', array('item'=>$key)));
