@@ -1,15 +1,17 @@
-<template include="./plugin/sq_independent_mobile/view/htm/user_thread.template.htm">
-	<slot name="user_body">
-		<ul class="list-unstyled threadlist">
-			<?php include _include(APP_PATH.'view/htm/thread_list.inc.htm'); ?>
-		</ul>
-		
-		<?php if($pagination) { ?>
-		<nav><ul class="pagination justify-content-center"><?php echo $pagination; ?></ul></nav>
-		<?php } ?>
-	</slot>
-</template>
+<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/header.inc.htm');?>
+
+<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/user_header.htm'); ?>
+
+	<ul class="list-unstyled threadlist">
+		<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/thread_list.inc.htm'); ?>
+	</ul>
+	
+	<?php if($pagination) { ?>
+	<nav><ul class="pagination justify-content-center"><?php echo $pagination; ?></ul></nav>
+	<?php } ?>
+
+<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer.inc.htm');?>
 
 <script>
-$('a[data-active="user-thread"]').addClass('active');
+	$('.sq-user-nav>div:eq(0)').addClass('active');
 </script>

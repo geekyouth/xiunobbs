@@ -207,7 +207,6 @@ function thread_delete($tid) {
 	$uid = $thread['uid'];
 	
 	
-	thread_digest_delete($tid, $uid, $fid);
 	db_delete('thread_search', array('tid'=>$tid));
 
 	

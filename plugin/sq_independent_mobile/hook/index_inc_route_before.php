@@ -35,3 +35,8 @@ defined('SQ_INDEP') OR define('SQ_INDEP', $indepPluginConf); // 判断是否手�
 
 defined('IS_MOBILE') OR define('IS_MOBILE', isMobile() ? 1 : 0); // 判断是否手机端
 define('SQ_MOBILE_PATH', SQ_INDEP ? 'plugin/sq_independent_mobile/' : ''); // 如果手机独立模板开启，那么定义一个插件目录
+
+/** 注册错误函数 */
+// register_shutdown_function(function(){ 
+//   var_dump(error_get_last());
+// });

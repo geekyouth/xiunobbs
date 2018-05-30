@@ -1,0 +1,18 @@
+<div class="row sq-user-info">
+    <div class="sq-user-info-container text-center">
+        <div class="sq-user-avatr">
+            <img src="<?php echo $_user['avatar_url']; ?>">
+        </div>
+        <div class="sq-user-name">
+            <h3><?php echo $_user['username']; ?></h3>
+        </div>
+    </div>
+</div>
+<div class="row sq-user-nav">
+    <div class="col-6 text-center">
+        <a href="<?php echo url('user-thread-' . $_uid); ?>">帖子</a>
+    </div>
+    <div class="col-6 text-center">
+        <a href="<?php echo url('user-post-' . $_uid); ?>">评论</a>
+    </div>
+</div>

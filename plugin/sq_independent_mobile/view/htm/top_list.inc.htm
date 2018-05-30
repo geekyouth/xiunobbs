@@ -15,23 +15,25 @@
 					<?php $topIndex++; ?>
 					<div class="outside">
 						<div class="toplist-item">
-							<div class="toplist-header">
-								<span ><?php echo $_thread['subject'];?></span>
-								<span class="sq-float-tag">TOP<?php echo $topIndex; ?></span>
-							</div>
-							<div class="toplist-desc">
-								<?php
-									$thumbImg = './' . SQ_MOBILE_PATH . 'view/images/no-pic.jpg';
-									if($_thread['images_url'][0]['filename']) { 
-										$thumbImg = './upload/attach/thumb/' . $_thread['images_url'][0]['filename'];
-									}
-								?>
-								<div class="toplist-desc-img" style="background-image: url(<?php echo $thumbImg; ?>)"></div>
-							</div>
-							<div class="toplist-bottom">
-								<span class="toplist-bottom-username"><?php echo $_thread['username'];?></span>
-								<span class="toplist-bottom-date"><?php echo $_thread['create_date_fmt'];?></span>
-							</div>
+							<a href="<?php echo url("thread-$_thread[tid]");?>">
+								<div class="toplist-header">
+									<span ><?php echo $_thread['subject'];?></span>
+									<span class="sq-float-tag">TOP<?php echo $topIndex; ?></span>
+								</div>
+								<div class="toplist-desc">
+									<?php
+										$thumbImg = './' . SQ_MOBILE_PATH . 'view/images/no-pic.jpg';
+										if($_thread['images_url'][0]['filename']) { 
+											$thumbImg = './upload/attach/thumb/' . $_thread['images_url'][0]['filename'];
+										}
+									?>
+									<div class="toplist-desc-img" style="background-image: url(<?php echo $thumbImg; ?>)"></div>
+								</div>
+								<div class="toplist-bottom">
+									<span class="toplist-bottom-username"><?php echo $_thread['username'];?></span>
+									<span class="toplist-bottom-date"><?php echo $_thread['create_date_fmt'];?></span>
+								</div>
+							</a>
 						</div>
 					</div>
 					<?php if(topIndex >= 2) break; ?>

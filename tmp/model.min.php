@@ -1387,7 +1387,6 @@ function thread_delete($tid) {
 	$uid = $thread['uid'];
 	
 	
-	thread_digest_delete($tid, $uid, $fid);
 	db_delete('thread_search', array('tid'=>$tid));
 
 	
@@ -2328,6 +2327,23 @@ function post_list_access_filter(&$postlist, $gid) {
 }
 
 
+function post_img_list_html($filelistSq) {
+    if(empty($filelistSq)) return '';
+
+    $filelistSq = arrlist_multisort($filelistSq, 'aid');
+
+    $deleteIcon = '<span class="img-delete-icon" onclick="sqDeleteImg(this);"></span>';
+    $html = '';
+    foreach ($filelistSq as &$attach) {
+        $html .= '<div class="sq-img-div" data-id="' . $attach['aid'] . '" style="background-image: url(' . $attach['url'] . ')">' . $deleteIcon . '</div>';
+    }
+    return $html;
+}
+
+function get_imgs_by_postid($pid) {
+    $imgs = db_find('attach', ['pid' => $pid], ['aid' => 1], 1, 5, '', ['aid', 'filename']);
+    return $imgs;
+}
 // 此处有缓存，是否有必要？
 function post_find_by_uid($uid, $page = 1, $pagesize = 50) {
 	global $conf;
@@ -2431,6 +2447,10 @@ function attach_delete($aid) {
 	
 	$r = attach__delete($aid);
 	
+$tid = $attach['tid'];
+if($attach['is_image']){
+    db_update('thread', ['tid' => $tid], ['image-' => 1]);
+}
 	return $r;
 }
 
@@ -2539,8 +2559,9 @@ function attach_assoc_post($pid) {
 	$post = post__read($pid);
 	if(empty($post)) return;
 	
-	// 生成缩略图
-include _include(APP_PATH . SQ_MOBILE_PATH . '/model/plugin.func.php');
+	// 将两个图片数组合并
+$sess_tmp_files_sq = $_SESSION['tmp_files_sq'];
+$sess_tmp_files = array_merge($sess_tmp_files, $sess_tmp_files_sq);
 
 $attach_dir_save_rule = array_value($conf, 'attach_dir_save_rule', 'Ym'); // 获得保存路径的规则
 $day = date($attach_dir_save_rule, $time); // 保存的日期
@@ -2549,8 +2570,10 @@ $thumbImgPath = APP_PATH . 'upload/attach/thumb/' . $day; // 保存路径
 foreach($sess_tmp_files as $_file) { // 循环生成缩略图
 	$filename = file_name($_file['url']);
 	$filename = str_replace(".", ".thumb.", $filename);
-	
-	get_compress_image($_file['url'], $thumbImgPath, $filename);
+
+	if(file_exists($_file['url'])){
+		get_compress_image($_file['url'], $thumbImgPath, $filename);
+	}
 }
 	
 	$tid = $post['tid'];
@@ -2633,6 +2656,7 @@ foreach($sess_tmp_files as $_file) { // 循环生成缩略图
 	post__update($pid, array('images'=>$images, 'files'=>$files));
 	
 	
+$_SESSION['tmp_files_sq'] = array(); // 清空session
 	
 	return TRUE;
 }
@@ -2842,10 +2866,7 @@ function runtime_init() {
 		cache_set('runtime', $runtime);
 		
 	}
-	if($runtime === NULL || !isset($runtime['digests'])) {
-	$runtime['digests'] = thread_digest_count();
-	cache_set('runtime', $runtime);
-}
+	
 	return $runtime;
 }
 
@@ -4189,6 +4210,177 @@ function haya_post_like_humandate($timestamp, $lan = array()) {
 }
 
 
+?><?php
+
+
+function get_forum_list() {
+    $data = db_find('forum', [], ['fid' => 1], 1, 10, '', ['fid', 'name']);
+    return $data;
+}
+
+/** 通过板块id获得tag信息 **/
+function get_tag_by_fid($fid) {
+    $data = db_find_one('tag_cate', ['fid' => $fid], [], ['cateid']); // 只找了一个分类，这个必然要是部门
+    $data = db_find('tag', ['cateid' => $data['cateid']], [], 1, 10, '', ['tagid', 'name']); // 这个只找了10条记录，如果有更多，改写10
+    return $data;
+}
+
+function get_tagname_by_tagid($tagid) {
+	$data = db_find_one('tag', ['tagid' => $tagid], [], ['name']);
+	return $data;
+}
+
+/** 组装帖子详情页里面的图片html内容 */
+function thread_images_html($tid) {
+    $pid = db_find_one('post', ['tid' => $tid, 'isfirst' => 1], [], ['pid']);
+    $data = db_find('attach', ['pid' => $pid['pid']], ['aid' => 1]);
+    $html = '';
+    if ($data) {
+    	foreach($data as $item) {
+    		$html .= '<div><img src="./upload/attach/' . $item['filename'] . '"></div>';
+    	}
+    }
+    
+    return $html;
+}
+
+function get_forum_and_tag() {
+    $forum = get_forum_list();
+    foreach($forum as &$_forum) {
+        $_forum['tags'] = get_tag_by_fid($_forum['fid']);
+    }
+    return $forum;
+}
+?><?php
+ 
+// 根据帖主题查找图片,由于部分图片太大并且没有缩略图，所以这里先限制可显示的大小
+function get_images_by_tid($tid, $isThumb = false) {
+	$data = db_find('attach', ['tid' => $tid, 'isimage' => 1], ['aid' => 1], 1, 3, '', ['aid', 'filename']);
+	if($isThumb) {
+		$uploadPath = './upload/attach/';
+		$path = './upload/attach/thumb/'; // 缩略图目录
+		
+		foreach($data as &$item) {
+			$originFilename = $item['filename'];
+			$item['filename'] = str_replace(".", ".thumb.", $item['filename']);
+			$filename = explode('/', $item['filename']);
+			$day = $filename[0];
+			$filename = $filename[1]; // 取后面的文件名
+			if(!file_exists($path . $item['filename'])) { // 如果没有该缩略图的话，生成一个
+				get_compress_image($uploadPath . $originFilename, $path . $day . '/', $filename);
+			}
+		}
+	}
+	return $data;
+}
+
+/** 根据id获得帖子的内容简介 */
+function get_desc_by_tid($tid) {
+	$data = db_find_one('post', ['tid' => $tid, 'isfirst' => 1], [], ['message_fmt']);
+	$data = preg_replace('/<\/?.+?>/', '', $data);
+	$data = cut_str($data['message_fmt'], 50); // 获得前50个字符
+	if($data) $data .= '...'; // 加上省略号
+	return $data;
+}
+
+/** 根据个数获得热门贴 */
+function get_hot_thread($num) {
+	$data = db_find('thread', [], ['views' => 0], 1, $num, '', ['tid']);
+	$tids = arrlist_values($data, 'tid');
+	$threadList = thread_find_by_tids($tids);
+	$threadList = arrlist_multisort($threadList, 'views', false);
+	return $threadList;
+}
+
+/**
+ * 下载压缩后的图片
+ * @param unknown $url
+ * @param unknown $percent
+ */
+function get_compress_image($url, $save_dir='', $filename='') {
+	if(trim($url)==''){
+		return array('file_name'=>'','save_path'=>'','error'=>1);
+	}
+	if(trim($save_dir)==''){
+		$save_dir='./';
+	}
+	if(trim($filename)==''){//保存文件名
+		/* 原来的判断
+		 $ext=strrchr($url,'.');
+		 if($ext!='.gif'&&$ext!='.jpg'&&$ext!='.png'){
+		 return array('file_name'=>'','save_path'=>'','error'=>3);
+		 }
+		 $filename=time().$ext;
+		 */
+		// 保存原来的文件名
+		if(!preg_match('/\/([^\/]+\.[a-z]{3,4})$/i', $url, $matches)){
+			return array('file_name'=>'','save_path'=>'','error'=>3);
+		}
+		$filename = strToLower($matches[1]);
+	}
+	if(0!==strrpos($save_dir,'/')){
+		$save_dir.='/';
+	}
+	//创建保存目录
+	if(!file_exists($save_dir)&&!mkdir($save_dir,0777,true)){
+		return array('file_name'=>'','save_path'=>'','error'=>5);
+	}
+	
+	list($width, $height, $type, $attr) = getimagesize($url);
+	$imageInfo = array(
+			'width' => $width,
+			'height' => $height,
+			'type' => image_type_to_extension($type,false),
+			'attr' => $attr
+	);
+	$fun = 'imagecreatefrom' . $imageInfo['type'];
+	$simg = $fun($url);
+	// 将图片宽高等比60%保存
+	$new_width = $imageInfo['width'] * 0.6;
+	$new_height = $imageInfo['height'] * 0.6;
+	$image_thump = imagecreatetruecolor($new_width, $new_height);
+	imagecopyresampled($image_thump, $simg, 0, 0, 0, 0, $new_width, $new_height, $imageInfo['width'], $imageInfo['height']);
+	imagedestroy($simg);
+	$funcs = 'image'.$imageInfo['type'];
+	$funcs($image_thump, $save_dir . $filename);
+	
+	return array('file_name'=>$filename,'save_path'=>$save_dir.$filename,'error'=>0);
+}
+
+ 
+/** 截取中文字符串  */
+/* 
+Utf-8、gb2312都支持的汉字截取函数 
+cut_str(字符串, 截取长度, 开始长度, 编码); 
+编码默认为 utf-8 
+开始长度默认为 0 
+*/
+function cut_str($string, $sublen, $start = 0, $code = 'UTF-8') { 
+	if($code == 'UTF-8') { 
+		$pa ="/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|\xe0[\xa0-\xbf][\x80-\xbf]|[\xe1-\xef][\x80-\xbf][\x80-\xbf]|\xf0[\x90-\xbf][\x80-\xbf][\x80-\xbf]|[\xf1-\xf7][\x80-\xbf][\x80-\xbf][\x80-\xbf]/"; 
+		preg_match_all($pa, $string, $t_string);
+		if(count($t_string[0]) - $start > $sublen) return join('', array_slice($t_string[0], $start, $sublen)); 
+		return join('', array_slice($t_string[0], $start, $sublen)); 
+	} else { 
+		$start = $start*2; 
+		$sublen = $sublen*2; 
+		$strlen = strlen($string); 
+		$tmpstr = '';
+		for($i=0; $i<$strlen; $i++) { 
+			if($i>=$start && $i<($start+$sublen)) { 
+				if(ord(substr($string, $i, 1))>129) { 
+					$tmpstr.= substr($string, $i, 2); 
+				} 
+				else { 
+					$tmpstr.= substr($string, $i, 1); 
+				} 
+			} 
+			if(ord(substr($string, $i, 1))>129) $i++; 
+		} 
+		if(strlen($tmpstr) < $strlen) $tmpstr.= ""; 
+		return $tmpstr; 
+	} 
+}
 ?><?php
 
 

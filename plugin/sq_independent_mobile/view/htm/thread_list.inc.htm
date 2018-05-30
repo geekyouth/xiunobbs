@@ -21,9 +21,11 @@
 							<?php } ?>
 							
 							<!--{hook thread_list_inc_avatar_before.htm}-->
+							<?php if(!$dontShowAuthor) { ?>
 							<a href="<?php echo url("user-$_thread[uid]");?>" tabindex="-1" class="ml-1 mt-1 mr-3">
 								<img class="avatar-3" src="<?php echo $_thread['user_avatar_url'];?>">
 							</a>
+							<?php } ?>
 							<!--{hook thread_list_inc_avatar_after.htm}-->
 						
 							<div class="media-body">
@@ -35,7 +37,9 @@
 									<?php } ?>
 									<!--{hook thread_list_inc_subject_top_after.htm}-->
 									
+									<!-- 不使用下面的锚点
 									<!--{hook thread_list_inc_subject_before.htm}-->
+									-->
 									<a href="<?php echo url("thread-$_thread[tid]");?>"><?php echo $_thread['subject'];?></a>
 									<!--{hook thread_list_inc_subject_after.htm}-->
 									
@@ -47,11 +51,16 @@
 									<?php if($_thread['closed'] > 0) { ?><i class="icon-lock"></i><?php } ?>
 									<!--{hook thread_list_inc_lock_icon_after.htm}-->
 									
+									<?php if($route == 'my') { ?>
+									<i class="sq-icon-more sq-position-right" pid="<?php echo $_thread['firstpid']; ?>" tid="<?php echo $_thread['tid']; ?>"></i>
+									<?php } ?>
 								</div>
 								<div class="d-flex justify-content-between small mt-1">
 									<div>
 										<!--{hook thread_list_inc_username_before.htm}-->
+										<?php if(!$dontShowAuthor) { ?>
 										<span class="username text-grey mr-1" uid="<?php echo $_thread['uid'];?>">BY:&nbsp;&nbsp;<?php echo $_thread['username'];?></span>
+										<?php } ?>
 										<!-- <span class="date text-grey<?php if($_thread['lastuid']) { ?> hidden-sm<?php } ?>"><?php echo $_thread['create_date_fmt'];?></span> -->
 										<!--{hook thread_list_inc_username_after.htm}-->
 										
@@ -123,7 +132,10 @@
 					</li>
 					<?php }} else { ?>
 					<li>
-						<div><?php echo lang('none');?></div>
+						<div class="sq-no-thread">
+							<div></div>
+							<span>没有帖子</span>
+						</div>
 					</li>
 					<?php } ?>
 					<!--{hook thread_list_inc_end.htm}-->

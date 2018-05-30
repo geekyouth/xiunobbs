@@ -98,6 +98,11 @@ defined('SQ_INDEP') OR define('SQ_INDEP', $indepPluginConf); // 判断是否手�
 defined('IS_MOBILE') OR define('IS_MOBILE', isMobile() ? 1 : 0); // 判断是否手机端
 define('SQ_MOBILE_PATH', SQ_INDEP ? 'plugin/sq_independent_mobile/' : ''); // 如果手机独立模板开启，那么定义一个插件目录
 
+/** 注册错误函数 */
+// register_shutdown_function(function(){ 
+//   var_dump(error_get_last());
+// });
+
 if(!defined('SKIP_ROUTE')) {
 	
 	// 按照使用的频次排序，增加命中率，提高效率
@@ -113,7 +118,7 @@ if(!defined('SKIP_ROUTE')) {
 		case 'post': 	include _include(APP_PATH.'route/post.php'); 	break;
 		case 'mod': 	include _include(APP_PATH.'route/mod.php'); 	break;
 		case 'browser': include _include(APP_PATH.'route/browser.php'); break;
-		case 'dd_login': include APP_PATH.'plugin/sq_dd_autoLogin/route/dd_login.php'; break;
+		case 'dd_login': include APP_PATH.'plugin/sq_dd_autoLogin/route/dd_login.php'; break;        case 'f_select': include _include(APP_PATH . SQ_MOBILE_PATH . 'route/f_select.php'); break;
 		case 'search': include _include(APP_PATH.'plugin/xn_search/route/search.php'); break;case 'vcode': include _include(APP_PATH.'plugin/xn_vcode/route/vcode.php'); break;
 		default: 
 			

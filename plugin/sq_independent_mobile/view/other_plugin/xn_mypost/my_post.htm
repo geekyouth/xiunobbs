@@ -1,15 +1,20 @@
-<template include="./plugin/sq_independent_mobile/view/htm/my_thread.template.htm">
-	<slot name="my_body">
-		<ul class="list-unstyled postlist mb-0">
-			<?php include _include(APP_PATH.'view/htm/post_list.inc.htm');?>
-		</ul>
-		
-		<?php if($pagination) { ?>
-		<nav><ul class="pagination justify-content-center"><?php echo $pagination; ?></ul></nav>
-		<?php } ?>
-	</slot>
-</template>
+<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/header.inc.htm');?>
+
+<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/my_header.htm'); ?>
+
+	<ul class="list-unstyled postlist mb-0">
+		<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/my_post_list.inc.htm');?>
+	</ul>
+	
+	<?php if($pagination) { ?>
+	<nav><ul class="pagination justify-content-center"><?php echo $pagination; ?></ul></nav>
+	<?php } ?>
+
+<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer.inc.htm');?>
 
 <script>
-$('a[data-active="my-post"]').addClass('active');
+	$('.sq-my-hearder>div:eq(2)').addClass('active');
+	// active底部菜单
+	$('#bottom-menu>li:eq(4)').addClass('bottom-active');
+	$('#bottom-menu>li:eq(4)>a>div').addClass('icon-active');
 </script>

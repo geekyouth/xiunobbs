@@ -19,7 +19,9 @@
 	<!--{hook footer_nav_before.htm}-->
 
 	<!-- <?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer_nav.inc.htm'); ?> -->
-	<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer_nav_bar.htm'); ?>
+	<?php if(!$noBottomNav) { ?>
+		<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer_nav_bar.htm'); ?>
+	<?php } ?>
 	
 	<!--{hook footer_nav_after.htm}-->
 	

@@ -1,0 +1,27 @@
+<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/header.inc.htm');?>
+
+<ul class="list-unstyled f-select-ul">
+    <?php if($condition == 'f') { ?>
+    <?php    foreach($forumList as $item) { ?>
+        <li data-url="<?php echo url('f_select-t-'.$item['fid']); ?>">
+            <span><?php echo $item['name']; ?></span>
+            <span class="sq-right-icon"></span>
+        </li>
+    <?php    } ?>
+    <?php } else if($condition == 't') { ?>
+    <?php    foreach($tagList as $item) { ?>
+        <li data-url="<?php echo url('thread-create-'.$fid.'-'.$item['tagid']); ?>">
+            <span><?php echo $item['name']; ?></span>
+            <span class="sq-right-icon"></span>
+        </li>
+    <?php    } ?>
+    <?php } ?>
+</ul>
+
+<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer.inc.htm');?>
+
+<script>
+    $('.f-select-ul>li').on('click', function(e){
+        window.location = $(this).attr('data-url');
+    });
+</script>

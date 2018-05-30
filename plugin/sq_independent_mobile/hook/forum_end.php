@@ -1,8 +1,6 @@
 <?php exit;
 if(IS_MOBILE) {
 
-	include _include(APP_PATH . SQ_MOBILE_PATH . '/model/plugin.func.php');
-
 	/** 将图片地址添加到列表项里面 */
 	foreach($threadlist as &$item) {
 		if($item['images']) {

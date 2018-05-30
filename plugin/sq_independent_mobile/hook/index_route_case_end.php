@@ -1,0 +1,1 @@
+        case 'f_select': include _include(APP_PATH . SQ_MOBILE_PATH . 'route/f_select.php'); break;

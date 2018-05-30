@@ -19,7 +19,9 @@
 	
 
 	<!-- <?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer_nav.inc.htm'); ?> -->
-	<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer_nav_bar.htm'); ?>
+	<?php if(!$noBottomNav) { ?>
+		<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer_nav_bar.htm'); ?>
+	<?php } ?>
 	
 	
 	
@@ -242,23 +244,6 @@
         });
     });
 </script><script>
-// 版主管理：精华
-/*
-$('.mod-button button.digest').on('click', function() {
-	var modtid = $('input[name="modtid"]').checked();
-	if(modtid.length == 0) return $.alert(lang.please_choose_thread);
-	var radios = xn.form_radio('digest', {"0": "<?php echo lang('digest_0');?>", "1": "<?php echo lang('digest_1');?>","2": "<?php echo lang('digest_2');?>", "3": "<?php echo lang('digest_3');?>"});
-	$.confirm("<?php echo lang('set_digest_thread');?>", function() {
-		var tids = xn.implode('_', modtid);
-		var digest = $('input[name="digest"]').checked();
-		var postdata = {digest: digest};
-		$.xpost(xn.url('mod-digest-'+tids), postdata, function(code, message) {
-			if(code != 0) return $.alert(message);
-			$.alert(message).delay(1000).location('');
-		});
-	}, {'body': '<p>'+"<?php echo lang('digest_level');?>"+'：'+radios+'</p>'});
-})*/
-</script><script>
 function xn_read_unread(tids, tid) {
 	
 	// 当前时间
@@ -379,7 +364,7 @@ $('body').on('click', '.update_log_delete', function() {
 
 <?php } ?>
 
-<div id="scroll_to_top" class="d-fixed" style="position: fixed; _position: absolute; bottom: 80px; right: 10px; width: 70px; height: 70px; display: none;">
+<div id="scroll_to_top" class="d-fixed" style="position: fixed; _position: absolute; bottom: 160px; right: 5px; width: 70px; height: 70px; display: none;">
 	<a href="javascript:void(0);" style="width: 70px; height: 70px; display: inline-block; background: url(plugin/xn_top/scroll_top.png) no-repeat; outline: none;" title="返回顶部"></a>
 </div>
 	

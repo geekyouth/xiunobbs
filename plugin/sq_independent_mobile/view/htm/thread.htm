@@ -98,15 +98,13 @@
 					</div>
 				</div>
 				<ul class="list-unstyled postlist">
-					<?php include _include(APP_PATH.'view/htm/post_list.inc.htm'); ?>
+					<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/post_list.inc.htm'); ?>
 					
 					<?php if(!empty($user)) { ?>
-					<li class="post newpost media">
-						<a href="<?php echo url("user-$user[uid]");?>" class="mr-3" tabindex="-1">
-							<img class="avatar-3" src="<?php echo $user['avatar_url'];?>">
-						</a>
+					<li class="post newpost media" id="sqReplyContainer">
+						
 						<div class="media-body">
-							<div class="d-flex justify-content-between small text-muted">
+							<div class="d-flex justify-content-between small text-muted" id="sqPostFloor">
 								<div>
 									<div><?php echo $user['username'];?></div>
 								</div>
@@ -114,31 +112,37 @@
 									<span class="floor" id="newfloor"><?php echo ($thread['posts'] + 2);?></span><?php echo lang('floor');?>
 								</div>
 							</div>
-							<div>
-								<form action="<?php echo url("post-create-$tid-1");?>" method="post" id="quick_reply_form" class="d-block">	
+							
+							<form action="<?php echo url("post-create-$tid-1");?>" method="post" id="quick_reply_form" class="d-block">	
+
+								<div class="d-flex justify-content-between align-items-center text-muted" style="margin-top: 0.5rem;">
+									<div class="action-icons">
+										<!--{hook sq_thread_reply_left.htm}-->
+										<i class="sq-icon-image sq-md-icon"></i>
+									</div>
+									<div>
+										<!--{hook sq_thread_reply_right.htm}-->
+									</div>
+								</div>
+								<div>
+									
 									<input type="hidden" name="doctype" value="1" />
 									<input type="hidden" name="return_html" value="1" />
 									<input type="hidden" name="quotepid" value="0" />
 									
 									<div class="message mt-1">
-										<textarea class="form-control" placeholder="<?php echo lang('message');?>" name="message" id="message"></textarea>
-									</div>
-									<div class="text-muted mt-2 small">
-										<div class="d-flex justify-content-between">
-											<div>
-												<!--{hook thread_quick_reply_left_start.htm}-->
-												<button type="submit" class="btn btn-sm btn-secondary" id="submit" data-loading-text="<?php echo lang('submiting');?>..."> <?php echo lang('post_create');?> </button>
-												<!--{hook thread_quick_reply_left_end.htm}-->
-											</div>
-											<div>
-												<!--{hook thread_quick_reply_right_start.htm}-->
-												<a class="icon-mail-forward text-muted" href="<?php echo url("post-create-$tid");?>" id="advanced_reply"> <?php echo lang('advanced_reply');?></a>
-												<!--{hook thread_quick_reply_right_end.htm}-->
+										<div class="input-group mb-3">
+											<input type="text" id="message" name="message" class="form-control" placeholder="写评论...">
+											<div class="input-group-append">
+												<button class="btn btn-outline-secondary" type="submit" id="submit">发送</button>
 											</div>
 										</div>
+										<!-- <textarea class="form-control" placeholder="<?php echo lang('message');?>" name="message" id="message"></textarea> -->
 									</div>
-								</form>
-							</div>
+										
+								</div>
+
+							</form>
 						</div>
 					</li>
 					<?php } ?>
@@ -198,6 +202,11 @@
 		<!--{hook thread_user_after.htm}-->
 		
 	</div>
+
+	<div id="sqFloatDiv">
+		<div id="sqFloatReply"></div>
+		<div id="sqFloatFace"></div>
+	</div>
 </div>
 
 <!--{hook thread_end.htm}-->
@@ -207,10 +216,13 @@
 <script>
 var jform = $('#quick_reply_form');
 var jsubmit = $('#submit');
-jform.on('submit', function() {
+jform.on('submit', formSubmit);
+
+function formSubmit() {
 	jform.reset();
 	jsubmit.button('loading');
-	var postdata = jform.serialize();
+	var formContent = $('#quick_reply_form');
+	var postdata = formContent.serialize();
 	$.xpost(jform.attr('action'), postdata, function(code, message) {
 		if(code == 0) {
 			var s = '<ul>'+message+'</ul>';
@@ -232,17 +244,22 @@ jform.on('submit', function() {
 			setTimeout(function() {
 				$('li[data-pid=' + liPid + ']').find('.alert.alert-danger').addClass('sq-not-play');
 			}, 3000);
+
+			// 关闭浮动输入框
+			$('#sqFloatDiv').click();
+			$.alert('发送成功');
 			
 		} else if(code < 0) {
 			$.alert(message);
 			jsubmit.button('reset');
 		} else {
-			jform.find('[name="'+code+'"]').alert(message).focus();
+			// jform.find('[name="'+code+'"]').alert(message).focus();
+			$.alert(message);
 			jsubmit.button('reset');
 		}
 	});
 	return false;
-});
+}
 
 
 // 缩放图片，适应屏幕大小。
@@ -290,6 +307,8 @@ function resize_table() {
 	});
 }
 
+var openFloatInput = 0; // 初始化状态
+
 $(function() {
 	resize_image();
 	resize_table();
@@ -299,13 +318,268 @@ $(function() {
 	var forumName = $('li[forum-id=' + fid + ']>a').html();
 	$('#bottom-menu>li:eq(1)>a>span').html(forumName);
 	$('#bottom-menu>li:eq(1)>a>div').addClass('icon-active');
+
+	$(window).on('resize', function(){ // 将输入框返回原位
+		if(openFloatInput) {
+			$('.sq-bottom-nav').css('display', 'none');
+		} else {
+			$('.sq-bottom-nav').css('display', 'block');
+		}
+	});
 });
 
 // 输入框自动伸缩
 
 var jmessage = $('#message');
-jmessage.on('focus', function() {if(jmessage.t) { clearTimeout(jmessage.t); jmessage.t = null; } jmessage.css('height', '8rem'); });
-jmessage.on('blur', function() {jmessage.t = setTimeout(function() { jmessage.css('height', '2.5rem');}, 1000); });
+jmessage.on('focus', floatInput);
+
+var sqClientHeight = document.body.clientHeight;
+
+function floatInput() {
+	// 获得需要处理的div
+	var sqReplyContainer = $('#sqReplyContainer'), // 列表里面的表单div
+		sqFloatDiv       = $('#sqFloatDiv'), // 
+		sqFloatReply     = $('#sqFloatReply');
+
+	sqReplyContainer.find('#sqPostFloor').addClass('sq-not-play'); // 浮动的时候不让楼层信息显示
+	var formHtml = sqReplyContainer.html(); // 获得表单内容
+
+	//  1.整个floatReply显示
+	sqFloatDiv.css('height', $(document).height() + 'px'); // 设置整个浮动层的高
+	sqFloatDiv.css('display', 'block');
+	sqFloatDiv.on('click', resetInput); // 注册点击事件
+	// $('body').one('click', resetInput);
+	$('.sq-bottom-nav').css('display', 'none'); // 隐藏底部菜单
+
+	openFloatInput = 1; // 开启浮动输入框
+
+	var inputData = returnInputStatus(sqReplyContainer); // 获得现在输入框的值
+	// console.log(inputData);
+	sqReplyContainer.html(''); // 清空ul列表里面的回复框html
+
+	sqFloatReply.html(formHtml); // 添加表单html到浮动输入表单里面
+	changeInputStatus(sqFloatReply, inputData); // 将获得的信息填写到新的表单里面
+	
+	// 由于之前的删除了html，所以事件也删除了，这里重新注册
+	$('.emotion').on('click', function(){
+		$('#imagebox') && $('#imagebox').remove();
+	});
+	$('.emotion').qqFace({
+		id : 'facebox', 
+		assign:'message',
+		floatContent: 1,
+		path:'plugin/Ty_face/face/arclist/'	//?������֪��
+	});
+
+	// 当点击的新出来的输入框的时候，阻止冒泡并focus输入框，而且remove掉表情组
+	$('#message').on('click', function(e){
+		$('#message').focus();
+		$('#facebox') && $('#facebox').remove();
+		$('#imagebox') && $('#imagebox').remove();
+		e.stopPropagation();
+	});
+	$('.sq-checkbox-label').on('click', function(e){ // 阻止匿名回帖的冒泡
+		e.stopPropagation();
+	});
+	$('.sq-icon-image').on('click', function(e){
+		openUploadDiv();
+		e.stopPropagation();
+	});
+
+	$('#quick_reply_form').on('submit', formSubmit); // 为表单注册提交事件
+	sqFloatReply.find('input[name=message]').focus();
+}
+
+function resetInput(e) {
+	var target = $(e.target);
+	if(target.attr('id') == 'submit') { // 如果点击的是submit按钮的话，阻止其冒泡
+		$('#facebox').remove();
+		e.stopPropagation();
+		return;
+	}
+
+	var sqFloatDiv   = $('#sqFloatDiv'),
+		sqFloatReply = $('#sqFloatReply'),
+		sqReplyContainer = $('#sqReplyContainer');
+
+	var sqReplyHtml = sqReplyContainer.html(); // ul列表里面的回复框内容
+
+	if(!sqReplyHtml) { // 当ul列表里面的回复框为空才执行下面的操作
+
+		$('.sq-bottom-nav').css('display', 'none');
+
+		// 去除多余的内容
+		$('#facebox') && $('#facebox').remove();
+		$('#imagebox') && $('#imagebox').remove();
+
+		var sqFloatReplyHtml = sqFloatReply.html(); // 浮动输入框的内容
+
+		var inputData = returnInputStatus(sqFloatReply); // 获得现在浮动输入框的值
+		// console.log(inputData);
+		sqFloatReply.html(''); // 清空浮动输入框的html内容
+		sqFloatDiv.css('display', 'none'); // 隐藏整个浮动层
+
+		openFloatInput = 0; // 关闭浮动输入框
+
+		sqReplyContainer.html(sqFloatReplyHtml); // 将浮动输入框的内容重新填装到列表里面
+		changeInputStatus(sqReplyContainer, inputData);
+
+		// 由于之前的删除了html，所以事件也删除了，这里重新注册
+		$('.emotion').qqFace({
+			id: 'facebox', 
+			assign:'message',
+			path:'plugin/Ty_face/face/arclist/'	//?������֪��
+		});
+		$('.sq-icon-image').on('click', openUploadDiv);
+
+		$('#quick_reply_form').on('submit', formSubmit); // 为表单注册提交事件
+
+		sqReplyContainer.find('#sqPostFloor').removeClass('sq-not-play');
+		sqReplyContainer.find('input[name=message]').on('focus', floatInput);
+
+	}
+
+	if(!openFloatInput) { // 只有不是开启了浮动输入框的时候，才显示底部菜单
+		$('.sq-bottom-nav').css('display', 'block');
+	}
+
+}
+
+function returnInputStatus(node) {
+	var result = {
+		doctype: node.find('input[name=doctype]').val(),
+		return_html: node.find('input[name=return_html]').val(),
+		quotepid: node.find('input[name=quotepid]').val(),
+		message: node.find('input[name=message]').val(),
+		is_secret: node.find('input[name=is_secret]').is(':checked')
+	};
+
+	return result;
+}
+function changeInputStatus(node, inputData) {
+	node.find('input[name=doctype]').val(inputData.doctype);
+	node.find('input[name=return_html]').val(inputData.return_html);
+	node.find('input[name=quotepid]').val(inputData.quotepid);
+	node.find('input[name=message]').val(inputData.message);
+	if (inputData.is_secret) {
+		node.find('input[name=is_secret]').attr('checked', true);
+	}
+}
+
+$('.sq-icon-image').on('click', openUploadDiv); // 注册点击事件
+/** 开启上传图片的div */
+function openUploadDiv() {
+	if (!openFloatInput) {
+		$('#message').focus(); // 让其
+	} else {
+		if($('#facebox')) $('#facebox').remove(); // 如果现在已经打开了表情框，先去掉
+	}
+
+	$('#imagebox') && $('#imagebox').remove();
+
+	$.ajax({
+		type: 'GET',
+		url: '<?php echo url("attach-getsess"); ?>',
+		success: function(data) {
+			data = JSON.parse(data);
+			var imageHtml = '<div id="imagebox">' +
+							data.data +
+							'	<div class="image-add">' +
+							'		<label style="width: 100%; height: 100%;">'+
+							'			<img src="./plugin/sq_independent_mobile/view/images/icon/add.png"/>' +
+							'			<input type="file" id="inputImg" multiple="multiple" style="width: 0; height: 0;" />' +
+							'		</label>' +
+							'	</div>' +
+							'</div>';
+
+			$('#sqFloatReply').append(imageHtml);
+
+			var imagebox = $('#imagebox');
+			var divWidth = imagebox.width() / 4.2;
+			var divMargin = (imagebox.width() - (4 * divWidth)) / 4;
+
+			$('#imagebox .image-add').css({width: divWidth, height: divWidth});
+			$('#imagebox .sq-img-div').css({width: divWidth, height: divWidth});
+
+			$('#imagebox').on('click', function(e){ // 阻止冒泡
+				e.stopPropagation();
+			});
+			$('#inputImg').on('change', inputImgChange);
+			
+			$('#message').blur();
+		}
+	});
+
+}
+
+$('#inputImg').on('change', inputImgChange);
+
+function inputImgChange(e){
+	var files = xn.get_files_from_event(e);
+
+	var div = $('#imagebox');
+	var containerWidth = div.width();
+	var divWidth = divHeight = containerWidth / 4.2;
+	var divMargin = (containerWidth - (4 * divWidth)) / 4;
+
+	if (!files) return;
+
+	// 判断用户上传的是否为图片格式，如果不是，阻止其上传
+	var flag = true;
+	for (var i = 0; i < files.length; i++) {
+		var filetype = files[i].type;
+		if(filetype) {
+			if(filetype.indexOf('image') < 0) {
+				flag = false;
+				break;
+			}
+		} else {
+			flag = false;
+			break;
+		}
+	}
+	if (!flag) {
+		$.alert('请上传图片格式');
+		return;
+	}
+
+	$.each_sync(files, function(i, callback) {
+		var file = files[i];
+		xn.upload_file(file, xn.url('attach-create'), {is_image: 1, not_sess: 1}, function(code, message) {
+			if (code != 0) return $.alert(message);
+			// 把文件 append 到附件列表
+			var url = message.url;
+			var filetype = message.filetype;
+			var aid = message.aid;
+			var deleteIcon = '<span class="img-delete-icon" onclick="sqDeleteImg(this);"></span>';
+			var divStr = '<div class="sq-img-div" data-id="' + aid + '" style="width: ' + divWidth + 'px; height: ' + divHeight + 'px; margin-right: ' + divMargin + 'px; background-image: url(' + message.url + ')">' + deleteIcon + '</div>';
+			$('.image-add').before(divStr);
+			callback();
+		}
+		// function(percent) {
+		// 	percent = xn.intval(percent);
+		// 	jprogressbar.css('width', percent+'%');
+		// 	jprogressbar.text(percent+'%');
+		// 	jprogress.show();
+		// 	console.log('progress:'+ percent); 
+		// }
+		);
+	});
+};
+
+function sqDeleteImg(node) {
+	var jlink = $(node);
+	var jli = jlink.parent();
+	var aid = jli.attr('data-id');
+	// console.log(aid);
+	if(!window.confirm(lang.confirm_delete)) return false;
+	$.xpost(xn.url('attach-delete-'+aid+'-sq'), function(code, message) {
+		if(code != 0) return $.alert(message);
+		jlink.parent().remove();
+	});
+	return false;
+};
+
 
 $('li[data-active="fid-<?php echo $fid;?>"]').addClass('active');
 

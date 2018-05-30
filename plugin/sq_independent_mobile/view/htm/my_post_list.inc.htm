@@ -1,0 +1,26 @@
+				<?php
+					empty($allowupdate) AND $allowupdate = 0;
+					empty($allowdelete) AND $allowdelete = 0;
+					empty($allowpost) AND $allowpost = 0;
+				?>
+				<!--{hook post_list_inc_start.htm}-->
+
+				<?php if($postlist) { foreach($postlist as $_post) { ?>
+					<li class="media <?php echo $_post['classname'];?>" data-pid="<?php echo $_post['pid'];?>" data-uid="<?php echo $_post['uid'];?>">
+
+						<div class="media-body">
+							<div class="message mt-1 break-all">
+								<?php if(!empty($_post['subject'])) { ?>
+									<h6><span class="text-muted">评论&nbsp;&nbsp;</span><a href="<?php echo url("thread-$_post[tid]");?>">《<?php echo $_post['subject'];?>》</a></h6>
+								<?php } ?>
+
+								<!--{hook post_list_inc_message_before.htm}-->
+								<?php echo $_post['message_fmt'];?>
+
+								<div class="text-right text-muted small"><?php echo $_post['create_date_fmt']; ?></div>
+							</div>
+						</div>
+					</li>
+				<?php }} ?>
+				
+				<!--{hook post_list_inc_end.htm}-->
