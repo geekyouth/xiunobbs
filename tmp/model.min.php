@@ -2266,7 +2266,9 @@ function post_message_fmt(&$arr, $gid) {
 	$arr['doctype'] == 0 && $arr['message_fmt'] = ($gid == 1 ? $arr['message'] : xn_html_safe($arr['message']));
 	$arr['doctype'] == 1 && $arr['message_fmt'] = xn_txt_to_html($arr['message']);
 	
-	
+	    // 对引用进行处理
+    !empty($arr['quotepid']) && $arr['quotepid'] > 0 && $arr['message_fmt'] = $arr['message_fmt'] . post_quote($arr['quotepid']);
+    return;
 	
 	// 对引用进行处理
 	!empty($arr['quotepid']) && $arr['quotepid'] > 0 && $arr['message_fmt'] = post_quote($arr['quotepid']).$arr['message_fmt'];
@@ -2290,7 +2292,17 @@ function post_quote($quotepid) {
 	$uid = $quotepost['uid'];
 	$s = $quotepost['message'];
 	
+	    $s = post_brief($s, 100);
+	$userhref = url("user-$uid");
+	$user = user_read_cache($uid);
+	$r = '<blockquote class="blockquote">
+        <span class="text-muted">回复：&nbsp;</span>
+		<a href="'.$userhref.'" class="text-small text-muted user">
+			'.$user['username'].'
+		</a><br>
+		'.$s.'</blockquote>';
 	
+	return $r;
 	
 	$s = post_brief($s, 100);
 	$userhref = url("user-$uid");
@@ -2327,6 +2339,7 @@ function post_list_access_filter(&$postlist, $gid) {
 }
 
 
+/** 发帖里面的图片添加内容 */
 function post_img_list_html($filelistSq) {
     if(empty($filelistSq)) return '';
 
@@ -2340,6 +2353,7 @@ function post_img_list_html($filelistSq) {
     return $html;
 }
 
+/** 根据pid获得当前pid的图片 */
 function get_imgs_by_postid($pid) {
     $imgs = db_find('attach', ['pid' => $pid], ['aid' => 1], 1, 5, '', ['aid', 'filename']);
     return $imgs;
@@ -2560,7 +2574,7 @@ function attach_assoc_post($pid) {
 	if(empty($post)) return;
 	
 	// 将两个图片数组合并
-$sess_tmp_files_sq = $_SESSION['tmp_files_sq'];
+$sess_tmp_files_sq = $_SESSION['tmp_files_sq']; // 获得session里面定义的文件
 $sess_tmp_files = array_merge($sess_tmp_files, $sess_tmp_files_sq);
 
 $attach_dir_save_rule = array_value($conf, 'attach_dir_save_rule', 'Ym'); // 获得保存路径的规则
@@ -2656,6 +2670,7 @@ foreach($sess_tmp_files as $_file) { // 循环生成缩略图
 	post__update($pid, array('images'=>$images, 'files'=>$files));
 	
 	
+// 和post关联成功后删除session里面的文件信息
 $_SESSION['tmp_files_sq'] = array(); // 清空session
 	
 	return TRUE;
@@ -4250,6 +4265,32 @@ function get_forum_and_tag() {
         $_forum['tags'] = get_tag_by_fid($_forum['fid']);
     }
     return $forum;
+}
+
+function get_tag_by_tagid($tagid) {
+    $tag = db_find_one('tag', ['tagid' => $tagid], [], ['tagid', 'name']);
+    if(!$tag) {
+        $tag = [
+            'tagid' => 0,
+            'name'  => '全部'
+        ];
+    }
+    return $tag;
+}
+
+function get_count_by_tagid($tagid) {
+    $threads = db_find('tag_thread', ['tagid' => $tagid], [], 1, 1000);
+    return $threads;
+}
+
+function get_today_by_tids($tids) {
+    $db = $_SERVER['db'];
+    $tids = "($tids)";
+    $todayStart = strtotime(date("Y-m-d"),time());
+    $todayEnd   = $todayStart + 86399;
+    $sql = "SELECT * FROM bbs_thread WHERE create_date > $todayStart AND create_date < $todayEnd AND tid IN $tids";
+    $threads = $db->sql_find($sql);
+    return $threads;
 }
 ?><?php
  

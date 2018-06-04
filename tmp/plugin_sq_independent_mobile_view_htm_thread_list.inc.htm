@@ -17,7 +17,7 @@ if (isset($haya_post_info_config['forum_show_pagination'])
 					?>
 
 					<?php if($threadlist) { foreach($threadlist as &$_thread) { ?>
-					<li class="media thread tap <?php echo $_thread['top_class'];?> " data-href="<?php echo url("thread-$_thread[tid]");?>" data-tid="<?php echo $_thread['tid'];?>">
+					<li class="media thread tap <?php echo $_thread['top_class'];?> <?php if($route == 'my') {echo 'my-thread-list'; } ?>" data-href="<?php echo url("thread-$_thread[tid]");?>" data-tid="<?php echo $_thread['tid'];?>">
 						<div class="sq-thread-tag">
 							<?php if($have_allowtop) { ?>
 								<?php if($_thread['allowtop']) { ?>
@@ -105,7 +105,7 @@ if (isset($haya_post_info_config['today_thread_hightlighter'])
 ?>
 
 										<?php if(!$dontShowAuthor) { ?>
-										<span class="username text-grey mr-1" uid="<?php echo $_thread['uid'];?>">BY:&nbsp;&nbsp;<?php echo $_thread['username'];?></span>
+										<span class="username text-grey mr-1" uid="<?php echo $_thread['uid'];?>">By:&nbsp;&nbsp;<?php echo $_thread['username'];?></span>
 										<?php } ?>
 										<!-- <span class="date text-grey<?php if($_thread['lastuid']) { ?> hidden-sm<?php } ?>"><?php echo $_thread['create_date_fmt'];?></span> -->
 										<?php 

@@ -51,12 +51,11 @@
 <div class="row">
 	<form action="<?php echo $form_action;?>" method="post" id="form" class="sq-post">
 		<div class="col-12 post-forum" data-url="<?php echo url('f_select-f'); ?>">
-			<?php if($fid) { ?>
-			<span style="font-weight: 500;"><?php echo $forum['name']; ?>-<?php echo $tag['name']; ?></span>
-			<?php } else { ?>
 			<span style="font-weight: 500;">选择分类</span>
-			<?php } ?>
-			<span class="sq-right-icon"></span>
+			<div>
+				<span style="font-weight: 500;"><?php if($fid){ echo $forum['name'];} ?><?php if($tag['name'] !== '无分类') { echo '-' . $tag['name']; } ?></span>
+				<span class="sq-right-icon"></span>
+			</div>
 			<input name="fid" type="text" hidden value="<?php echo $fid; ?>">
 			<input name="tagid[]" type="text" hidden value="<?php echo $tag['tagid']; ?>" >
 		</div>
@@ -81,7 +80,8 @@
 			<div class="attachlist_parent" style="width: 50%;">
 				<a class="small text-left" href="javascript:void(0)">
 					<label class="addattach" id="addattach">
-						<i class="icon-folder-open-o"></i> 
+						<!-- <i class="icon-folder-open-o"></i>  -->
+						<i class="sq-icon-attach"></i>
 						<?php echo lang('add_attach');?>
 						<input type="file" multiple="multiple" class="invisible" />
 					</label>
@@ -225,7 +225,7 @@ $('.post-forum').on('click', function(){
 
 function openTagSelect(node, fid){
 	var forumNamae = $(node).find('span:eq(0)').html();
-	$('.post-forum span:eq(0)').html(forumNamae);
+	$('.post-forum>div>span:eq(0)').html(forumNamae);
 	$('input[name=fid]').val(fid);
 
 	var url = $(node).attr('data-url');
@@ -261,8 +261,8 @@ function openTagSelect(node, fid){
 function completeSelect(node) {
 	var tagid = $(node).attr('tagid');
 	var tagName = $(node).find('span:eq(0)').html();
-	var forumName = $('.post-forum span:eq(0)').html();
-	$('.post-forum span:eq(0)').html(forumName + '-' + tagName);
+	var forumName = $('.post-forum>div>span:eq(0)').html();
+	$('.post-forum>div>span:eq(0)').html(forumName + '-' + tagName);
 	$('.post-forum input:eq(1)').val(tagid);
 
 	var chooseTNode = $('.choose-tag');

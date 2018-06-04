@@ -14,6 +14,30 @@ if(IS_MOBILE) {
 		}
 	}
 
+	$tagid  = param('tagids');
+	$tagids = explode('_', $tagid);
+	$tagid  = $tagids[0]; // 第一个
+	if($tagid) {
+		$tag = get_tag_by_tagid($tagid);
+	} else {
+		$tag = ['tagid' => 0, 'name' => '全部'];
+	}
+	
+	$threadsByTag = get_count_by_tagid($tagid);
+	$threadCount = count($threadsByTag);
+	
+	if($threadsByTag) {
+		$threadIds = [];
+		foreach($threadsByTag as $_item) {
+			$threadIds[] = $_item['tid'];
+		}
+		$threadIds = implode(',', $threadIds);
+		$threadIds = rtrim($threadIds, ',');
+		$today = count(get_today_by_tids($threadIds));
+	} else {
+		$today = 0;
+	}
+
 	$show_search = 1;
 	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/htm/forum.htm');
 	return;

@@ -1,6 +1,6 @@
 <?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/header.inc.htm');?>
 
-<!--{hook forum_start.htm}-->
+
 
 <div class="row">
 	<div class="col-lg-9 main">
@@ -17,18 +17,18 @@
 			</div>
 			<div class="card-body">
 				<ul class="list-unstyled threadlist mb-0">
-					<!--{hook forum_threadlist_before.htm}-->
+					
 					<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/thread_list.inc.htm');?>
-					<!--{hook forum_threadlist_after.htm}-->
+					
 				</ul>
 			</div>
 		</div>
 
 		<?php include _include(APP_PATH.'view/htm/thread_list_mod.inc.htm');?>
 		
-		<!--{hook forum_page_before.htm}-->
+		
 		<nav class="my-3"><ul class="pagination justify-content-center flex-wrap"><?php echo $pagination; ?></ul></nav>
-		<!--{hook forum_page_after.htm}-->
+		
 	</div>
 	<div class="col-lg-3 d-none d-lg-block aside">
 	
@@ -38,9 +38,9 @@
 			<div class="card-body text-center">
 				<img class="logo-5 mb-2" src="<?php echo $forum['icon_url'];?>">
 				<h5><?php echo $forum['name'];?></h5>
-				<!--{hook forum_brief_before.htm}-->
+				
 				<div class="text-left line-height-2"><?php echo $forum['brief'];?></div>
-				<!--{hook forum_brief_before.htm}-->
+				
 			</div>
 			<div class="card-footer p-2">
 				<table class="w-100 small">
@@ -57,13 +57,22 @@
 							<span class="text-muted"><?php echo lang('today_threads');?></span><br>
 							<b><?php echo $forum['todaythreads'];?></b>
 						</td>
-						<!--{hook forum_todaythreads_after.htm}-->
+						
 					</tr>
 				</table>
 			</div>
 		</div>
 		
-		<!--{hook forum_mod_before.htm}-->
+		<div class="form-group">
+	<form action="<?php echo url('search');?>" id="search_form">
+		<div class="input-group mb-3">
+			<input type="text" class="form-control" placeholder="<?php echo lang('keyword');?>" name="keyword">
+			<div class="input-group-append">
+				<button class="btn btn-primary" type="submit"><?php echo lang('search');?></button>
+			</div>
+		</div>
+	</form>
+</div>
 		<?php if($forum['announcement'] || $forum['modlist']) { ?>
 		<div class="card card-mod-info">
 			<div class="card-body">
@@ -88,12 +97,12 @@
 			</div>
 		</div>
 		<?php  } ?>
-		<!--{hook forum_mod_after.htm}-->
+		
 	</div>
 </div>
 
 
-<!--{hook forum_end.htm}-->
+
 
 <?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer.inc.htm');?>
 
@@ -107,4 +116,17 @@ $('#bottom-menu>li:eq(1)').addClass('bottom-active');
 $('#bottom-menu>li:eq(1)>a>div').addClass('icon-active');
 </script>
 
-<!--{hook forum_js.htm}-->
+<?php if(!empty($threadlist)) { ?>
+<script>
+var tids = <?php echo xn_json_encode(arrlist_key_values($threadlist, 'tid', 'last_date'));?>;
+xn_read_unread(tids, 0);
+</script>
+<?php } ?><script>
+jsearch_form = $('#search_form');
+jsearch_form.on('submit', function() {
+	var keyword = jsearch_form.find('input[name="keyword"]').val();
+	var url = xn.url('search-'+xn.urlencode(keyword));
+	window.location = url;
+	return false;
+});
+</script>

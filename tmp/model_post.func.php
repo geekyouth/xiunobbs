@@ -495,7 +495,9 @@ function post_message_fmt(&$arr, $gid) {
 	$arr['doctype'] == 0 && $arr['message_fmt'] = ($gid == 1 ? $arr['message'] : xn_html_safe($arr['message']));
 	$arr['doctype'] == 1 && $arr['message_fmt'] = xn_txt_to_html($arr['message']);
 	
-	
+	    // 对引用进行处理
+    !empty($arr['quotepid']) && $arr['quotepid'] > 0 && $arr['message_fmt'] = $arr['message_fmt'] . post_quote($arr['quotepid']);
+    return;
 	
 	// 对引用进行处理
 	!empty($arr['quotepid']) && $arr['quotepid'] > 0 && $arr['message_fmt'] = post_quote($arr['quotepid']).$arr['message_fmt'];
@@ -519,7 +521,17 @@ function post_quote($quotepid) {
 	$uid = $quotepost['uid'];
 	$s = $quotepost['message'];
 	
+	    $s = post_brief($s, 100);
+	$userhref = url("user-$uid");
+	$user = user_read_cache($uid);
+	$r = '<blockquote class="blockquote">
+        <span class="text-muted">回复：&nbsp;</span>
+		<a href="'.$userhref.'" class="text-small text-muted user">
+			'.$user['username'].'
+		</a><br>
+		'.$s.'</blockquote>';
 	
+	return $r;
 	
 	$s = post_brief($s, 100);
 	$userhref = url("user-$uid");
@@ -556,6 +568,7 @@ function post_list_access_filter(&$postlist, $gid) {
 }
 
 
+/** 发帖里面的图片添加内容 */
 function post_img_list_html($filelistSq) {
     if(empty($filelistSq)) return '';
 
@@ -569,6 +582,7 @@ function post_img_list_html($filelistSq) {
     return $html;
 }
 
+/** 根据pid获得当前pid的图片 */
 function get_imgs_by_postid($pid) {
     $imgs = db_find('attach', ['pid' => $pid], ['aid' => 1], 1, 5, '', ['aid', 'filename']);
     return $imgs;

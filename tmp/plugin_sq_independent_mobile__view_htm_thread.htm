@@ -35,55 +35,70 @@ if($thread['is_secret']) { // 如果是匿名模式，跳转到自己的信息�
 		</ol>
 		<?php } ?>
 		
+
+		<div class="row">
+			<div class="col-12 sq-thread">
+				<div class="sq-thread-subject">
+					<h4 class="break-all">
+						<?php echo $thread['subject']; ?>
+					</h4>
+				</div>
+				<div class="sq-thread-info">
+					<div class="sq-thread-info-left">
+						<a href="<?php echo url("user-$thread[uid]");?>" tabindex="-1">
+							<img class="avatar-3" src="<?php echo $thread['user_avatar_url'];?>">
+						</a>
+					</div>
+					<div class="sq-thread-info-right">
+						<div>
+							<span class="username">
+								<a href="<?php echo url("user-$thread[uid]");?>" class="text-muted font-weight-bold"><?php echo $thread['username'];?></a>
+							</span>
+						</div>			
+						<div>
+							<span class="date text-grey"><?php echo $thread['create_date_fmt'];?></span>
+							<span class="text-grey"><i class="icon-eye"></i> <?php echo $thread['views'];?></span>
+						</div>
+					</div>
+				</div>
+				<div class="sq-thread-message">
+					<?php if($page == 1) { ?>
+				
+						
+						<?php echo $first['message_fmt'];?>
+						<div class="thread-images">
+    <?php echo thread_images_html($tid); ?>
+</div>
+
+<?php if($first['last_update_date']) { ?>
+	<?php $first['last_update_user'] = user_read_cache($first['last_update_uid']);?>
+	<div class="text-right text-muted my-3 small font-italic">
+		最后于 <span class="icon-clock-o ml-2"> </span><?php echo humandate($first['last_update_date']);?>
 		
-		<div class="card card-thread">
-			<div class="card-body">
-				<div class="media">
-					<a href="<?php echo url("user-$thread[uid]");?>" tabindex="-1">
-						<img class="avatar-3 mr-3" src="<?php echo $thread['user_avatar_url'];?>">
-					</a>
-					<div class="media-body">
-						
-						<h4 class="break-all">
-							
-							<?php echo $thread['subject'];?>
-													
-						<?php if(!empty($thread['taglist'])) { foreach($thread['taglist'] as $tag) { ?>
-						<a href="<?php echo url("forum-$thread[fid]-1", array('tagids'=>$tag['tagid']));?>" class="badge badge-pill badge-<?php echo empty($tag['style']) ? 'secondary' : $tag['style'];?>"><?php echo $tag['name'];?></a>
-						<?php  }} ?>
-						</h4>
-						
-						<div class="d-flex justify-content-between small">
-							<div>
-								
-								<span class="username">
-									<a href="<?php echo url("user-$thread[uid]");?>" class="text-muted font-weight-bold"><?php echo $thread['username'];?></a>
-								</span>
-								<span class="date text-grey ml-2"><?php echo $thread['create_date_fmt'];?></span>
-								<span class="text-grey ml-2"><i class="icon-eye"></i> <?php echo $thread['views'];?></span>
-								<?php if (isset($haya_post_info_config['show_see_him']) && $haya_post_info_config['show_see_him'] == 1) { ?>
-
-	<span class="text-grey ml-2">
-		<?php if (!empty($haya_post_info_see_user) && $haya_post_info_see_user == $thread['uid']) { ?>
-			<?php if (!empty($haya_post_info_orderby)) { ?>
-				<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid'], array('orderby' => $haya_post_info_orderby));?>">查看全部</a>
-			<?php } else { ?>
-				<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid']);?>">查看全部</a>
-			<?php } ?>
+		<?php if($gid < 5 && $allowdelete) { ?>
+		<a href="javascript:void(0);" data-modal-url="<?php echo url("post-update_log_list-".$first['pid']);?>" data-modal-title="编辑历史" data-modal-size="lg">被<?php echo $first['last_update_user']['username'];?>编辑</a>
 		<?php } else { ?>
-			<?php if (!empty($haya_post_info_orderby)) { ?>
-				<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid'], array('orderby' => $haya_post_info_orderby, 'user' => $thread['uid']));?>">只看Ta</a>
-			<?php } else { ?>
-				<a class="text-grey" tabindex="1" href="<?php echo url('thread-'.$thread['tid'], array('user' => $thread['uid']));?>">只看Ta</a>
-			<?php } ?>
+		被<?php echo $first['last_update_user']['username'];?>编辑
 		<?php } ?>
-	</span>
-
+		
+		，原因： <?php echo $first['last_update_reason'];?>
+		
+	</div>
 <?php } ?>
-
-							</div>
-							<div>
-								<?php
+						
+						<?php echo post_file_list_html($first['filelist']);?>
+						
+						
+					<?php } else { ?>
+					
+						
+						<p><a href="<?php echo url("thread-$tid");?>"><?php echo lang('view_thread_message');?></a></p>
+						
+						
+					<?php } ?>
+				</div>
+				<div class="sq-thread-bottom">
+					<?php
 	
 if (isset($haya_post_like_config['thread_like_position'])
 	&& $haya_post_like_config['thread_like_position'] == 1
@@ -129,169 +144,20 @@ if (isset($haya_post_like_config['thread_like_position'])
 
 <?php } ?>
 
-								<?php if($allowupdate || $first['allowupdate']) { ?>
-								<a href="<?php echo url("post-update-$thread[firstpid]");?>" class="text-grey mr-2 post_update"><i class="icon-edit"></i> <?php echo lang('edit');?></a>
-								<?php } ?>
-								
-								<?php if($allowdelete || $first['allowdelete']) { ?>
-								<a data-href="<?php echo url("post-delete-$thread[firstpid]");?>" href="javascript:void(0);" class="text-grey post_delete" isfirst="1"><i class="icon-remove"></i> <?php echo lang('delete');?></a>
-								<?php } ?>
-								
-							</div>
-						</div>
-					</div>
+					<?php if($allowupdate || $first['allowupdate']) { ?>
+					<a href="<?php echo url("post-update-$thread[firstpid]");?>" class="text-grey mr-2 post_update"><i class="icon-edit"></i> <?php echo lang('edit');?></a>
+					<?php } ?>
+					
+					<?php if($allowdelete || $first['allowdelete']) { ?>
+					<a data-href="<?php echo url("post-delete-$thread[firstpid]");?>" href="javascript:void(0);" class="text-grey post_delete" isfirst="1"><i class="icon-remove"></i> <?php echo lang('delete');?></a>
+					<?php } ?>
+					
 				</div>
-				<hr />
-				<div class="message break-all" isfirst="1">
-				<?php if($page == 1) { ?>
-				
-					
-					<?php echo $first['message_fmt'];?>
-					<div class="thread-images">
-    <?php echo thread_images_html($tid); ?>
-</div>
-
-<?php if($first['last_update_date']) { ?>
-	<?php $first['last_update_user'] = user_read_cache($first['last_update_uid']);?>
-	<div class="text-right text-muted my-3 small font-italic">
-		最后于 <span class="icon-clock-o ml-2"> </span><?php echo humandate($first['last_update_date']);?>
-		
-		<?php if($gid < 5 && $allowdelete) { ?>
-		<a href="javascript:void(0);" data-modal-url="<?php echo url("post-update_log_list-".$first['pid']);?>" data-modal-title="编辑历史" data-modal-size="lg">被<?php echo $first['last_update_user']['username'];?>编辑</a>
-		<?php } else { ?>
-		被<?php echo $first['last_update_user']['username'];?>编辑
-		<?php } ?>
-		
-		，原因： <?php echo $first['last_update_reason'];?>
-		
-	</div>
-<?php } ?>
-					
-					<?php echo post_file_list_html($first['filelist']);?>
-					
-					
-				<?php } else { ?>
-				
-					
-					<p><a href="<?php echo url("thread-$tid");?>"><?php echo lang('view_thread_message');?></a></p>
-					
-					
-				<?php } ?>
-				</div>
-
-				
-				<div class="plugin d-flex justify-content-center mt-3">
-					<?php
-	
-if (isset($haya_post_like_config['thread_like_position'])
-	&& $haya_post_like_config['thread_like_position'] == 2
-) {
-
-	if (isset($haya_post_like_config['open_thread'])
-		&& $haya_post_like_config['open_thread'] == 1
-	) {
-	?>
-		<?php $haya_post_like_thread_check = haya_post_like_find_by_uid_and_pid($uid, $first['pid']); ?>
-
-		<div class="haya-post-like px-2">
-			<span class="btn-group" role="group">
-				<?php if (!empty($uid)) { ?>
-					<?php if($haya_post_like_thread_check){ ?>
-						<button class="btn btn-outline-secondary js-haya-post-like-thread-del" data-pid="<?php echo $first['pid'];?>" title="<?php echo $haya_post_like_is_delete ? lang('haya_post_like_unlike') : lang('haya_post_like_has_like'); ?>">
-							<i class="icon icon-thumbs-up" aria-label="<?php echo $haya_post_like_is_delete ? lang('haya_post_like_unlike') : lang('haya_post_like_has_like'); ?>"></i>
-							<span class="haya-post-like-thread-btn"><?php echo lang('haya_post_like_has_like'); ?></span>
-						</button>
-					<?php } else { ?>
-						<button class="btn btn-outline-secondary js-haya-post-like-thread-add" data-pid="<?php echo $first['pid'];?>" title="点赞本帖">
-							<i class="icon icon-thumbs-o-up" aria-label="<?php echo lang('haya_post_like_like_thread'); ?>"></i>
-							<span class="haya-post-like-thread-btn"><?php echo lang('haya_post_like_like'); ?></span>
-						</button>
-					<?php } ?>	
-				<?php } else { ?>
-					<button class="btn btn-outline-secondary js-haya-post-like-thread-tip" data-pid="<?php echo $first['pid'];?>" title="点赞本帖">
-						<i class="icon icon-thumbs-o-up" aria-label="<?php echo lang('haya_post_like_like_thread'); ?>"></i>
-						<span class="haya-post-like-thread-btn"><?php echo lang('haya_post_like_like'); ?></span>
-					</button>
-				<?php } ?>
-
-				<button class="btn btn-outline-secondary" title="<?php echo lang('haya_post_like_like_count'); ?>" data-tid="<?php echo $tid;?>">
-					<span class="haya-post-like-thread-user-count"><?php echo intval($first['likes']); ?></span>
-				</button>
-			</span>
-		</div>
-	<?php } ?>
-
-<?php } ?>
-<?php $haya_favorite_check_favorite = haya_favorite_find_by_uid_and_tid($uid, $tid); ?>
-
-<style>
-.haya-favoriter {
-	position: relative;
-}
-.haya-favorite-show-users {
-	position: absolute;
-	top: 5px;
-	z-index: 100;
-	width: 100%;
-}
-.haya-favorite-show-users .haya-favorite-users {
-	max-height: 250px;
-	overflow-y: auto;
-}
-</style>
-
-<div class="haya-favoriter px-2">
-	<span class="btn-group haya-favoriter-info" role="group">
-		<?php if (!empty($uid)) { ?>
-			<?php if($haya_favorite_check_favorite){ ?>
-				<button class="btn btn-outline-secondary js-haya-favorite-del" data-tid="<?php echo $tid;?>" title="<?php echo lang('haya_favorite_delete_favorite'); ?>">
-					<i class="icon icon-star" aria-label="<?php echo lang('haya_favorite_delete_favorite'); ?>"></i>
-					<span class="haya-favorite-btn"><?php echo lang('haya_favorite_delete'); ?></span>
-				</button>
-			<?php } else { ?>
-				<button class="btn btn-outline-secondary js-haya-favorite-add" data-tid="<?php echo $tid;?>" title="<?php echo lang('haya_favorite_add_favorite'); ?>">
-					<i class="icon icon-star-o" aria-label="<?php echo lang('haya_favorite_add_favorite'); ?>"></i>
-					<span class="haya-favorite-btn"><?php echo lang('haya_favorite_add'); ?></span>
-				</button>
-			<?php } ?>	
-		<?php } else { ?>
-			<button class="btn btn-outline-secondary js-haya-favorite-tip" data-tid="<?php echo $tid;?>" title="<?php echo lang('haya_favorite_add_favorite'); ?>">
-				<i class="icon icon-star-o" aria-label="<?php echo lang('haya_favorite_add_favorite'); ?>"></i>
-				<span class="haya-favorite-btn"><?php echo lang('haya_favorite_add'); ?></span>
-			</button>
-		<?php } ?>
-
-		<button class="btn btn-outline-secondary js-haya-favorite-show-users" data-tid="<?php echo $tid;?>" title="<?php echo lang('haya_favorite_show_favorite_users'); ?>">
-			<span class="haya-favorite-user-count"><?php echo intval($thread['favorites']); ?></span>
-		</button>
-	</span>
-</div>
-
-
-				</div>
-				<div class="haya-favoriter">
-	<div class="text-center d-none haya-favorite-show-users">
-		<div class="text-left m-0 p-0 col-md-6 mx-auto">
-			<div class="modal-content">
-				<div class="modal-header small">
-					<b><?php echo lang('haya_favorite_users'); ?>（<span class="haya-favorite-user-count"><?php echo intval($thread['favorites']); ?></span>）</b>
-					
-					<span class="close small p-3 haya-favorite-close js-haya-favorite-show-users" data-dismiss="dodal">X</span>
-				</div>
-			
-				<div class="modal-body p-3">
-					<div class="text-muted haya-favorite-users small break-all">
-						<div class="text-muted"><?php echo lang('haya_favorite_loading'); ?></div>
-					</div>
-				</div>
-			</div>	
-		</div>
-	</div>
-</div>
-
 			</div>
 		</div>
-		
+
+		<div class="row sq-thread-hr"></div>
+
 		<?php
 if ((isset($haya_post_like_config['open_post'])
 	&& $haya_post_like_config['open_post'] == 1)
@@ -327,17 +193,16 @@ if ((isset($haya_post_like_config['open_post'])
 	<?php } ?>
 
 <?php } ?>
-		
-		<div class="card card-postlist">
-			<div class="card-body">
-				<div class="card-title">
-					<div class="d-flex justify-content-between">
-						<div>
-							<b><?php echo lang('new_post');?></b> (<span class="posts"><?php echo $thread['posts'];?></span>)
-						</div>
-						
-						<div>
-							<?php 
+
+		<div class="row sq-thread-postlist">
+			<div class="col-12">
+				<div class="sq-thread-postlist-header">
+					<div>
+						<b><?php echo lang('new_post');?></b> (<span class="posts"><?php echo $thread['posts'];?></span>)
+					</div>
+					
+					<div>
+						<?php 
 if ((isset($haya_post_info_config['show_see_first_floor']) 
 	&& $haya_post_info_config['show_see_first_floor'] == 1)
 	|| (isset($haya_post_info_config['show_post_sort']) 
@@ -393,11 +258,10 @@ if ((isset($haya_post_info_config['show_see_first_floor'])
 	</div>
 
 <?php } ?>
-						</div>
 					</div>
 				</div>
 				<ul class="list-unstyled postlist">
-					<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/post_list.inc.htm'); ?>
+					<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/thread_post_list.inc.htm'); ?>
 					
 					<?php if(!empty($user)) { ?>
 					<li class="post newpost media" id="sqReplyContainer">
@@ -453,6 +317,7 @@ if ((isset($haya_post_info_config['show_see_first_floor'])
 				</ul>
 			</div>
 		</div>
+
 		
 		
 		<div class="d-none threadlist"><input type="checkbox" name="modtid" value="<?php echo $thread['tid']; ?>" checked /></div>

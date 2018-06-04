@@ -11,7 +11,7 @@
 					?>
 
 					<?php if($threadlist) { foreach($threadlist as &$_thread) { ?>
-					<li class="media thread tap <?php echo $_thread['top_class'];?> " data-href="<?php echo url("thread-$_thread[tid]");?>" data-tid="<?php echo $_thread['tid'];?>">
+					<li class="media thread tap <?php echo $_thread['top_class'];?> <?php if($route == 'my') {echo 'my-thread-list'; } ?>" data-href="<?php echo url("thread-$_thread[tid]");?>" data-tid="<?php echo $_thread['tid'];?>">
 						<div class="sq-thread-tag">
 							<?php if($have_allowtop) { ?>
 								<?php if($_thread['allowtop']) { ?>

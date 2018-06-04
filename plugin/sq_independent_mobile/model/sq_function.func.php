@@ -38,3 +38,29 @@ function get_forum_and_tag() {
     }
     return $forum;
 }
+
+function get_tag_by_tagid($tagid) {
+    $tag = db_find_one('tag', ['tagid' => $tagid], [], ['tagid', 'name']);
+    if(!$tag) {
+        $tag = [
+            'tagid' => 0,
+            'name'  => '全部'
+        ];
+    }
+    return $tag;
+}
+
+function get_count_by_tagid($tagid) {
+    $threads = db_find('tag_thread', ['tagid' => $tagid], [], 1, 1000);
+    return $threads;
+}
+
+function get_today_by_tids($tids) {
+    $db = $_SERVER['db'];
+    $tids = "($tids)";
+    $todayStart = strtotime(date("Y-m-d"),time());
+    $todayEnd   = $todayStart + 86399;
+    $sql = "SELECT * FROM bbs_thread WHERE create_date > $todayStart AND create_date < $todayEnd AND tid IN $tids";
+    $threads = $db->sql_find($sql);
+    return $threads;
+}
