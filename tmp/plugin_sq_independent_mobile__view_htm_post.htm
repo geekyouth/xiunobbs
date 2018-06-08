@@ -41,13 +41,17 @@
 		$filelistSq = array();
 	}
 	
-	// hook post_start_init.htm
+	
+	if($route != 'post' && $action != 'update') {
+		$tagids = array();
+	}
+	
 	
 	$filelist += (array)_SESSION('tmp_files');
 	$filelistSq = array_merge($filelistSq, (array)$_SESSION['tmp_files_sq']);
 ?>
 
-<!--{hook post_start.htm}-->
+
 
 <div class="row">
 	<form action="<?php echo $form_action;?>" method="post" id="form" class="sq-post">
@@ -88,9 +92,13 @@
 					</label>
 				</a>
 				<?php echo post_file_list_html($filelist, TRUE);?>
-				<!--{hook post_bottom_right.htm}-->
+				
 			</div>
-			<!--{hook post_bottom_actions_right.htm}-->
+			<label class="sq-checkbox-label">
+    <input class="sq-checkbox" type="checkbox" name="is_secret">
+    <span class="sq-checkbox-span"></span>
+    <span class="sq-checkbox-text">开启匿名</span>
+</label>
 		</div>
 		<div class="col-12 post-submit-btn">
 			<button type="submit" class="btn btn-block" id="submit" data-loading-text="<?php echo lang('submiting');?>..."><?php echo $form_submit_txt;?></button>
@@ -105,7 +113,7 @@
 	<ul class="list-unstyled f-select-ul"></ul>
 </div>
 
-<!--{hook post_end.htm}-->
+
 
 <?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer.inc.htm');?>
 <script>
@@ -359,4 +367,77 @@ var initImgWidth = function() {
 
 </script>
 
-<!--{hook post_js.htm}-->
+<script>
+
+var forumlist = <?php echo xn_json_encode($forumlist_show);?>;
+
+// 初始化值，选中的值
+var tagids = <?php echo xn_json_encode($tagids);?>;
+var action = '<?php echo $action;?>';
+
+var jfid = $('select[name="fid"]');
+var fid = <?php echo intval($fid); ?> || $('select[name="fid"]').val();
+jfid.on('change', function() {
+	var fid = jfid.val();
+	fid_on_change(fid);
+});
+
+function fid_on_change(fid) {
+	var s = '<table class="small nav_tag_list mb-2">';
+	var forum = forumlist[fid];
+	$.each(forum.tagcatelist, function(k, tagcate) {
+		s += '<tr><td class="text-muted text-nowrap" align="right" valign="top">';
+		s += tagcate.name;
+		s += '：</td><td>';
+		$.each(tagcate.taglist, function(k, tag) {
+			s += '<a href="javascript:void(0);" class="tag_option ' + (xn.in_array(tag.tagid, tagids) || (tag.tagid == tagcate.defaulttagid && action == 'create') ? ' active' : '') + '" tagid="' + tag.tagid + '">' + tag.name + '</a>';
+			s += '<input type="hidden" name="tagid[]" value="' + (xn.in_array(tag.tagid, tagids) || (tag.tagid == tagcate.defaulttagid && action == 'create') ? tag.tagid : '') + '" />';
+		});
+		s += '</td></tr>';
+	});
+	s += '</table>';
+	$('#nav_tag_list_div').html(s);
+}
+
+fid_on_change(fid);
+
+$('#nav_tag_list_div').on('click', 'a.tag_option', function() {
+	var jthis = $(this);
+	var tagid = jthis.attr('tagid');
+	jthis.toggleClass('active');
+	// 隐藏域
+	var v = jthis.hasClass('active') ? tagid : '';
+	jthis.next().attr('value', v);
+});
+
+
+// tag 选中区域。
+
+</script>
+<link href="plugin/xn_umeditor/umeditor/themes/default/css/umeditor.css<?php echo $static_version;?>" type="text/css" rel="stylesheet" />
+<link href="plugin/xn_umeditor/umeditor/umeditor-bbs.css<?php echo $static_version;?>" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="plugin/xn_umeditor/umeditor/umeditor.config.js<?php echo $static_version;?>"></script>
+<script type="text/javascript" src="plugin/xn_umeditor/umeditor/umeditor.js<?php echo $static_version;?>"></script>
+<script type="text/javascript" src="plugin/xn_umeditor/umeditor/umeditor-insertcode.js<?php echo $static_version;?>"></script>
+<script type="text/javascript" src="plugin/xn_umeditor/umeditor/umeditor-bbs.js<?php echo $static_version;?>"></script>
+<script type="text/javascript" src="plugin/xn_umeditor/umeditor/lang/zh-cn/zh-cn.js<?php echo $static_version;?>"></script>
+<script>
+if(typeof jform != 'unefined') jform.find('[name="doctype"]').val(0);
+var xn_sbform=$('#message').parents('form'); //获取文本框message所在form表单
+xn_sbform.on('submit',function(){UM.getEditor('message').sync();}); //给submit挂载同步事件
+var xn_sbdata=$._data(xn_sbform[0],'events').submit; //获取form表单submit事件列表
+xn_sbdata.splice(0,0,xn_sbdata.pop()); //把同步事件优先级设到最前
+</script>
+
+<?php if(SQ_MOBILE_PATH) { ?>
+<script>
+    // 500毫秒之后将百度ueditor的z-index设为空
+    setTimeout(function() {
+        $('.edui-container').css('z-index', 0);
+		$('.edui-container>.edui-toolbar').css('z-index', 0);
+		$('.form-control.edui-body-container').css('z-index', 0);
+    }, 500);
+    // $('.edui-body-container').css('z-index', '');
+</script>
+<?php } ?>
+

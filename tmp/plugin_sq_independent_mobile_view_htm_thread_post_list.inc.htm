@@ -53,18 +53,21 @@ $haya_post_like_check = isset($haya_post_like_pids[$_post['pid']]);
 		<?php if (!empty($uid)) { ?>
 			<?php if($haya_post_like_check){ ?>
 				<a href="javascript:;" class="text-muted haya-post-like-loved js-haya-post-like-post-del" data-pid="<?php echo $_post['pid'];?>" title="<?php echo $haya_post_like_is_delete ? lang('haya_post_like_unlike') : lang('haya_post_like_has_like'); ?>">
-					<i class="icon icon-thumbs-up" aria-label="<?php echo $haya_post_like_is_delete ? lang('haya_post_like_unlike') : lang('haya_post_like_has_like'); ?>"></i>
+					<!-- <i class="icon icon-thumbs-up" aria-label="<?php echo $haya_post_like_is_delete ? lang('haya_post_like_unlike') : lang('haya_post_like_has_like'); ?>"></i> -->
+					<i class="sq-iconfont sq-iconfont-st" aria-label="<?php echo $haya_post_like_is_delete ? lang('haya_post_like_unlike') : lang('haya_post_like_has_like'); ?>">&#xe7bb;</i>
 					<span class="haya-post-like-post-user-count"><?php echo intval($_post['likes']); ?></span>
 				</a>
 			<?php } else { ?>
 				<a href="javascript:;" class="text-muted js-haya-post-like-post-add" data-pid="<?php echo $_post['pid'];?>" title="<?php echo lang('haya_post_like_like_post'); ?>">
-					<i class="icon icon-thumbs-o-up" aria-label="<?php echo lang('haya_post_like_like_post'); ?>"></i>
+					<!-- <i class="icon icon-thumbs-o-up" aria-label="<?php echo lang('haya_post_like_like_post'); ?>"></i> -->
+					<i class="sq-iconfont sq-iconfont-st" aria-label="<?php echo lang('haya_post_like_like_post'); ?>">&#xe7bb;</i>
 					<span class="haya-post-like-post-user-count"><?php echo intval($_post['likes']); ?></span>
 				</a>
 			<?php } ?>	
 		<?php } else { ?>
 			<a href="javascript:;" class="text-muted js-haya-post-like-post-tip" data-pid="<?php echo $_post['pid'];?>" title="<?php echo lang('haya_post_like_like_post'); ?>">
-				<i class="icon icon-thumbs-o-up" aria-label="<?php echo lang('haya_post_like_like_post'); ?>"></i>
+				<!-- <i class="icon icon-thumbs-o-up" aria-label="<?php echo lang('haya_post_like_like_post'); ?>"></i> -->
+				<i class="sq-iconfont sq-iconfont-st" aria-label="<?php echo lang('haya_post_like_like_post'); ?>">&#xe7bb;</i>
 				<span class="haya-post-like-post-user-count"><?php echo intval($_post['likes']); ?></span>
 			</a>
 		<?php } ?>
@@ -72,19 +75,31 @@ $haya_post_like_check = isset($haya_post_like_pids[$_post['pid']]);
 
 <?php } ?>
 											<?php if($allowpost) { ?>
-											<a href="javascript:void(0)" data-tid="<?php echo $_item['tid'];?>" data-pid="<?php echo $_item['pid'];?>" class="text-grey post_reply mr-3"><i class="icon-reply" title="<?php echo lang('quote');?>"></i> <span class="d-none"><?php echo lang('quote');?></span></a>
+											<a href="javascript:void(0)" data-tid="<?php echo $_item['tid'];?>" data-pid="<?php echo $_item['pid'];?>" class="text-grey post_reply mr-3">
+												<!-- <i class="icon-reply" title="<?php echo lang('quote');?>"></i> -->
+												<i class="sq-iconfont sq-iconfont-st">&#xe615;</i>
+												 <span class="d-none"><?php echo lang('quote');?></span>
+											</a>
 											<?php } ?>
 											
 											
 											
 											<?php if($allowupdate || $_item['allowupdate']) { ?>
-											<a href="<?php echo url("post-update-$_item[pid]");?>" class="text-grey post_update mr-3"><i class="icon-edit" title="<?php echo lang('edit');?>"></i> <span class="d-none"><?php echo lang('edit');?></span></a>
+											<a href="<?php echo url("post-update-$_item[pid]");?>" class="text-grey post_update mr-3">
+												<!-- <i class="icon-edit" title="<?php echo lang('edit');?>"></i> -->
+												<i class="sq-iconfont sq-iconfont-st">&#xe602;</i>
+												 <span class="d-none"><?php echo lang('edit');?></span>
+											</a>
 											<?php } ?>
 											
 										
 											
 											<?php if($allowdelete || $_item['allowdelete']) { ?>
-											<a data-href="<?php echo url("post-delete-$_item[pid]");?>" data-confirm-text="<?php echo lang('confirm_delete');?>" href="javascript:void(0);" class="text-grey post_delete _confirm mr-3"><i class="icon-remove" title="<?php echo lang('delete');?>"></i> <span class="d-none"><?php echo lang('delete');?></span></a>
+											<a data-href="<?php echo url("post-delete-$_item[pid]");?>" data-confirm-text="<?php echo lang('confirm_delete');?>" href="javascript:void(0);" class="text-grey post_delete _confirm mr-3">
+												<!-- <i class="icon-remove" title="<?php echo lang('delete');?>"></i> -->
+												<i class="sq-iconfont sq-iconfont-st">&#xe693;</i>
+												 <span class="d-none"><?php echo lang('delete');?></span>
+											</a>
 											<?php } ?>
 											
 										</div>
@@ -92,7 +107,7 @@ $haya_post_like_check = isset($haya_post_like_pids[$_post['pid']]);
 								</div>
 								
 							</div>
-							<div class="message mt-1 break-all">
+							<div class="message break-all">
 							
 								
 								<?php if(!empty($_item['subject'])) { ?>
@@ -101,12 +116,10 @@ $haya_post_like_check = isset($haya_post_like_pids[$_post['pid']]);
 								
 								
 								<?php 
-$msg = $_post['message_fmt']; 
+$msg = $_item['message_fmt'];
 $msg = preg_replace("/\[em_([0-9]*)\]/i","<img src='./plugin/Ty_face/face/arclist/$1.gif' border='0'/>",$msg);
-$_post['message_fmt']=	$msg			
-?><?php if(!empty($sg_group_pid)) { ?>
-	<div class="alert alert-danger"><?php echo lang('sg_creditsplus',  array('credits'=>$sg_group['post_credits']));?></div>
-<?php } ?>
+$_item['message_fmt'] =	$msg			
+?>
 								<?php echo $_item['message_fmt'];?>
 								<?php if($_item['sq_imgs']) { ?>
     <?php foreach($_item['sq_imgs'] as $_img) { ?>

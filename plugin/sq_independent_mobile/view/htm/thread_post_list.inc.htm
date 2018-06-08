@@ -36,19 +36,31 @@
 										<div class="text-right text-grey">
 											<!--{hook post_list_inc_quote_before.htm}-->
 											<?php if($allowpost) { ?>
-											<a href="javascript:void(0)" data-tid="<?php echo $_item['tid'];?>" data-pid="<?php echo $_item['pid'];?>" class="text-grey post_reply mr-3"><i class="icon-reply" title="<?php echo lang('quote');?>"></i> <span class="d-none"><?php echo lang('quote');?></span></a>
+											<a href="javascript:void(0)" data-tid="<?php echo $_item['tid'];?>" data-pid="<?php echo $_item['pid'];?>" class="text-grey post_reply mr-3">
+												<!-- <i class="icon-reply" title="<?php echo lang('quote');?>"></i> -->
+												<i class="sq-iconfont sq-iconfont-st">&#xe615;</i>
+												 <span class="d-none"><?php echo lang('quote');?></span>
+											</a>
 											<?php } ?>
 											<!--{hook post_list_inc_quote_after.htm}-->
 											
 											<!--{hook post_list_inc_update_before.htm}-->
 											<?php if($allowupdate || $_item['allowupdate']) { ?>
-											<a href="<?php echo url("post-update-$_item[pid]");?>" class="text-grey post_update mr-3"><i class="icon-edit" title="<?php echo lang('edit');?>"></i> <span class="d-none"><?php echo lang('edit');?></span></a>
+											<a href="<?php echo url("post-update-$_item[pid]");?>" class="text-grey post_update mr-3">
+												<!-- <i class="icon-edit" title="<?php echo lang('edit');?>"></i> -->
+												<i class="sq-iconfont sq-iconfont-st">&#xe602;</i>
+												 <span class="d-none"><?php echo lang('edit');?></span>
+											</a>
 											<?php } ?>
 											<!--{hook post_list_inc_update_after.htm}-->
 										
 											<!--{hook post_list_inc_delete_before.htm}-->
 											<?php if($allowdelete || $_item['allowdelete']) { ?>
-											<a data-href="<?php echo url("post-delete-$_item[pid]");?>" data-confirm-text="<?php echo lang('confirm_delete');?>" href="javascript:void(0);" class="text-grey post_delete _confirm mr-3"><i class="icon-remove" title="<?php echo lang('delete');?>"></i> <span class="d-none"><?php echo lang('delete');?></span></a>
+											<a data-href="<?php echo url("post-delete-$_item[pid]");?>" data-confirm-text="<?php echo lang('confirm_delete');?>" href="javascript:void(0);" class="text-grey post_delete _confirm mr-3">
+												<!-- <i class="icon-remove" title="<?php echo lang('delete');?>"></i> -->
+												<i class="sq-iconfont sq-iconfont-st">&#xe693;</i>
+												 <span class="d-none"><?php echo lang('delete');?></span>
+											</a>
 											<?php } ?>
 											<!--{hook post_list_inc_delete_after.htm}-->
 										</div>
@@ -56,7 +68,7 @@
 								</div>
 								
 							</div>
-							<div class="message mt-1 break-all">
+							<div class="message break-all">
 							
 								<!--{hook post_list_inc_subject_before.htm}-->
 								<?php if(!empty($_item['subject'])) { ?>
@@ -64,7 +76,7 @@
 								<?php } ?>
 								<!--{hook post_list_inc_subject_after.htm}-->
 								
-								<!--{hook post_list_inc_message_before.htm}-->
+								<!--{hook thread_post_list_inc_message_before.htm}-->
 								<?php echo $_item['message_fmt'];?>
 								<!--{hook post_list_inc_message_after.htm}-->
 								

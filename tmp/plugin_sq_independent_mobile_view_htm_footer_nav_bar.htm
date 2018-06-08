@@ -19,7 +19,9 @@
         </li>
         <li>
             <?php $addUrl = empty($uid) ? url('user-login') : url("thread-create-$fid"); ?>
-            <a href="<?php echo $addUrl;?>"><div></div></a>
+            <a href="<?php echo $addUrl;?>">
+                <div><img src="./plugin/sq_independent_mobile/view/images/icon/add.svg" style="width: 18.5px; height: 18.5px;" /></div>
+            </a>
         </li>
         <li>
             <a href="<?php echo url('my-notice');?>">
@@ -27,9 +29,10 @@
                 <span>消息</span>
             </a>
             <?php if($user['unread_notices']) {?>
-                <span class="unread badge badge-danger badge-pill" id="my_notice">
+                <!-- <span class="unread badge badge-danger badge-pill" id="my_notice">
                     <?php echo $user['unread_notices']; ?>
-                </span>
+                </span> -->
+                <span id="unreadNotice"></span>
             <?php } ?>
         </li>
         <li>

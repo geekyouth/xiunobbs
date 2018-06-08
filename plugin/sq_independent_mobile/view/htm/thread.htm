@@ -3,7 +3,7 @@
 <!--{hook thread_start.htm}-->
 
 <div class="row">
-	<div class="col-lg-9 main">
+	<div class="col-lg-9 main sq-thread-page">
 		<!--{hook thread_breadcrumb_before.htm}-->
 		<?php if(empty($hide_breadcrumb)) { ?>
 		<ol class="breadcrumb d-none d-md-flex">
@@ -35,9 +35,14 @@
 							</span>
 						</div>			
 						<div>
-							<span class="date text-grey"><?php echo $thread['create_date_fmt'];?></span>
-							<span class="text-grey"><i class="icon-eye"></i> <?php echo $thread['views'];?></span>
-						</div>
+							<div>
+								<span class="date text-grey"><?php echo $thread['create_date_fmt'];?></span>
+							</div>
+							<div>
+								<span class="text-grey"><i class="sq-iconfont sq-iconfont-st">&#xe645;</i> <?php echo $thread['views'];?></span>
+								<!--{hook thread_icon_right.htm}-->
+							</div>
+						</div> 
 					</div>
 				</div>
 				<div class="sq-thread-message">
@@ -58,17 +63,28 @@
 						
 					<?php } ?>
 				</div>
+
+				<?php if($allowupdate || $allowdelete) { ?>
 				<div class="sq-thread-bottom">
 					<!--{hook thread_update_before.htm}-->
 					<?php if($allowupdate || $first['allowupdate']) { ?>
-					<a href="<?php echo url("post-update-$thread[firstpid]");?>" class="text-grey mr-2 post_update"><i class="icon-edit"></i> <?php echo lang('edit');?></a>
+					<a href="<?php echo url("post-update-$thread[firstpid]");?>" class="text-grey post_update">
+						<!-- <i class="icon-edit"></i> -->
+						<i class="sq-iconfont sq-iconfont-st">&#xe602;</i>
+						<?php echo lang('edit');?>
+					</a>
 					<?php } ?>
 					
 					<?php if($allowdelete || $first['allowdelete']) { ?>
-					<a data-href="<?php echo url("post-delete-$thread[firstpid]");?>" href="javascript:void(0);" class="text-grey post_delete" isfirst="1"><i class="icon-remove"></i> <?php echo lang('delete');?></a>
+					<a data-href="<?php echo url("post-delete-$thread[firstpid]");?>" href="javascript:void(0);" class="text-grey post_delete" isfirst="1">
+						<!-- <i class="icon-remove"></i> -->
+						<i class="sq-iconfont sq-iconfont-st">&#xe693;</i>
+						<?php echo lang('delete');?>
+					</a>
 					<?php } ?>
 					<!--{hook thread_delete_after.htm}-->
 				</div>
+				<?php } ?>
 			</div>
 		</div>
 
@@ -152,8 +168,9 @@
 		
 		<!--{hook thread_page_after.htm}-->
 		
+		<!--
 		<a role="button" class="btn btn-secondary btn-block xn-back col-lg-6 mx-auto mb-3" href="javascript:history.back();"><?php echo lang('back');?></a>
-		
+		-->
 	</div>
 	<div class="col-lg-3 d-none d-lg-block aside">
 	

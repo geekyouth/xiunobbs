@@ -64,15 +64,14 @@
 		var isread = $(this).attr('is-read');
 		var nid = $(this).attr('data-nid');
 
-		console.log(isread);
-
 		var readLiHtml = '';
 		if(isread != 1) {
 			readLiHtml = '<li><a onclick="readOne(' + nid + ');"><i class="sq-icon-tick"></i>标记已读</a></li>';
 		}
 		var deleteLiHtml = '<li><a onclick="deleteOne(' + nid + ');"><i class="sq-icon-delete"></i>删除</a></li>';
 		var actionsHtml = readLiHtml + deleteLiHtml;
-		var bubbleDiv = '<div class="sq-notice-bubble" style="position: absolute; left: ' + (nodePos.left-90) + 'px; top: ' + (nodePos.top+20) + 'px;"><ul class="list-unstyled">' + actionsHtml + '</ul></div>';
+		var height = readLiHtml ? 72 : 46;
+		var bubbleDiv = '<div class="sq-notice-bubble" style="position: absolute; height: ' + height + 'px; right: 10px; top: ' + (nodePos.top+20) + 'px;"><ul class="list-unstyled">' + actionsHtml + '</ul></div>';
 
 		$('body').append(bubbleDiv);
 

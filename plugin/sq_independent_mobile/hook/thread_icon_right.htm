@@ -1,0 +1,24 @@
+<?php
+    $haya_favorite_check_favorite = haya_favorite_find_by_uid_and_tid($uid, $tid);
+    $haya_post_like_thread_check = haya_post_like_find_by_uid_and_pid($uid, $first['pid']);
+?>
+<span id="sqFavorite" class="text-grey <?php if($haya_favorite_check_favorite) { echo 'favorited';} ?>" data-tid="<?php echo $tid; ?>">
+    <i class="sq-iconfont sq-iconfont-st">
+        <?php if($haya_favorite_check_favorite) { ?>
+            &#xe621;
+        <?php } else { ?>
+            &#xe6c2;    
+        <?php } ?>
+    </i>
+    <span><?php echo intval($thread['favorites']); ?></span>
+</span>
+<span id="sqLike" class="text-grey <?php if($haya_post_like_thread_check) { echo 'liked';} ?>" data-pid="<?php echo $first['pid']; ?>">
+    <i class="sq-iconfont sq-iconfont-st">
+        <?php if($haya_post_like_thread_check) { ?>
+            &#xe7bc;
+        <?php } else { ?>
+            &#xe7bb;
+        <?php } ?>
+    </i>
+    <span><?php echo intval($first['likes']); ?></span>
+</span>

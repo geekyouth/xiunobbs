@@ -20,7 +20,7 @@ if (isset($haya_post_like_config['like_is_delete'])
 ?>
 
 <div class="row">
-	<div class="col-lg-9 main">
+	<div class="col-lg-9 main sq-thread-page">
 		<?php
 if($thread['is_secret']) { // 如果是匿名模式，跳转到自己的信息页
     $thread['uid'] = 0;
@@ -56,9 +56,37 @@ if($thread['is_secret']) { // 如果是匿名模式，跳转到自己的信息�
 							</span>
 						</div>			
 						<div>
-							<span class="date text-grey"><?php echo $thread['create_date_fmt'];?></span>
-							<span class="text-grey"><i class="icon-eye"></i> <?php echo $thread['views'];?></span>
-						</div>
+							<div>
+								<span class="date text-grey"><?php echo $thread['create_date_fmt'];?></span>
+							</div>
+							<div>
+								<span class="text-grey"><i class="sq-iconfont sq-iconfont-st">&#xe645;</i> <?php echo $thread['views'];?></span>
+								<?php
+    $haya_favorite_check_favorite = haya_favorite_find_by_uid_and_tid($uid, $tid);
+    $haya_post_like_thread_check = haya_post_like_find_by_uid_and_pid($uid, $first['pid']);
+?>
+<span id="sqFavorite" class="text-grey <?php if($haya_favorite_check_favorite) { echo 'favorited';} ?>" data-tid="<?php echo $tid; ?>">
+    <i class="sq-iconfont sq-iconfont-st">
+        <?php if($haya_favorite_check_favorite) { ?>
+            &#xe621;
+        <?php } else { ?>
+            &#xe6c2;    
+        <?php } ?>
+    </i>
+    <span><?php echo intval($thread['favorites']); ?></span>
+</span>
+<span id="sqLike" class="text-grey <?php if($haya_post_like_thread_check) { echo 'liked';} ?>" data-pid="<?php echo $first['pid']; ?>">
+    <i class="sq-iconfont sq-iconfont-st">
+        <?php if($haya_post_like_thread_check) { ?>
+            &#xe7bc;
+        <?php } else { ?>
+            &#xe7bb;
+        <?php } ?>
+    </i>
+    <span><?php echo intval($first['likes']); ?></span>
+</span>
+							</div>
+						</div> 
 					</div>
 				</div>
 				<div class="sq-thread-message">
@@ -97,6 +125,8 @@ if($thread['is_secret']) { // 如果是匿名模式，跳转到自己的信息�
 						
 					<?php } ?>
 				</div>
+
+				<?php if($allowupdate || $allowdelete) { ?>
 				<div class="sq-thread-bottom">
 					<?php
 	
@@ -145,14 +175,23 @@ if (isset($haya_post_like_config['thread_like_position'])
 <?php } ?>
 
 					<?php if($allowupdate || $first['allowupdate']) { ?>
-					<a href="<?php echo url("post-update-$thread[firstpid]");?>" class="text-grey mr-2 post_update"><i class="icon-edit"></i> <?php echo lang('edit');?></a>
+					<a href="<?php echo url("post-update-$thread[firstpid]");?>" class="text-grey post_update">
+						<!-- <i class="icon-edit"></i> -->
+						<i class="sq-iconfont sq-iconfont-st">&#xe602;</i>
+						<?php echo lang('edit');?>
+					</a>
 					<?php } ?>
 					
 					<?php if($allowdelete || $first['allowdelete']) { ?>
-					<a data-href="<?php echo url("post-delete-$thread[firstpid]");?>" href="javascript:void(0);" class="text-grey post_delete" isfirst="1"><i class="icon-remove"></i> <?php echo lang('delete');?></a>
+					<a data-href="<?php echo url("post-delete-$thread[firstpid]");?>" href="javascript:void(0);" class="text-grey post_delete" isfirst="1">
+						<!-- <i class="icon-remove"></i> -->
+						<i class="sq-iconfont sq-iconfont-st">&#xe693;</i>
+						<?php echo lang('delete');?>
+					</a>
 					<?php } ?>
 					
 				</div>
+				<?php } ?>
 			</div>
 		</div>
 
@@ -329,8 +368,9 @@ if ((isset($haya_post_info_config['show_see_first_floor'])
 		
 		
 		
+		<!--
 		<a role="button" class="btn btn-secondary btn-block xn-back col-lg-6 mx-auto mb-3" href="javascript:history.back();"><?php echo lang('back');?></a>
-		
+		-->
 	</div>
 	<div class="col-lg-3 d-none d-lg-block aside">
 	
@@ -1054,6 +1094,56 @@ if (isset($haya_post_like_config['open_post'])
                     })
                 }
         }); 
+</script><script>
+    $('#sqFavorite').on('click', function(){
+        <?php if(!$uid) { ?>
+            $.alert('需要登陆之后才能收藏!');
+            return false;
+        <?php } ?>
+        var thisNode = $(this);
+        var favorited = thisNode.hasClass('favorited');
+        var countNode = thisNode.find('span');
+        var iNode = thisNode.find('i');
+        var url = favorited ? '<?php echo url("my-favorite-delete");?>' : '<?php echo url("my-favorite-create");?>';
+        var tid = thisNode.attr('data-tid');
+        $.xpost(url, {'tid': tid}, function(code, msg){
+            if (code == 1) {
+                countNode.html(msg.count);
+                if(favorited) {
+                    iNode.html('&#xe6c2;');
+                    thisNode.removeClass('favorited');
+                } else {
+                    iNode.html('&#xe621;');
+                    thisNode.addClass('favorited');
+                }
+            }
+        })
+    });
+
+    $('#sqLike').on('click', function(){
+        <?php if(!$uid) { ?>
+            $.alert('需要登陆之后才能点赞!');
+            return false;
+        <?php } ?>
+        var thisNode = $(this);
+        var liked = thisNode.hasClass('liked');
+        var countNode = thisNode.find('span');
+        var iNode = thisNode.find('i');
+        var url = liked ? '<?php echo url("post-post_like-delete");?>' : '<?php echo url("post-post_like-create");?>';
+        var pid = thisNode.attr('data-pid');
+        $.xpost(url, {'pid': pid}, function(code, msg){
+            if (code == 1) {
+                countNode.html(msg.count);
+                if(liked) {
+                    iNode.html('&#xe7bb;');
+                    thisNode.removeClass('liked');
+                } else {
+                    iNode.html('&#xe7bc;');
+                    thisNode.addClass('liked');
+                }
+            }
+        })
+    });
 </script><script>
 xn_read_unread({"<?php echo $tid;?>": "<?php echo $thread['last_date'];?>"}, <?php echo $tid;?>);
 </script><script>

@@ -31,6 +31,20 @@ function thread_images_html($tid) {
     return $html;
 }
 
+/** 根据postid获得图片详情 */
+function post_images_html($pid) {
+    $data = db_find('attach', ['pid' => $pid], ['aid' => 1]);
+
+    $html = '';
+    if ($data) {
+        foreach($data as $item) {
+            $html .= '<div><img src="./upload/attach/' . $item['filename'] . '"></div>';
+        }
+    }
+
+    return $html;
+}
+
 function get_forum_and_tag() {
     $forum = get_forum_list();
     foreach($forum as &$_forum) {

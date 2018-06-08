@@ -1,0 +1,51 @@
+<script>
+    $('#sqFavorite').on('click', function(){
+        <?php if(!$uid) { ?>
+            $.alert('需要登陆之后才能收藏!');
+            return false;
+        <?php } ?>
+        var thisNode = $(this);
+        var favorited = thisNode.hasClass('favorited');
+        var countNode = thisNode.find('span');
+        var iNode = thisNode.find('i');
+        var url = favorited ? '<?php echo url("my-favorite-delete");?>' : '<?php echo url("my-favorite-create");?>';
+        var tid = thisNode.attr('data-tid');
+        $.xpost(url, {'tid': tid}, function(code, msg){
+            if (code == 1) {
+                countNode.html(msg.count);
+                if(favorited) {
+                    iNode.html('&#xe6c2;');
+                    thisNode.removeClass('favorited');
+                } else {
+                    iNode.html('&#xe621;');
+                    thisNode.addClass('favorited');
+                }
+            }
+        })
+    });
+
+    $('#sqLike').on('click', function(){
+        <?php if(!$uid) { ?>
+            $.alert('需要登陆之后才能点赞!');
+            return false;
+        <?php } ?>
+        var thisNode = $(this);
+        var liked = thisNode.hasClass('liked');
+        var countNode = thisNode.find('span');
+        var iNode = thisNode.find('i');
+        var url = liked ? '<?php echo url("post-post_like-delete");?>' : '<?php echo url("post-post_like-create");?>';
+        var pid = thisNode.attr('data-pid');
+        $.xpost(url, {'pid': pid}, function(code, msg){
+            if (code == 1) {
+                countNode.html(msg.count);
+                if(liked) {
+                    iNode.html('&#xe7bb;');
+                    thisNode.removeClass('liked');
+                } else {
+                    iNode.html('&#xe7bc;');
+                    thisNode.addClass('liked');
+                }
+            }
+        })
+    });
+</script>

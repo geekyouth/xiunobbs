@@ -88,9 +88,9 @@
         repairThumbImg: function() {
             var imgDiv      = $('.sq-thumb-img');
             var imgDivWidth = imgDiv.width();
-            var imgWidth    = (imgDivWidth / 3.3 ); // 图片的宽度
-            var imgHeight   = imgWidth * 3 / 4; // 高度为宽度的3/4
-            var marginWidth = (imgDivWidth - (imgWidth * 3)) / 2;
+            var imgWidth    = (imgDivWidth - 20) / 3; // 图片的宽度
+            var imgHeight   = imgWidth / (8 / 5); // 高度为宽度的1.6
+            var marginWidth = 10;
             imgDiv.find('div').css({width: imgWidth, height: imgHeight});
             imgDiv.find('div:not(:last-child)').css('margin-right', marginWidth);
         },
@@ -364,8 +364,12 @@ $('body').on('click', '.update_log_delete', function() {
 
 <?php } ?>
 
-<div id="scroll_to_top" class="d-fixed" style="position: fixed; _position: absolute; bottom: 160px; right: 5px; width: 70px; height: 70px; display: none;">
-	<a href="javascript:void(0);" style="width: 70px; height: 70px; display: inline-block; background: url(plugin/xn_top/scroll_top.png) no-repeat; outline: none;" title="返回顶部"></a>
+<!-- <div id="scroll_to_top" class="d-fixed" style="position: fixed; _position: absolute; bottom: 160px; right: 5px; width: 70px; height: 70px; display: none;"> -->
+<div id="scroll_to_top" class="d-fixed" style="position: fixed; _position: absolute; bottom: 180px; right: 20px; width: 40px; height: 40px; display: none;">
+	<!-- <a href="javascript:void(0);" style="width: 70px; height: 70px; display: inline-block; background: url(plugin/xn_top/top.svg) no-repeat; outline: none;" title="返回顶部"> -->
+	<a href="javascript:void(0);" style="width: 40px; height: 40px; display: flex; outline: none; border-radius: 40px; background: #C6C6C6; justify-content: center; align-items: center;" title="返回顶部">
+		<img src="./plugin/xn_top/top.svg" style="width: 20px; height: 20px;" />
+	</a>
 </div>
 	
 <script>

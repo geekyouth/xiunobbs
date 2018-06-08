@@ -29,8 +29,14 @@
 				-->
 			</div>
 		</div>
-		<div class="message break-all mt-1">
-			<span><i class="icon icon-circle text-danger"></i></span>  <?php echo $_notice['message'];?>
+		<div class="message break-all">
+			<!-- 
+			<span>
+				<i class="icon icon-circle text-danger"></i>
+			</span>
+			-->
+			<span class="red-point">·</span>
+			<?php echo $_notice['message'];?>
 		</div>
 		<div>
 			<span class="date text-grey"><?php echo $_notice['create_date_fmt'];?></span>

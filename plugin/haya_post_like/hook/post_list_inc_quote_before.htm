@@ -17,18 +17,21 @@ $haya_post_like_check = isset($haya_post_like_pids[$_post['pid']]);
 		<?php if (!empty($uid)) { ?>
 			<?php if($haya_post_like_check){ ?>
 				<a href="javascript:;" class="text-muted haya-post-like-loved js-haya-post-like-post-del" data-pid="<?php echo $_post['pid'];?>" title="<?php echo $haya_post_like_is_delete ? lang('haya_post_like_unlike') : lang('haya_post_like_has_like'); ?>">
-					<i class="icon icon-thumbs-up" aria-label="<?php echo $haya_post_like_is_delete ? lang('haya_post_like_unlike') : lang('haya_post_like_has_like'); ?>"></i>
+					<!-- <i class="icon icon-thumbs-up" aria-label="<?php echo $haya_post_like_is_delete ? lang('haya_post_like_unlike') : lang('haya_post_like_has_like'); ?>"></i> -->
+					<i class="sq-iconfont sq-iconfont-st" aria-label="<?php echo $haya_post_like_is_delete ? lang('haya_post_like_unlike') : lang('haya_post_like_has_like'); ?>">&#xe7bb;</i>
 					<span class="haya-post-like-post-user-count"><?php echo intval($_post['likes']); ?></span>
 				</a>
 			<?php } else { ?>
 				<a href="javascript:;" class="text-muted js-haya-post-like-post-add" data-pid="<?php echo $_post['pid'];?>" title="<?php echo lang('haya_post_like_like_post'); ?>">
-					<i class="icon icon-thumbs-o-up" aria-label="<?php echo lang('haya_post_like_like_post'); ?>"></i>
+					<!-- <i class="icon icon-thumbs-o-up" aria-label="<?php echo lang('haya_post_like_like_post'); ?>"></i> -->
+					<i class="sq-iconfont sq-iconfont-st" aria-label="<?php echo lang('haya_post_like_like_post'); ?>">&#xe7bb;</i>
 					<span class="haya-post-like-post-user-count"><?php echo intval($_post['likes']); ?></span>
 				</a>
 			<?php } ?>	
 		<?php } else { ?>
 			<a href="javascript:;" class="text-muted js-haya-post-like-post-tip" data-pid="<?php echo $_post['pid'];?>" title="<?php echo lang('haya_post_like_like_post'); ?>">
-				<i class="icon icon-thumbs-o-up" aria-label="<?php echo lang('haya_post_like_like_post'); ?>"></i>
+				<!-- <i class="icon icon-thumbs-o-up" aria-label="<?php echo lang('haya_post_like_like_post'); ?>"></i> -->
+				<i class="sq-iconfont sq-iconfont-st" aria-label="<?php echo lang('haya_post_like_like_post'); ?>">&#xe7bb;</i>
 				<span class="haya-post-like-post-user-count"><?php echo intval($_post['likes']); ?></span>
 			</a>
 		<?php } ?>

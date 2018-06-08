@@ -33,9 +33,9 @@
         repairThumbImg: function() {
             var imgDiv      = $('.sq-thumb-img');
             var imgDivWidth = imgDiv.width();
-            var imgWidth    = (imgDivWidth / 3.3 ); // 图片的宽度
-            var imgHeight   = imgWidth * 3 / 4; // 高度为宽度的3/4
-            var marginWidth = (imgDivWidth - (imgWidth * 3)) / 2;
+            var imgWidth    = (imgDivWidth - 20) / 3; // 图片的宽度
+            var imgHeight   = imgWidth / (8 / 5); // 高度为宽度的1.6
+            var marginWidth = 10;
             imgDiv.find('div').css({width: imgWidth, height: imgHeight});
             imgDiv.find('div:not(:last-child)').css('margin-right', marginWidth);
         },

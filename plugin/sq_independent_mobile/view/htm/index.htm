@@ -3,7 +3,7 @@
 <!--{hook index_start.htm}-->
 
 <div class="row">
-	<div class="col-lg-9 main">
+	<div class="col-lg-9 main sq-index">
 		<!--{hook index_main_start.htm}-->
 
 		<div class="card card-toplist">
@@ -91,5 +91,16 @@ $('li[data-active="fid-0"]').addClass('active');
 // 将底部菜单的首页设置为激活状态
 $('#bottom-menu>li:eq(0)').addClass('bottom-active');
 $('#bottom-menu>li:eq(0)>a>div').addClass('icon-active');
+
+function repairTopImgWidth() {
+	var descImg = $('.toplist-desc-img');
+	var toplistItem = descImg.parent();
+	var itemWidth = toplistItem.width();
+	var imgHeight = itemWidth / 1.78; // 宽高比
+	descImg.css({width: itemWidth, height: imgHeight});
+}
+$(function(){
+	repairTopImgWidth();
+});
 </script>
 <!--{hook index_js.htm}-->

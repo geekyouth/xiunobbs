@@ -2,7 +2,7 @@
 
 <?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/my_header.htm'); ?>
 
-	<ul class="list-unstyled postlist mb-0">
+	<ul class="list-unstyled postlist mb-0 sq-my-post">
 		<?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/my_post_list.inc.htm');?>
 	</ul>
 	
@@ -17,4 +17,43 @@
 	// active底部菜单
 	$('#bottom-menu>li:eq(4)').addClass('bottom-active');
 	$('#bottom-menu>li:eq(4)>a>div').addClass('icon-active');
+
+	$('.sq-my-post .sq-icon-more').on('click', function(e){
+		var nodePos = $(this).offset();
+
+		if($('.sq-my-post-bubble')) $('.sq-my-post-bubble').remove();
+
+		var pid = $(this).attr('pid');
+		
+		var updateHref = '<?php echo url("post-update-' + pid + '");?>';
+		var deleteLink = '<?php echo url("post-delete-' + pid + '");?>'
+		var actionsHtml = '<li><a href="' + updateHref + '"><i class="sq-icon-edit"></i><span>编辑</span></a></li><li><a data-link="' + deleteLink + '" onclick="deletePost(this);"><i class="sq-icon-delete"></i><span>删除</span></a></li>';
+		// var bubbleDiv = '<div class="sq-my-bubble" style="position: absolute; left: ' + (nodePos.left-50) + 'px; top: ' + (nodePos.top+20) + 'px;"><ul class="list-unstyled">' + actionsHtml + '</ul></div>';
+		var bubbleDiv = '<div class="sq-my-post-bubble" style="position: absolute; right: 10px; top: ' + (nodePos.top+20) + 'px;"><ul class="list-unstyled">' + actionsHtml + '</ul></div>';
+
+		$('body').append(bubbleDiv);
+
+		$(body).one('click', function(){
+			$('.sq-my-post-bubble').remove();
+		});
+		
+		e.stopPropagation(); // 阻止冒泡
+	});
+
+	// 删除帖子 / Delete post
+	var deletePost = function(node) {
+		var jthis = $(node);
+		var href = jthis.attr('data-link');
+		if(window.confirm(lang.confirm_delete)) {
+			$.xpost(href, function(code, message) {
+				if(code == 0) {
+					window.location = './?my-post.htm';
+				} else {
+					$.alert(message);
+				}
+			});
+		}
+		return false;
+	};
+
 </script>

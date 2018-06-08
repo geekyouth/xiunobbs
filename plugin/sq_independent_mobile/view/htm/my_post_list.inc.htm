@@ -15,9 +15,24 @@
 								<?php } ?>
 
 								<!--{hook post_list_inc_message_before.htm}-->
-								<?php echo $_post['message_fmt'];?>
+								<div class="message-fmt">
+									<?php echo $_post['message_fmt'];?>
+								</div>
+								<?php if($_post['images']) { ?>
+								<div class="post-images">
+									<?php echo post_images_html($_post['pid']); ?>
+								</div>
+								<?php } ?>
 
-								<div class="text-right text-muted small"><?php echo $_post['create_date_fmt']; ?></div>
+								<div class="d-flex justify-content-between text-muted small">
+									<div class="text-muted small">
+										<?php echo $_post['create_date_fmt']; ?>
+									</div>
+									<?php if($route == 'my') { ?>
+									<div class="text-right small"><i class="sq-icon-more" pid="<?php echo $_post['pid']; ?>"></i></div>
+									<?php } ?>
+								</div>
+								
 							</div>
 						</div>
 					</li>

@@ -1,0 +1,5 @@
+<?php 
+$msg = $_item['message_fmt'];
+$msg = preg_replace("/\[em_([0-9]*)\]/i","<img src='./plugin/Ty_face/face/arclist/$1.gif' border='0'/>",$msg);
+$_item['message_fmt'] =	$msg			
+?>

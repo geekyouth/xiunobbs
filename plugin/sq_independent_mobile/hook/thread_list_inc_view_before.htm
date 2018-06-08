@@ -1,0 +1,5 @@
+<span><?php echo $_thread['forumname']; ?></span>
+<span>-</span>
+<?php if(!empty($_thread['taglist'])) { foreach($_thread['taglist'] as $tag) { ?>
+<span><?php echo $tag['name'];?></span>
+<?php  }} ?>
