@@ -8,9 +8,11 @@ $thumbImgPath = APP_PATH . 'upload/attach/thumb/' . $day; // 保存路径
 
 foreach($sess_tmp_files as $_file) { // 循环生成缩略图
 	$filename = file_name($_file['url']);
+	$fileType = get_file_type($filename);
+	
 	$filename = str_replace(".", ".thumb.", $filename);
 
-	if(file_exists($_file['url'])){
+	if(file_exists($_file['url']) && $fileType == 'image'){ // 只有文件存在，并且为图片格式才生成缩略图
 		get_compress_image($_file['url'], $thumbImgPath, $filename);
 	}
 }

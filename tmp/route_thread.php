@@ -72,6 +72,8 @@ if($action == 'create') {
 		$tag = ['name' => '无分类'];
 	}
 
+	$noBottomNav = true; // 不显示底部菜单
+
 	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/htm/post.htm');
 	return;
 }
@@ -349,6 +351,8 @@ if(IS_MOBILE) {
 			$_post['sq_imgs'] = $imgs;
 		}
 	}
+
+	$noBottomNav = true; // 不显示底部菜单
 
 	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/htm/thread.htm');
 	return;

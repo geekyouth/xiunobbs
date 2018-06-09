@@ -20,7 +20,7 @@ function get_tagname_by_tagid($tagid) {
 /** 组装帖子详情页里面的图片html内容 */
 function thread_images_html($tid) {
     $pid = db_find_one('post', ['tid' => $tid, 'isfirst' => 1], [], ['pid']);
-    $data = db_find('attach', ['pid' => $pid['pid']], ['aid' => 1]);
+    $data = db_find('attach', ['pid' => $pid['pid'], 'isimage' => 1], ['aid' => 1]);
     $html = '';
     if ($data) {
     	foreach($data as $item) {
@@ -77,4 +77,34 @@ function get_today_by_tids($tids) {
     $sql = "SELECT * FROM bbs_thread WHERE create_date > $todayStart AND create_date < $todayEnd AND tid IN $tids";
     $threads = $db->sql_find($sql);
     return $threads;
+}
+
+/** 判断文件类型 */
+function get_file_type($filename) {
+    $ext = explode('.', $filename);
+    $count = count($ext);
+    $ext = $ext[$count - 1];
+    switch ($ext) 
+    { 
+        case 'exe': 
+            $fileType = 'exe'; 
+            break; 
+        case 'midi': 
+            $fileType = 'midi'; 
+            break; 
+        case 'rar': 
+            $fileType = 'rar'; 
+            break; 
+        case 'bmp': 
+            $fileType = 'bmp'; 
+            break; 
+        case 'jpg':
+        case 'gif':
+        case 'png':
+            $fileType = 'image'; 
+            break; 
+        default: 
+            $fileType = 'unknown'; 
+    } 
+    return $fileType;
 }

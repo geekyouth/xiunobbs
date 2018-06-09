@@ -94,9 +94,12 @@ if($thread['is_secret']) { // 如果是匿名模式，跳转到自己的信息�
 				
 						
 						<?php echo $first['message_fmt'];?>
-						<div class="thread-images">
-    <?php echo thread_images_html($tid); ?>
-</div>
+						<?php
+    $imagesHtml = thread_images_html($tid);
+    if($imagesHtml) {
+        echo '<div class="thread-images">' . $imagesHtml . '</div>';
+    }    
+?>
 
 <?php if($first['last_update_date']) { ?>
 	<?php $first['last_update_user'] = user_read_cache($first['last_update_uid']);?>
@@ -241,7 +244,7 @@ if ((isset($haya_post_like_config['open_post'])
 					</div>
 					
 					<div>
-						<?php 
+					<?php 
 if ((isset($haya_post_info_config['show_see_first_floor']) 
 	&& $haya_post_info_config['show_see_first_floor'] == 1)
 	|| (isset($haya_post_info_config['show_post_sort']) 
@@ -304,7 +307,7 @@ if ((isset($haya_post_info_config['show_see_first_floor'])
 					
 					<?php if(!empty($user)) { ?>
 					<li class="post newpost media" id="sqReplyContainer">
-						
+						<!--
 						<div class="media-body">
 							<div class="d-flex justify-content-between small text-muted" id="sqPostFloor">
 								<div>
@@ -316,7 +319,7 @@ if ((isset($haya_post_info_config['show_see_first_floor'])
 							</div>
 							
 							<form action="<?php echo url("post-create-$tid-1");?>" method="post" id="quick_reply_form" class="d-block">	
-
+			
 								<div class="d-flex justify-content-between align-items-center text-muted" style="margin-top: 0.5rem;">
 									<div class="action-icons">
 										<i class="emotion sq-icon-face sq-md-icon"></i>
@@ -343,13 +346,14 @@ if ((isset($haya_post_info_config['show_see_first_floor'])
 												<button class="btn btn-outline-secondary" type="submit" id="submit">发送</button>
 											</div>
 										</div>
-										<!-- <textarea class="form-control" placeholder="<?php echo lang('message');?>" name="message" id="message"></textarea> -->
+										<textarea class="form-control" placeholder="<?php echo lang('message');?>" name="message" id="message"></textarea>
 									</div>
 										
 								</div>
-
+			
 							</form>
 						</div>
+						-->
 					</li>
 					<?php } ?>
 							
@@ -420,12 +424,76 @@ if ((isset($haya_post_info_config['show_see_first_floor'])
 		
 	</div>
 
+	<?php if(!empty($user)) { ?>
 	<div id="sqFloatDiv">
-		<div id="sqFloatReply"></div>
-		<div id="sqFloatFace"></div>
-	</div>
-</div>
+		<div id="sqFloatReply">
+			<div>
+				<input id="bottomInput" type="text" placeholder="写评论..."/>
+			</div>
+			<div>
+				<i class="sq-iconfont" id="bottomStar">
+				<?php if($haya_favorite_check_favorite) { ?>
+					&#xe621;
+				<?php } else { ?>
+					&#xe6c2;    
+				<?php } ?>
+				</i>
+				<i class="sq-iconfont" id="bottomLike">
+				<?php if($haya_post_like_thread_check) { ?>
+					&#xe7bc;
+				<?php } else { ?>
+					&#xe7bb;
+				<?php } ?>
+				</i>
+			</div>
+		</div>
+		<div id="sqHiddenReply">
+			<div class="media-body">
+				<!--
+				<div class="d-flex justify-content-between small text-muted" id="sqPostFloor">
+					<div>
+						<div><?php echo $user['username'];?></div>
+					</div>
+					<div>
+						<span class="floor" id="newfloor"><?php echo ($thread['posts'] + 2);?></span><?php echo lang('floor');?>
+					</div>
+				</div>
+				-->
+				
+				<form action="<?php echo url("post-create-$tid-1");?>" method="post" id="quick_reply_form" class="d-block">	
 
+					<div class="d-flex justify-content-between align-items-center text-muted" style="margin-top: 0.5rem;">
+						<div class="action-icons">
+							<i class="emotion sq-icon-face sq-md-icon"></i>
+							<i class="sq-icon-image sq-md-icon"></i>
+						</div>
+						<div>
+							<label class="sq-checkbox-label sq-checkbox-post">
+    <input class="sq-checkbox" type="checkbox" name="is_secret">
+    <span class="sq-checkbox-span"></span>
+    <span class="sq-checkbox-text">匿名回帖</span>
+</label>
+						</div>
+					</div>
+					<div>
+						
+						<input type="hidden" name="doctype" value="1" />
+						<input type="hidden" name="return_html" value="1" />
+						<input type="hidden" name="quotepid" value="0" />
+						<div class="message">
+							<input type="text" id="message" name="message" class="form-control" placeholder="写评论...">
+							<button class="btn" type="submit" id="submit">发送</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	<?php } ?>
+
+</div>
+ 
 
 
 <?php include _include(APP_PATH . SQ_MOBILE_PATH . 'view/htm/footer.inc.htm');?>
@@ -536,6 +604,7 @@ $(function() {
 	$('#bottom-menu>li:eq(1)>a>span').html(forumName);
 	$('#bottom-menu>li:eq(1)>a>div').addClass('icon-active');
 
+/** 原来浮动输入框应该在列表中点击才打开的逻辑
 	$(window).on('resize', function(){ // 将输入框返回原位
 		if(openFloatInput) {
 			$('.sq-bottom-nav').css('display', 'none');
@@ -543,10 +612,88 @@ $(function() {
 			$('.sq-bottom-nav').css('display', 'block');
 		}
 	});
+**/
+	$(window).on('resize', function() { // 如果窗口大小变化，一般是键盘隐藏，那么应该去掉表情框之类
+		var isDisplay = $('#sqHiddenReply').css('display');
+	});
+	$('.sq-bottom-nav').css('display', 'none');
 });
 
-// 输入框自动伸缩
+var jmessage = $('#bottomInput');
+jmessage.on('focus', floatInput);
 
+$('.post .post_reply').on('click', function(){
+	var thisNode = $(this);
+	var quoteNode = $('input[name=quotepid]');
+	var quotepid = quoteNode.val();
+	if(thisNode.attr('data-pid') == quotepid) {
+		quoteNode.val(0);
+	} else {
+		quoteNode.val(thisNode.attr('data-pid'));
+	}
+	$('#bottomInput').focus();
+});
+$('.emotion').on('click', function(e){
+	$('#imagebox') && $('#imagebox').remove;
+	e.stopPropagation();
+});
+$('.action-icons .sq-icon-image').on('click', function(e) {
+	e.stopPropagation();
+});
+$('.sq-checkbox-label').on('click', function(e){ // 阻止匿名回帖的冒泡
+	e.stopPropagation();
+});
+$('input[name=message]').on('click', function(e){
+	var isDisplay = $('#sqFloatReply').css('display');
+	if(isDisplay == 'none') {
+		$('#facebox').remove();
+		$('#imagebox').remove();
+	}
+	e.stopPropagation();
+});
+$('#bottomStar').on('click', function(){
+	$('#sqFavorite').click();
+});
+$('#bottomLike').on('click', function(){
+	$('#sqLike').click();
+});
+
+function floatInput() {
+	var sqHiddenReply = $('#sqHiddenReply'),
+		sqFloatReply  = $('#sqFloatReply'),
+		sqFloatDiv    = $('#sqFloatDiv');
+
+	sqHiddenReply.css('display', 'block');
+	sqFloatReply.css('display', 'none');
+	sqFloatDiv.css('position', 'fixed');
+	sqFloatDiv.css('min-height', '100%');
+
+	sqFloatDiv.on('click', resetInput);
+
+	openFloatInput = 1; // 开启了浮动输入框
+
+	$('#message').focus(); // 焦点
+}
+
+function resetInput() {
+	var sqHiddenReply = $('#sqHiddenReply'),
+		sqFloatReply  = $('#sqFloatReply'),
+		sqFloatDiv    = $('#sqFloatDiv');
+
+	sqHiddenReply.css('display', 'none');
+	sqFloatReply.css('display', 'flex');
+	sqFloatDiv.css('position', 'absolute');
+	sqFloatDiv.css('min-height', '0');
+
+	$('#facebox') && $('#facebox').remove();
+	$('#imagebox') && $('#imagebox').remove();
+
+	openFloatInput = 0; // 关闭了浮动输入框
+
+	sqFloatDiv.off('click', resetInput);
+}
+
+/**
 var jmessage = $('#message');
 jmessage.on('focus', floatInput);
 
@@ -682,9 +829,49 @@ function changeInputStatus(node, inputData) {
 		node.find('input[name=is_secret]').attr('checked', true);
 	}
 }
+**/
 
 $('.sq-icon-image').on('click', openUploadDiv); // 注册点击事件
 /** 开启上传图片的div */
+function openUploadDiv() {
+	$('#imagebox') && $('#imagebox').remove();
+	$('#facebox') && $('#facebox').remove();
+
+	$.ajax({
+		type: 'GET',
+		url: '<?php echo url("attach-getsess"); ?>',
+		success: function(data) {
+			data = JSON.parse(data);
+			var imageHtml = '<div id="imagebox">' +
+							data.data +
+							'	<div class="image-add">' +
+							'		<label style="width: 100%; height: 100%;">'+
+							'			<img src="./plugin/sq_independent_mobile/view/images/icon/add.png"/>' +
+							'			<input type="file" id="inputImg" multiple="multiple" style="width: 0; height: 0; display: none;" />' +
+							'		</label>' +
+							'	</div>' +
+							'</div>';
+
+			$('#sqHiddenReply').append(imageHtml);
+
+			var imagebox = $('#imagebox');
+			var divWidth = imagebox.width() / 4.2;
+			var divMargin = (imagebox.width() - (4 * divWidth)) / 4;
+
+			$('#imagebox .image-add').css({width: divWidth, height: divWidth});
+			$('#imagebox .sq-img-div').css({width: divWidth, height: divWidth});
+
+			$('#imagebox').on('click', function(e){ // 阻止冒泡
+				e.stopPropagation();
+			});
+			$('#inputImg').on('change', inputImgChange);
+			
+			$('#message').blur();
+		}
+	});
+}
+
+/** 开启上传图片的div
 function openUploadDiv() {
 	if (!openFloatInput) {
 		$('#message').focus(); // 让其
@@ -704,7 +891,7 @@ function openUploadDiv() {
 							'	<div class="image-add">' +
 							'		<label style="width: 100%; height: 100%;">'+
 							'			<img src="./plugin/sq_independent_mobile/view/images/icon/add.png"/>' +
-							'			<input type="file" id="inputImg" multiple="multiple" style="width: 0; height: 0;" />' +
+							'			<input type="file" id="inputImg" multiple="multiple" style="width: 0; height: 0; display: none;" />' +
 							'		</label>' +
 							'	</div>' +
 							'</div>';
@@ -728,6 +915,7 @@ function openUploadDiv() {
 	});
 
 }
+*/
 
 $('#inputImg').on('change', inputImgChange);
 
@@ -836,6 +1024,8 @@ $(function(){
 		id : 'facebox', 
 
 		assign:'message', 
+
+		floatContent: true,
 
 		path:'plugin/Ty_face/face/arclist/'	//?������֪��
 
@@ -1095,55 +1285,63 @@ if (isset($haya_post_like_config['open_post'])
                 }
         }); 
 </script><script>
-    $('#sqFavorite').on('click', function(){
+    $('#sqFavorite').on('click', favoriteClick);
+    function favoriteClick() {
         <?php if(!$uid) { ?>
             $.alert('需要登陆之后才能收藏!');
             return false;
         <?php } ?>
-        var thisNode = $(this);
-        var favorited = thisNode.hasClass('favorited');
-        var countNode = thisNode.find('span');
-        var iNode = thisNode.find('i');
+        var favoriteNode = $('#sqFavorite');
+        var bottomFavorite = $('#bottomStar');
+        var favorited = favoriteNode.hasClass('favorited');
+        var countNode = favoriteNode.find('span');
+        var iNode = favoriteNode.find('i');
         var url = favorited ? '<?php echo url("my-favorite-delete");?>' : '<?php echo url("my-favorite-create");?>';
-        var tid = thisNode.attr('data-tid');
+        var tid = favoriteNode.attr('data-tid');
         $.xpost(url, {'tid': tid}, function(code, msg){
             if (code == 1) {
                 countNode.html(msg.count);
                 if(favorited) {
                     iNode.html('&#xe6c2;');
-                    thisNode.removeClass('favorited');
+                    bottomFavorite.html('&#xe6c2;');
+                    favoriteNode.removeClass('favorited');
                 } else {
                     iNode.html('&#xe621;');
-                    thisNode.addClass('favorited');
+                    bottomFavorite.html('&#xe621;');
+                    favoriteNode.addClass('favorited');
                 }
             }
-        })
-    });
+        });
+    }
 
-    $('#sqLike').on('click', function(){
+    $('#sqLike').on('click', likeClick);
+    function likeClick() {
         <?php if(!$uid) { ?>
             $.alert('需要登陆之后才能点赞!');
             return false;
         <?php } ?>
-        var thisNode = $(this);
-        var liked = thisNode.hasClass('liked');
-        var countNode = thisNode.find('span');
-        var iNode = thisNode.find('i');
+        var likeNode = $('#sqLike');
+        var bottomLike = $('#bottomLike');
+        var liked = likeNode.hasClass('liked');
+        var countNode = likeNode.find('span');
+        var iNode = likeNode.find('i');
         var url = liked ? '<?php echo url("post-post_like-delete");?>' : '<?php echo url("post-post_like-create");?>';
-        var pid = thisNode.attr('data-pid');
+        var pid = likeNode.attr('data-pid');
         $.xpost(url, {'pid': pid}, function(code, msg){
             if (code == 1) {
                 countNode.html(msg.count);
                 if(liked) {
                     iNode.html('&#xe7bb;');
-                    thisNode.removeClass('liked');
+                    bottomLike.html('&#xe7bb;');
+                    likeNode.removeClass('liked');
                 } else {
                     iNode.html('&#xe7bc;');
-                    thisNode.addClass('liked');
+                    bottomLike.html('&#xe7bc;');
+                    likeNode.addClass('liked');
                 }
             }
-        })
-    });
+        });
+    }
 </script><script>
 xn_read_unread({"<?php echo $tid;?>": "<?php echo $thread['last_date'];?>"}, <?php echo $tid;?>);
 </script><script>

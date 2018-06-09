@@ -1,51 +1,59 @@
 <script>
-    $('#sqFavorite').on('click', function(){
+    $('#sqFavorite').on('click', favoriteClick);
+    function favoriteClick() {
         <?php if(!$uid) { ?>
             $.alert('需要登陆之后才能收藏!');
             return false;
         <?php } ?>
-        var thisNode = $(this);
-        var favorited = thisNode.hasClass('favorited');
-        var countNode = thisNode.find('span');
-        var iNode = thisNode.find('i');
+        var favoriteNode = $('#sqFavorite');
+        var bottomFavorite = $('#bottomStar');
+        var favorited = favoriteNode.hasClass('favorited');
+        var countNode = favoriteNode.find('span');
+        var iNode = favoriteNode.find('i');
         var url = favorited ? '<?php echo url("my-favorite-delete");?>' : '<?php echo url("my-favorite-create");?>';
-        var tid = thisNode.attr('data-tid');
+        var tid = favoriteNode.attr('data-tid');
         $.xpost(url, {'tid': tid}, function(code, msg){
             if (code == 1) {
                 countNode.html(msg.count);
                 if(favorited) {
                     iNode.html('&#xe6c2;');
-                    thisNode.removeClass('favorited');
+                    bottomFavorite.html('&#xe6c2;');
+                    favoriteNode.removeClass('favorited');
                 } else {
                     iNode.html('&#xe621;');
-                    thisNode.addClass('favorited');
+                    bottomFavorite.html('&#xe621;');
+                    favoriteNode.addClass('favorited');
                 }
             }
-        })
-    });
+        });
+    }
 
-    $('#sqLike').on('click', function(){
+    $('#sqLike').on('click', likeClick);
+    function likeClick() {
         <?php if(!$uid) { ?>
             $.alert('需要登陆之后才能点赞!');
             return false;
         <?php } ?>
-        var thisNode = $(this);
-        var liked = thisNode.hasClass('liked');
-        var countNode = thisNode.find('span');
-        var iNode = thisNode.find('i');
+        var likeNode = $('#sqLike');
+        var bottomLike = $('#bottomLike');
+        var liked = likeNode.hasClass('liked');
+        var countNode = likeNode.find('span');
+        var iNode = likeNode.find('i');
         var url = liked ? '<?php echo url("post-post_like-delete");?>' : '<?php echo url("post-post_like-create");?>';
-        var pid = thisNode.attr('data-pid');
+        var pid = likeNode.attr('data-pid');
         $.xpost(url, {'pid': pid}, function(code, msg){
             if (code == 1) {
                 countNode.html(msg.count);
                 if(liked) {
                     iNode.html('&#xe7bb;');
-                    thisNode.removeClass('liked');
+                    bottomLike.html('&#xe7bb;');
+                    likeNode.removeClass('liked');
                 } else {
                     iNode.html('&#xe7bc;');
-                    thisNode.addClass('liked');
+                    bottomLike.html('&#xe7bc;');
+                    likeNode.addClass('liked');
                 }
             }
-        })
-    });
+        });
+    }
 </script>

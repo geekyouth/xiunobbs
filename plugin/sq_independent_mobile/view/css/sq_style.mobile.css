@@ -577,7 +577,8 @@ body {background: #FFFFFF;}
 
 /** 帖子详情页 */
 .sq-thread-page {
-    padding: 20px 20px 0 !important;
+    padding: 18px 15px 0 !important;
+    margin-bottom: 50px; /** 底部预留位置 **/
 }
 .sq-thread {
     padding: 0 20px;
@@ -631,15 +632,40 @@ body {background: #FFFFFF;}
     margin-right: 20px;
 }
 .sq-thread .sq-thread-message {
-    padding: 20px 0;
+    padding: 15px 0;
     color: #666666;
     font-size: 1rem;
     line-height: 24px;
 }
+.sq-thread .sq-thread-message .fieldset {
+    position: relative;
+    padding: 0px;
+    padding-top: calc(1rem + 40px);
+    margin: 0px;
+    margin-top: 15px;
+    border: 0px;
+    background-color: #fff;
+    border-top: 1px solid #eeeeee;
+}
+.sq-thread .sq-thread-message .fieldset>legend {
+    padding: 0;
+    background-color: #fff;
+    color: #424242;
+    top: 18px;
+    position: absolute;
+}
+.sq-thread .sq-thread-message .fieldset ul>li>a {
+    color: #4B8FF9;
+    display: block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .sq-thread .sq-thread-bottom {
     display: flex;
     justify-content: center;
-    padding: 20px 0;
+    padding: 18px 0;
     border-top: 1px solid #eeeeee;
 }
 .sq-thread .sq-thread-bottom>a {
@@ -668,7 +694,7 @@ body {background: #FFFFFF;}
     padding: 16px 0 0;
 }
 .sq-thread-postlist .sq-thread-postlist-header {
-    padding: 20px 0;
+    padding: 15px 0;
     border-bottom: 1px solid #eeeeee;
     display: flex;
     justify-content: space-between;
@@ -713,6 +739,9 @@ body {background: #FFFFFF;}
     font-size: 11px;
     color: #888888 !important;
 }
+.sq-thread-postlist .post-container .post-header .post-right>div:last-child>div>a {
+    margin-right: 20px !important;
+}
 .sq-thread-postlist .post-container .message {
     padding: 18px 0;
     font-size: 12px;
@@ -750,6 +779,7 @@ body {background: #FFFFFF;}
 .action-icons>i {
     margin: 0.2rem;
 }
+/** 帖子详情页里面的浮动输入框，由于需求改变而取消，用的时候请取消注释，并把#sqHiddenReply里面的内容放回到ul.postlist列表里面即可
 #sqFloatDiv {
     width: 100%;
     min-height: 100%;
@@ -765,6 +795,75 @@ body {background: #FFFFFF;}
     width: 100%;
     background: #fff;
     box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.2);
+}
+**/
+#sqFloatDiv {
+    width: 100%;
+    /* min-height: 100%; */
+    display: block;
+    position: absolute; /** 当点击了输入框后，应该将其设为fixed，然后可以相应click事件让浮动输入框下沉 */
+    left: 0px;
+    top: 0px;
+}
+#sqFloatReply {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #F8F8F8;
+}
+#sqFloatReply>div:first-child {
+    width: 63vw;
+    padding: 10px 0 10px 20px;
+}
+#sqFloatReply>div:first-child input {
+    width: 100%;
+    font-size: 12px;
+    padding: 4.5px;
+    border-radius: 5px;
+    border: 1px solid #eeeeee;
+    background-color: #e1e1e1;
+}
+#sqFloatReply>div:nth-child(2) {
+    width: 37vw;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+    color: #888888;
+}
+#sqFloatReply>div:nth-child(2)>i {font-size: 27px;}
+#sqFloatReply>div:nth-child(2)>i:first-child {margin-right: 30px;}
+#sqHiddenReply {
+    display: none;
+    width: 100%;
+    position: fixed;
+    left: 0px;    
+    bottom: 0px;
+    background-color: #fff;
+}
+#sqHiddenReply #quick_reply_form {
+    padding: 0 12px;
+}
+#sqHiddenReply #quick_reply_form .emotion {display: inline-block;}
+#sqHiddenReply #quick_reply_form .message {display: flex; margin-bottom: 5px;}
+#sqHiddenReply #quick_reply_form .message>input {
+    width: 80%;
+    border: 0px;
+    border-radius: 5px 0 0 5px;
+    font-size: 12px;
+    background-color: #e1e1e1;
+}
+#sqHiddenReply #quick_reply_form .message>input:focus {
+    box-shadow: none;
+}
+#sqHiddenReply #quick_reply_form .message>button {
+    width: 20%;
+    border-radius: 0 5px 5px 0;
+    background-color: #0083F8;
+    color: #fff;
 }
 #imagebox {
     display: flex;
@@ -849,7 +948,8 @@ body {background: #FFFFFF;}
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2.2rem 15px;
+    padding: 30px 15px;
+    line-height: 1;
 }
 .post-forum>span:first-child {font-size: 15px; color: #424242;}
 .post-forum>div {
@@ -867,8 +967,11 @@ body {background: #FFFFFF;}
     border-top: 1px solid #eeeeee;
     border-bottom: 1px solid #eeeeee;
     width: 100%;
-    padding: 1.79rem 0;
+    padding: 20px 0;
     font-size: 15px;
+}
+.post-subject>input::-webkit-input-placeholder{
+    color: #888888;
 }
 .post-subject>input:focus {
     outline: 0px;
@@ -879,11 +982,12 @@ body {background: #FFFFFF;}
     height: 13rem;
     border: 0px;
     resize: none;
-    padding: 0px;
-    padding-top: 25px;
-    padding-bottom: 25px;
+    padding: 20px 0;
     font-size: 15px;
     line-height: 24px;
+}
+.post-message>textarea::-webkit-input-placeholder{
+    color: #888888;
 }
 .post-message>textarea:focus {
     outline: 0px;
@@ -932,22 +1036,67 @@ body {background: #FFFFFF;}
 .post-bottom-actions {
     display: flex;
     justify-content: space-between;
-    padding: 1.78rem 15px;
+    padding: 22px 15px;
+    margin-bottom: 60px;
+}
+.post-bottom-actions .attachlist_parent {
+    width: 70%;
 }
 .post-bottom-actions .attachlist_parent>a:focus {
     text-decoration: none;
+}
+.post-bottom-actions .attachlist_parent .fieldset {
+    margin: 5px 0 0;
+    padding: 0px;
+    background-color: #fff;
+    border: 0;
+}
+.post-bottom-actions .attachlist_parent .fieldset>legend {
+    display: none;
+}
+.post-bottom-actions .attachlist_parent .fieldset ul {
+    padding: 0;
+    list-style: none;
+}
+.post-bottom-actions .attachlist_parent .fieldset ul>li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.post-bottom-actions .attachlist_parent .fieldset ul>li>a {
+    color: #888888;
+}
+.post-bottom-actions .attachlist_parent .fieldset ul>li>a:first-child {
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.post-bottom-actions .attachlist_parent .fieldset ul>li>a:last-child {
+    margin-left: 0px !important;
+}
+.post-bottom-actions .attachlist_parent .fieldset ul>li>a:first-child i {
+    display: none;
 }
 .post-bottom-actions #addattach {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     color: #888888;
+    margin-bottom: 0px;
+    height: 1rem;
+    line-height: 1rem;
 }
 .post-bottom-actions #addattach>i.sq-icon-attach {
     width: 0.8rem;
     height: 0.8rem;
     background-size: 100%;
     margin-right: 5px;
+}
+.post-submit-btn {
+    position: fixed;
+    bottom: 10px;
+    left: 0;
 }
 .post-submit-btn>button {
     background: #424242;
@@ -967,7 +1116,7 @@ body {background: #FFFFFF;}
     min-height: 100%;
     width: 100%;
     z-index: 1;
-    transition: left 0.5s;
+    /* transition: left 0.2s; */
 }
 .choose-tag {
     position: absolute;
@@ -979,7 +1128,7 @@ body {background: #FFFFFF;}
     min-height: 100%;
     width: 100%;
     z-index: 2;
-    transition: left 0.5s;
+    /* transition: left 0.2s; */
 }
 
 /** 板块页 **/
@@ -1298,10 +1447,15 @@ body {background: #FFFFFF;}
 .sq-thread-tag .subject {
     position: relative;
     font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+.sq-thread-tag .subject .icon {
+    margin-left: 5px;
 }
 .sq-thread-tag .subject>a:first-child {
     color: #424242;
-    width: 70vw;
+    max-width: 65vw;
     max-height: 3.2rem;
     /* white-space: nowrap; */
     text-overflow: ellipsis;
@@ -1403,7 +1557,6 @@ body {background: #FFFFFF;}
 } */
 
 .sq-bottom-nav>#bottom-menu>li {
-    position: relative;
     width: 20%;
     height: 100%;
     text-align: center;
@@ -1460,9 +1613,9 @@ body {background: #FFFFFF;}
     display: block;
     position: absolute;
     top: 5px;
-    right: 20px;
-    width: 4px;
-    height: 4px;
+    right: 26%;
+    width: 8px;
+    height: 8px;
     border-radius: 4px;
     background: #f35c5c;
 }

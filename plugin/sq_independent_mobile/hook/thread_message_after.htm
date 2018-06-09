@@ -1,3 +1,6 @@
-<div class="thread-images">
-    <?php echo thread_images_html($tid); ?>
-</div>
+<?php
+    $imagesHtml = thread_images_html($tid);
+    if($imagesHtml) {
+        echo '<div class="thread-images">' . $imagesHtml . '</div>';
+    }    
+?>

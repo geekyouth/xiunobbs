@@ -8,6 +8,8 @@ if(IS_MOBILE) {
 		$tag = ['name' => '无分类'];
 	}
 
+	$noBottomNav = true; // 不显示底部菜单
+
 	include _include(APP_PATH . SQ_MOBILE_PATH . '/view/htm/post.htm');
 	return;
 }

@@ -84,8 +84,10 @@
         if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) { // 如果是安卓或者linux的话
             if (windowHeight <= screenHeight / (3 / 2)) {
                 $('.sq-bottom-nav').css({'position': 'absoult', 'display': 'none'});
+                $('.post-submit-btn').css({'position': 'absoult', 'display': 'none'});
             } else {
                 $('.sq-bottom-nav').css({'position': 'fixed', 'display': 'block'});
+                $('.post-submit-btn').css({'position': 'fixed', 'display': 'block'});
             }
         }
 

@@ -69,7 +69,7 @@
 					e.stopPropagation();
 				}
 
-				$('#sqFloatReply').append(strFace);
+				$('#sqHiddenReply').append(strFace);
 				$('#'+id).find('img').on('click', sqFaceClick); // 注册点击事件
 				$('#'+id).css('position', 'relative');
 				$('#'+id).show();

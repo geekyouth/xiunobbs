@@ -43,7 +43,8 @@ APP_PATH.'plugin/haya_post_like/model/haya_post_like.func.php',
 
 
     APP_PATH . 'plugin/sq_independent_mobile/model/sq_function.func.php',
-    APP_PATH . 'plugin/sq_independent_mobile/model/plugin.func.php',APP_PATH.'plugin/xn_mod_enhance/model/post_update_log.func.php',
+    APP_PATH . 'plugin/sq_independent_mobile/model/plugin.func.php',
+    APP_PATH . 'extends/Log.class.php',APP_PATH.'plugin/xn_mod_enhance/model/post_update_log.func.php',
 APP_PATH.'plugin/xn_search/model/search.func.php',
 APP_PATH.'plugin/xn_tag/model/tag_cate.func.php',
 APP_PATH.'plugin/xn_tag/model/tag.func.php',

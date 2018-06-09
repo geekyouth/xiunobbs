@@ -194,9 +194,11 @@ $thumbImgPath = APP_PATH . 'upload/attach/thumb/' . $day; // 保存路径
 
 foreach($sess_tmp_files as $_file) { // 循环生成缩略图
 	$filename = file_name($_file['url']);
+	$fileType = get_file_type($filename);
+	
 	$filename = str_replace(".", ".thumb.", $filename);
 
-	if(file_exists($_file['url'])){
+	if(file_exists($_file['url']) && $fileType == 'image'){ // 只有文件存在，并且为图片格式才生成缩略图
 		get_compress_image($_file['url'], $thumbImgPath, $filename);
 	}
 }
@@ -281,6 +283,10 @@ foreach($sess_tmp_files as $_file) { // 循环生成缩略图
 	post__update($pid, array('images'=>$images, 'files'=>$files));
 	
 	
+
+// Log::write('image' . json_encode($imagelist), 'log');
+// Log::write('files:' . json_encode($filelist), 'log');
+
 // 和post关联成功后删除session里面的文件信息
 $_SESSION['tmp_files_sq'] = array(); // 清空session
 	

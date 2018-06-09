@@ -2583,9 +2583,11 @@ $thumbImgPath = APP_PATH . 'upload/attach/thumb/' . $day; // 保存路径
 
 foreach($sess_tmp_files as $_file) { // 循环生成缩略图
 	$filename = file_name($_file['url']);
+	$fileType = get_file_type($filename);
+	
 	$filename = str_replace(".", ".thumb.", $filename);
 
-	if(file_exists($_file['url'])){
+	if(file_exists($_file['url']) && $fileType == 'image'){ // 只有文件存在，并且为图片格式才生成缩略图
 		get_compress_image($_file['url'], $thumbImgPath, $filename);
 	}
 }
@@ -2670,6 +2672,10 @@ foreach($sess_tmp_files as $_file) { // 循环生成缩略图
 	post__update($pid, array('images'=>$images, 'files'=>$files));
 	
 	
+
+// Log::write('image' . json_encode($imagelist), 'log');
+// Log::write('files:' . json_encode($filelist), 'log');
+
 // 和post关联成功后删除session里面的文件信息
 $_SESSION['tmp_files_sq'] = array(); // 清空session
 	
@@ -4248,7 +4254,7 @@ function get_tagname_by_tagid($tagid) {
 /** 组装帖子详情页里面的图片html内容 */
 function thread_images_html($tid) {
     $pid = db_find_one('post', ['tid' => $tid, 'isfirst' => 1], [], ['pid']);
-    $data = db_find('attach', ['pid' => $pid['pid']], ['aid' => 1]);
+    $data = db_find('attach', ['pid' => $pid['pid'], 'isimage' => 1], ['aid' => 1]);
     $html = '';
     if ($data) {
     	foreach($data as $item) {
@@ -4305,6 +4311,36 @@ function get_today_by_tids($tids) {
     $sql = "SELECT * FROM bbs_thread WHERE create_date > $todayStart AND create_date < $todayEnd AND tid IN $tids";
     $threads = $db->sql_find($sql);
     return $threads;
+}
+
+/** 判断文件类型 */
+function get_file_type($filename) {
+    $ext = explode('.', $filename);
+    $count = count($ext);
+    $ext = $ext[$count - 1];
+    switch ($ext) 
+    { 
+        case 'exe': 
+            $fileType = 'exe'; 
+            break; 
+        case 'midi': 
+            $fileType = 'midi'; 
+            break; 
+        case 'rar': 
+            $fileType = 'rar'; 
+            break; 
+        case 'bmp': 
+            $fileType = 'bmp'; 
+            break; 
+        case 'jpg':
+        case 'gif':
+        case 'png':
+            $fileType = 'image'; 
+            break; 
+        default: 
+            $fileType = 'unknown'; 
+    } 
+    return $fileType;
 }
 ?><?php
  
@@ -4436,6 +4472,82 @@ function cut_str($string, $sublen, $start = 0, $code = 'UTF-8') {
 		return $tmpstr; 
 	} 
 }
+?><?php
+ 
+/**
+ * 日志类
+ *
+ * @package    log
+ * @version    $Id$
+ */
+defined('LOG_PATH') || define('LOG_PATH', './log/');
+class Log
+{
+    /**
+     * 单个日志文件大小限制
+     *
+     * @var int 字节数
+     */
+    private static $i_log_size = 5242880; // 1024 * 1024 * 5 = 5M
+ 
+    /**
+     * 设置单个日志文件大小限制
+     * 
+     * @param int $i_size 字节数
+     */
+    public static function set_size($i_size)
+    {
+    	if( is_numeric($i_size) ){
+    		self::$i_log_size = $i_size;
+    	}
+    }
+ 
+    /**
+     * 写日志
+     *
+     * @param string $s_message 日志信息
+     * @param string $s_type    日志类型
+     */
+    public static function write($s_message, $s_type = 'log')
+    {
+        $s_message .= "\n\r";
+        // 检查日志目录是否可写
+         if ( !file_exists(LOG_PATH) ) {
+            @mkdir(LOG_PATH);     
+        }
+         chmod(LOG_PATH,0777);
+        if (!is_writable(LOG_PATH)) exit('LOG_PATH is not writeable !');
+    	$s_now_time = date('[Y-m-d H:i:s]');
+        $s_now_day  = date('Y_m_d');
+        // 根据类型设置日志目标位置
+        $s_target   = LOG_PATH;
+        switch($s_type)
+        {
+            case 'debug':
+                $s_target .= 'Out_' . $s_now_day . '.log';
+                break;
+            case 'error':
+                $s_target .= 'Err_' . $s_now_day . '.log';
+                break;
+            case 'log':
+                $s_target .= 'Log_' . $s_now_day . '.log';
+                break;
+            default:
+                $s_target .= 'Log_' . $s_now_day . '.log';
+                break;
+        }
+ 
+        //检测日志文件大小, 超过配置大小则重命名
+        if (file_exists($s_target) && self::$i_log_size <= filesize($s_target)) {
+            $s_file_name = substr(basename($s_target), 0, strrpos(basename($s_target), '.log')). '_' . time() . '.log';
+            rename($s_target, dirname($s_target) . DS . $s_file_name);
+        }
+        clearstatcache();
+        // 写日志, 返回成功与否
+        return error_log("$s_now_time $s_message\n", 3, $s_target);
+    }
+}
+
 ?><?php
 
 
