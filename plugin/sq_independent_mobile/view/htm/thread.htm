@@ -212,7 +212,6 @@
 		
 	</div>
 
-	<?php if(!empty($user)) { ?>
 	<div id="sqFloatDiv">
 		<div id="sqFloatReply">
 			<div>
@@ -250,7 +249,26 @@
 				
 				<form action="<?php echo url("post-create-$tid-1");?>" method="post" id="quick_reply_form" class="d-block">	
 
-					<div class="d-flex justify-content-between align-items-center text-muted" style="margin-top: 0.5rem;">
+					<div id="formTopActions">
+						<div id="topActionsCancel">取消</div>
+						<div>发表回复</div>
+						<div>
+							<button type="submit" id="submit">发表</button>
+						</div>
+					</div>
+					<div>
+						<input type="hidden" name="doctype" value="1" />
+						<input type="hidden" name="return_html" value="1" />
+						<input type="hidden" name="quotepid" value="0" />
+						<div class="message">
+							<!--
+							<input type="text" id="message" name="message" class="form-control" placeholder="写评论...">
+							<button class="btn" type="submit" id="submit">发送</button>
+							-->
+							<textarea name="message" id="message" placeholder="写评论..."></textarea>
+						</div>
+					</div>
+					<div class="d-flex justify-content-between align-items-center text-muted">
 						<div class="action-icons">
 							<!--{hook sq_thread_reply_left.htm}-->
 							<i class="sq-icon-image sq-md-icon"></i>
@@ -259,22 +277,11 @@
 							<!--{hook sq_thread_reply_right.htm}-->
 						</div>
 					</div>
-					<div>
-						
-						<input type="hidden" name="doctype" value="1" />
-						<input type="hidden" name="return_html" value="1" />
-						<input type="hidden" name="quotepid" value="0" />
-						<div class="message">
-							<input type="text" id="message" name="message" class="form-control" placeholder="写评论...">
-							<button class="btn" type="submit" id="submit">发送</button>
-						</div>
-					</div>
 
 				</form>
 			</div>
 		</div>
 	</div>
-	<?php } ?>
 
 </div>
  
@@ -316,6 +323,7 @@ function formSubmit() {
 
 			// 关闭浮动输入框
 			$('#sqFloatDiv').click();
+			$('#bottomInput').val('');
 			$.alert('发送成功');
 			
 		} else if(code < 0) {
@@ -325,6 +333,11 @@ function formSubmit() {
 			// jform.find('[name="'+code+'"]').alert(message).focus();
 			$.alert(message);
 			jsubmit.button('reset');
+			if(message == '请先登录') {
+				setTimeout(function(){
+					window.location = '<?php echo url("user-login");?>'; // 如果是未登录的话，跳转到登录页
+				}, 1000);
+			}
 		}
 	});
 	return false;
@@ -406,6 +419,7 @@ $(function() {
 var jmessage = $('#bottomInput');
 jmessage.on('focus', floatInput);
 
+// 处理引用的问题
 $('.post .post_reply').on('click', function(){
 	var thisNode = $(this);
 	var quoteNode = $('input[name=quotepid]');
@@ -417,23 +431,23 @@ $('.post .post_reply').on('click', function(){
 	}
 	$('#bottomInput').focus();
 });
+
+// 处理弹出层的冒泡行为
+$('#quick_reply_form').on('click', function(e){
+	e.stopPropagation();
+});
 $('.emotion').on('click', function(e){
-	$('#imagebox') && $('#imagebox').remove;
-	e.stopPropagation();
+	$('#imagebox') && $('#imagebox').remove();
 });
-$('.action-icons .sq-icon-image').on('click', function(e) {
-	e.stopPropagation();
-});
-$('.sq-checkbox-label').on('click', function(e){ // 阻止匿名回帖的冒泡
-	e.stopPropagation();
-});
-$('input[name=message]').on('click', function(e){
+$('textarea[name=message]').on('click', function(e){
 	var isDisplay = $('#sqFloatReply').css('display');
 	if(isDisplay == 'none') {
 		$('#facebox').remove();
 		$('#imagebox').remove();
 	}
-	e.stopPropagation();
+});
+$('#topActionsCancel').on('click', function(e) {
+	resetInput();
 });
 $('#bottomStar').on('click', function(){
 	$('#sqFavorite').click();
@@ -442,23 +456,29 @@ $('#bottomLike').on('click', function(){
 	$('#sqLike').click();
 });
 
+/** 上浮输入框 **/
 function floatInput() {
 	var sqHiddenReply = $('#sqHiddenReply'),
-		sqFloatReply  = $('#sqFloatReply'),
-		sqFloatDiv    = $('#sqFloatDiv');
+	sqFloatReply  = $('#sqFloatReply'),
+	sqFloatDiv    = $('#sqFloatDiv');
 
 	sqHiddenReply.css('display', 'block');
 	sqFloatReply.css('display', 'none');
 	sqFloatDiv.css('position', 'fixed');
-	sqFloatDiv.css('min-height', '100%');
 
-	sqFloatDiv.on('click', resetInput);
+	sqFloatDiv.one('click', resetInput);
+	sqFloatDiv.css('min-height', '100%');
+	sqFloatDiv.css('background-color', 'rgba(0,0,0,0.6)');
+	sqFloatDiv.on('touchmove', notAllowMove);
+
+	$('#scroll_to_top') && $('#scroll_to_top').css('display', 'none');
 
 	openFloatInput = 1; // 开启了浮动输入框
 
 	$('#message').focus(); // 焦点
 }
 
+/** 重置输入框 **/
 function resetInput() {
 	var sqHiddenReply = $('#sqHiddenReply'),
 		sqFloatReply  = $('#sqFloatReply'),
@@ -467,14 +487,26 @@ function resetInput() {
 	sqHiddenReply.css('display', 'none');
 	sqFloatReply.css('display', 'flex');
 	sqFloatDiv.css('position', 'absolute');
-	sqFloatDiv.css('min-height', '0');
+	sqFloatDiv.css('background-color', '');
+	//sqFloatDiv.css('min-height', '0');
+
+	$('#scroll_to_top') && $('#scroll_to_top').css('display', 'block');
 
 	$('#facebox') && $('#facebox').remove();
 	$('#imagebox') && $('#imagebox').remove();
 
+	var message = $('#message').val(); // 将值带回去底部输入框
+	$('#bottomInput').val(message);
+
 	openFloatInput = 0; // 关闭了浮动输入框
 
 	sqFloatDiv.off('click', resetInput);
+	sqFloatDiv.off('touchmove', notAllowMove);
+}
+
+/** 禁止拖动 **/
+function notAllowMove(e) {
+	e.preventDefault();
 }
 
 /**
@@ -618,6 +650,11 @@ function changeInputStatus(node, inputData) {
 $('.sq-icon-image').on('click', openUploadDiv); // 注册点击事件
 /** 开启上传图片的div */
 function openUploadDiv() {
+	<?php if(empty($user)) { ?>
+	$.alert('请先登录');
+	return;
+	<?php } ?>
+
 	$('#imagebox') && $('#imagebox').remove();
 	$('#facebox') && $('#facebox').remove();
 
@@ -728,7 +765,7 @@ function inputImgChange(e){
 		}
 	}
 	if (!flag) {
-		$.alert('请上传图片格式');
+		$.alert('请上传图片格式的文件');
 		return;
 	}
 

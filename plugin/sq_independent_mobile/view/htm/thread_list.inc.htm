@@ -40,14 +40,19 @@
 									<!-- 不使用下面的锚点
 									<!--{hook thread_list_inc_subject_before.htm}-->
 									-->
-									<a href="<?php echo url("thread-$_thread[tid]");?>"><?php echo $_thread['subject'];?></a>
+									<a href="<?php echo url("thread-$_thread[tid]");?>">
+										<?php echo $_thread['subject'];?>
+										<?php if($_thread['files'] > 0) { ?><i class="icon small filetype other"></i><?php } ?>
+									</a>
 									<!-- 不使用 
 									<!--{hook thread_list_inc_subject_after.htm}-->
 									-->
 									
+									<!--
 									<!--{hook thread_list_inc_filetype_icon_before.htm}-->
 									<?php if($_thread['files'] > 0) { ?><i class="icon small filetype other"></i><?php } ?>
 									<!--{hook thread_list_inc_filetype_icon_after.htm}-->
+									-->
 									
 									<!--{hook thread_list_inc_lock_icon_before.htm}-->
 									<?php if($_thread['closed'] > 0) { ?><i class="icon-lock"></i><?php } ?>

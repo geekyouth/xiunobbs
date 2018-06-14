@@ -54,7 +54,10 @@ if($_thread['is_secret']) { // 如果是匿名模式，跳转到自己的信息�
 	<a href="<?php echo url("forum-$_thread[fid]");?>" target="_blank" title="<?php echo $_thread['forumname'];?>" class="text-grey">[<?php echo $_thread['forumname'];?>]</a>
 <?php } ?>
 									-->
-									<a href="<?php echo url("thread-$_thread[tid]");?>"><?php echo $_thread['subject'];?></a>
+									<a href="<?php echo url("thread-$_thread[tid]");?>">
+										<?php echo $_thread['subject'];?>
+										<?php if($_thread['files'] > 0) { ?><i class="icon small filetype other"></i><?php } ?>
+									</a>
 									<!-- 不使用 
 																<?php if(!empty($_thread['taglist'])) { foreach($_thread['taglist'] as $tag) { ?>
 							<a href="<?php echo url("forum-$_thread[fid]-$page", array('tagids'=>$tag['tagid']));?>" class="badge badge-pill badge-<?php echo empty($tag['style']) ? 'secondary' : $tag['style'];?>"><?php echo $tag['name'];?></a>
@@ -62,9 +65,11 @@ if($_thread['is_secret']) { // 如果是匿名模式，跳转到自己的信息�
 							
 									-->
 									
+									<!--
 									
 									<?php if($_thread['files'] > 0) { ?><i class="icon small filetype other"></i><?php } ?>
 									
+									-->
 									
 									
 									<?php if($_thread['closed'] > 0) { ?><i class="icon-lock"></i><?php } ?>

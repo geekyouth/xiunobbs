@@ -1,5 +1,18 @@
 <?php if($noticelist) { foreach($noticelist as &$_notice) { ?>
-<!--{hook my_notice_list_before.htm}-->
+<?php 
+$msg = $_notice['message']; 
+$msg = preg_replace("/\[em_([0-9]*)\]/i","<img src='./plugin/Ty_face/face/arclist/$1.gif' border='0'/>",$msg);
+$_notice['message'] = $msg;
+?>
+<style>
+    img{
+        border: 0px !important;
+    }
+</style><?php
+if($_notice['is_secret']) { // 如果是匿名模式，跳转到自己的信息页
+    $_notice['fromuid'] = 0;
+}
+?>
 <li class="notice media text-small <?php echo $_notice['isread'] == 1 ? 'isread' : '';?>" data-nid="<?php echo $_notice['nid']?>" >
 
  	<?php if($_notice['type'] == 1 || $_notice['type'] == 3 || $_notice['type'] == 99){?>

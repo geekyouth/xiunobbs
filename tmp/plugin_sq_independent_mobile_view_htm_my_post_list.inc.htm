@@ -3,7 +3,7 @@
 					empty($allowdelete) AND $allowdelete = 0;
 					empty($allowpost) AND $allowpost = 0;
 				?>
-				<!--{hook post_list_inc_start.htm}-->
+				
 
 				<?php if($postlist) { foreach($postlist as $_post) { ?>
 					<li class="media <?php echo $_post['classname'];?>" data-pid="<?php echo $_post['pid'];?>" data-uid="<?php echo $_post['uid'];?>">
@@ -14,7 +14,13 @@
 									<h6><span class="text-muted">评论&nbsp;&nbsp;</span><a href="<?php echo url("thread-$_post[tid]");?>">《<?php echo $_post['subject'];?>》</a></h6>
 								<?php } ?>
 
-								<!--{hook post_list_inc_message_before.htm}-->
+								<?php 
+$msg = $_post['message_fmt']; 
+$msg = preg_replace("/\[em_([0-9]*)\]/i","<img src='./plugin/Ty_face/face/arclist/$1.gif' border='0'/>",$msg);
+$_post['message_fmt']=	$msg			
+?><?php if(!empty($sg_group_pid)) { ?>
+	<div class="alert alert-danger"><?php echo lang('sg_creditsplus',  array('credits'=>$sg_group['post_credits']));?></div>
+<?php } ?>
 								<div class="message-fmt">
 									<?php echo $_post['message_fmt'];?>
 								</div>
@@ -38,4 +44,4 @@
 					</li>
 				<?php }} ?>
 				
-				<!--{hook post_list_inc_end.htm}-->
+				

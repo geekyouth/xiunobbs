@@ -45,10 +45,10 @@ if(DEBUG > 1) {
 }
 
 /** 注册程序错误时使用的方法 */
-// register_shutdown_function(function(){ 
-//     Log::set_size(1024*1024*10);
-//     Log::write('Error: ' . json_encode(error_get_last()) . "\n\r",'log');
-// });
+register_shutdown_function(function(){ 
+    Log::set_size(1024*1024*10);
+    Log::write('Error: ' . json_encode(error_get_last()) . "\n\r",'log');
+});
 
 // 测试数据库连接 / try to connect database
 //db_connect() OR exit($errstr);
