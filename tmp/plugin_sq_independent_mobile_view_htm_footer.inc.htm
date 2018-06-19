@@ -207,7 +207,7 @@
                 });
             }
 
-            var isIndex = '<?php echo $is_index_one; ?>';
+            var isIndex = '<?php if($is_index_one) {echo 1;} else {echo 0;} ?>';
             if (isIndex || loginReferrer) { // 如果是首页，直接关闭应用
                 dd.device.notification.confirm({
                     message: "退出论坛",

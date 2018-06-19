@@ -1,0 +1,192 @@
+					<?php 
+if (isset($haya_post_info_config['forum_show_pagination']) 
+&& $haya_post_info_config['forum_show_pagination'] == 1
+) { 
+?>	
+	<style>.haya-post-info-break-normal {word-break: normal;}</style>	
+<?php } ?>
+
+					<?php 
+					if($hotList) { 
+						$have_allowtop = 0;
+						foreach($hotList as &$_thread) {
+							$_thread['allowtop'] = forum_access_mod($_thread['fid'], $gid, 'allowtop');
+							if($_thread['allowtop']) $have_allowtop = 1;
+						}
+					}
+					?>
+
+					<?php if($hotList) { foreach($hotList as &$_thread) { ?>
+					<li class="media thread tap <?php echo $_thread['top_class'];?> " data-href="<?php echo url("thread-$_thread[tid]");?>" data-tid="<?php echo $_thread['tid'];?>">
+						<div class="sq-thread-tag">
+							<?php if($have_allowtop) { ?>
+								<?php if($_thread['allowtop']) { ?>
+								<input type="checkbox" name="modtid" class="mt-3 mr-2" value="<?php echo $_thread['tid']; ?>" />
+								<?php } ?>
+							
+							<?php } ?>
+							
+							<a href="<?php echo url("user-$_thread[uid]");?>" tabindex="-1" class="ml-1 mt-1 mr-3">
+								<img class="avatar-3" src="<?php echo $_thread['user_avatar_url'];?>">
+							</a>
+							
+						
+							<div class="media-body">
+								<div class="subject break-all">
+								
+									
+									<?php if($_thread['top'] > 0) { ?>
+										<i class="icon-top-<?php echo $_thread['top']; ?>"></i>
+									<?php } ?>
+									
+									
+									<?php if (isset($route) && ($route == 'my' && $action == 'favorite')) { ?>
+	<a href="<?php echo url("forum-$_thread[fid]");?>" target="_blank" title="<?php echo $_thread['forumname'];?>" class="text-grey">[<?php echo $_thread['forumname'];?>]</a>
+<?php } ?><?php if ($route == 'index' && isset($haya_post_info_config['show_index_list_forum']) && $haya_post_info_config['show_index_list_forum'] == 1) { ?>
+	<a href="<?php echo url("forum-$_thread[fid]");?>" target="_blank" title="<?php echo $_thread['forumname'];?>" class="text-grey">[<?php echo $_thread['forumname'];?>]</a>
+<?php } ?>
+									<a href="<?php echo url("thread-$_thread[tid]");?>"><?php echo $_thread['subject'];?></a>
+																<?php if(!empty($_thread['taglist'])) { foreach($_thread['taglist'] as $tag) { ?>
+							<a href="<?php echo url("forum-$_thread[fid]-$page", array('tagids'=>$tag['tagid']));?>" class="badge badge-pill badge-<?php echo empty($tag['style']) ? 'secondary' : $tag['style'];?>"><?php echo $tag['name'];?></a>
+							<?php  }} ?>
+							
+									
+									
+									<?php if($_thread['files'] > 0) { ?><i class="icon small filetype other"></i><?php } ?>
+									
+									
+									
+									<?php if($_thread['closed'] > 0) { ?><i class="icon-lock"></i><?php } ?>
+									<?php if (isset($haya_post_info_config['forum_show_pagination']) && $haya_post_info_config['forum_show_pagination'] == 1) { ?>	
+
+	<?php 
+	$haya_post_info_pagesize = $conf['postlist_pagesize']; 
+	$haya_post_info_pagination = haya_post_info_pagination(url("thread-$_thread[tid]-{page}"), $_thread['posts'] + 1, 5, $haya_post_info_pagesize);
+	?>
+
+	<?php if (!empty($haya_post_info_pagination)) { ?>
+		<span class="text-muted haya-post-info-break-normal">
+			<span class="text-danger ml-1">•</span>
+			<span class="text-grey ml-1">>></span>
+			<span class="text-grey haya-post-info-pagination ml-1">[<?php echo $haya_post_info_pagination; ?>]</span>
+		</span>
+	<?php } ?>
+	
+<?php } ?>
+									
+								</div>
+								<div class="d-flex justify-content-between small mt-1">
+									<div>
+										<?php 
+if (isset($haya_post_info_config['today_thread_hightlighter']) 
+	&& $haya_post_info_config['today_thread_hightlighter'] == 1
+) { 
+	if (date('Y-m-d', $_thread['create_date']) == date('Y-m-d')) {
+		$haya_post_info_today_thread_hightlighter_class = 'today';
+	} else {
+		$haya_post_info_today_thread_hightlighter_class = '';
+	}
+?>
+<span class="haya-post-info-username <?php echo $haya_post_info_today_thread_hightlighter_class; ?>">
+<?php
+}
+?>
+
+										<span class="username text-grey mr-1 <?php if($_thread['lastuid']) { ?> hidden-sm<?php } ?>" uid="<?php echo $_thread['uid'];?>"><?php echo $_thread['username'];?></span>
+										<span class="date text-grey<?php if($_thread['lastuid']) { ?> hidden-sm<?php } ?>"><?php echo $_thread['create_date_fmt'];?></span>
+										<?php 
+if (isset($haya_post_info_config['today_thread_hightlighter']) 
+	&& $haya_post_info_config['today_thread_hightlighter'] == 1
+) {
+?>
+</span>
+<?php
+}
+?>
+
+										
+										<?php
+if($_thread['last_secret']) { 
+    $_thread['lastusername'] = '******';
+}
+?>
+										<?php if($_thread['lastuid']) { ?>
+										<span>
+											<span class="text-grey mx-2">←</span>
+											<span class="username text-grey mr-1" uid="<?php echo $_thread['lastuid'];?>"><?php echo $_thread['lastusername'];?></span>
+											<span class="text-grey"><?php echo $_thread['last_date_fmt'];?></span>
+										</span>
+										<?php } ?>
+										<?php if ($route == 'my' && $action == 'favorite') { ?>
+<span class="ml-3">
+	<a href="javascript:;" title="<?php echo lang('haya_favorite_remove_favorite'); ?>" class="text-grey text-small js-haya-favorite-remove" data-tid="<?php echo intval($_thread['tid']); ?>">
+		<i class="icon-remove" aria-hidden="true"></i> 
+		<?php echo lang('haya_favorite_remove_favorite'); ?>
+	<a>
+</span>
+<?php } ?>
+										
+									</div>
+									<div class="text-muted small">
+										<span><?php echo $_thread['forumname']; ?></span>
+<span>-</span>
+<?php if(!empty($_thread['taglist'])) { foreach($_thread['taglist'] as $tag) { ?>
+<span><?php echo $tag['name'];?></span>
+<?php  }} ?>
+										<span class="ml-2 d-none"><i class="icon-eye"></i> <?php echo $_thread['views'];?></span>
+										
+										
+										<?php if (isset($haya_post_info_config['show_list_views']) && $haya_post_info_config['show_list_views'] == 1) { ?>
+
+	<span class="ml-2"><i class="icon-eye"></i> <?php echo $_thread['views'];?></span>
+
+<?php } ?>
+
+										<span class="ml-2"><i class="icon-comment-o"></i> <?php echo $_thread['posts'];?></span>
+										<?php 
+if (isset($haya_post_like_config['open_thread'])
+	&& $haya_post_like_config['open_thread'] == 1
+) {
+?>
+	<?php 
+	if ((isset($haya_post_like_config['list_show_likes'])
+		&& $haya_post_like_config['list_show_likes'] == 1)
+		|| ($route == 'my' || $route == 'user')
+	) {
+	?>
+		<span class="ml-2">
+			<i class="icon-thumbs-o-up" aria-hidden="true"></i> 
+			<?php echo intval($_thread['likes']);?>
+		</span>
+	<?php } ?>
+	
+<?php } ?><?php 
+if ( 
+	(isset($haya_favorite_config['thread_show_favorite']) && $haya_favorite_config['thread_show_favorite'] == 1)
+	|| ($route == 'my' || $route == 'user')
+) { 
+?>
+<span class="ml-2" title="<?php echo intval($_thread['favorites']);?> <?php echo lang('haya_favorite_name'); ?>">
+	<i class="icon-star-o" aria-hidden="true"></i> 
+	<?php echo intval($_thread['favorites']);?>
+</span>
+<?php } ?>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<?php if($_thread['images_url']) { ?>
+							<div class="sq-thumb-img">
+								<?php foreach($_thread['images_url'] as $_image) { ?>
+									<div style="background-image: url(./upload/attach/thumb/<?php echo $_image['filename']; ?>);"></div>
+								<?php } ?>
+							</div>
+						<?php } ?>
+					</li>
+					<?php }} else { ?>
+					<li>
+						<div><?php echo lang('none');?></div>
+					</li>
+					<?php } ?>
+					
